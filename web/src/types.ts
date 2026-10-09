@@ -176,7 +176,10 @@ export interface Metrics {
   baseline: BaselineMetrics
   model: ModelMetrics
   lead_time: (LeadTimePoint & { model_far?: number; baseline_far?: number; n_available?: number })[]
-  screening: ScreeningMetrics & { primary?: string; conjunctions?: number; prefiltered_objects?: number; all_vs_all_seconds?: number }
+  screening: ScreeningMetrics & {
+    primary?: string; conjunctions?: number; prefiltered_objects?: number; catalog_load_seconds?: number
+    all_vs_all?: { objects: number; hours: number; step_s: number; radius_km: number; seconds: number; pairs_sampled_close: number }
+  }
   // extras written by evaluate.py / pc.py (absent in mock mode)
   is_mock?: boolean
   generated_at?: string

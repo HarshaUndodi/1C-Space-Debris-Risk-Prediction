@@ -81,7 +81,9 @@ Earlier warnings cost far more false alarms. At 3+ days, ≥95%-recall threshold
 **Physics validation:** our 2D Foster Pc engine against ESA's own `risk` on 20k CDMs gives Spearman **0.975**,
 a median difference of 0.12 orders of magnitude, and 82% agreement within 10×.
 **Throughput:** ISS against **19,376 catalog objects over 72 h** (60 s grid + 1 s TCA refinement) takes
-**1.2 s**, plus 0.5 s of catalog parsing.
+**1.2 s**, plus 0.5 s of catalog parsing. The optional all-vs-all benchmark
+(`python -m orbitguard.screen --all-vs-all --hours 24`) checks every pair of 18,589 LEO objects over 24 h
+with KD-trees in **34 s**. Pairs are sampled, not refined, so this is a throughput figure, not a risk list.
 
 ## Architecture
 
@@ -147,7 +149,7 @@ CelesTrak OMM ───▶  screen.py   (SGP4 catalog screening)  live.py (backg
 - Clohessy–Wiltshire is linear and assumes near-circular orbits. It's suitable for ranking burn options,
   not for flight-ready planning. The grid's smallest burn is 1 mm/s.
 - High-risk events are rare (150 test, 66 train), so every metric on them has wide uncertainty.
-- Not built (cut list): LSTM sequence model, all-vs-all screening, Space-Track integration.
+- Not built (cut list): LSTM sequence model, Space-Track integration.
 
 ## Repository layout
 

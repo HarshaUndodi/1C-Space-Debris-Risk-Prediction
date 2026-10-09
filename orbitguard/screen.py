@@ -255,6 +255,41 @@ def screen(primary_norad: int = config.DEFAULT_PRIMARY_NORAD, hours: float = 72,
     }
 
 
+def all_vs_all(hours: float = 24, step_s: float = 60, radius_km: float = 10, max_perigee_km: float = 2000,
+               start: datetime | None = None, catalog: list[CatalogEntry] | None = None) -> dict:
+    """Optional benchmark (SPEC 11.8): every LEO object against every other, per time step, with
+    cKDTree.query_pairs. Sampled pairs only (no TCA refinement) — this measures throughput, not risk.
+    Pairs that stay within radius for >90 % of steps (docked / formation flying) are counted separately."""
+    from scipy.spatial import cKDTree
+
+    t0 = time.perf_counter()
+    start = (start or datetime.now(timezone.utc)).replace(microsecond=0)
+    catalog = catalog if catalog is not None else load_catalog(start)[0]
+    leo = [c for c in catalog if c.perigee_km < max_perigee_km]
+    jd, fr = time_grid(start, hours, step_s)
+    sats = SatrecArray([c.sat for c in leo])
+    counts: dict[tuple[int, int], int] = {}
+    t_prop = t_tree = 0.0
+    for i in range(0, len(jd), 60):                       # time chunks bound memory (n × 60 × 3)
+        a = time.perf_counter()
+        e, r, _ = sats.sgp4(jd[i:i + 60], fr[i:i + 60])
+        t_prop += time.perf_counter() - a
+        a = time.perf_counter()
+        for k in range(r.shape[1]):
+            ok = (e[:, k] == 0) & np.isfinite(r[:, k]).all(axis=1)
+            idx = np.flatnonzero(ok)
+            for p, q in cKDTree(r[idx, k]).query_pairs(radius_km):
+                key = (leo[idx[p]].norad, leo[idx[q]].norad)
+                counts[key] = counts.get(key, 0) + 1
+        t_tree += time.perf_counter() - a
+    persistent = sum(1 for v in counts.values() if v > 0.9 * len(jd))
+    return {"objects": len(leo), "hours": hours, "step_s": step_s, "radius_km": radius_km,
+            "steps": int(len(jd)), "pairs_sampled_close": len(counts) - persistent,
+            "pairs_persistent_formation": persistent,
+            "propagation_seconds": round(t_prop, 2), "kdtree_seconds": round(t_tree, 2),
+            "seconds": round(time.perf_counter() - t0, 2)}
+
+
 def positions_now(catalog: list[CatalogEntry], when: datetime | None = None) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
     """Lat/lon/alt for many objects at one instant (vectorised). Returns (lat, lon, alt, ok)."""
     when = when or datetime.now(timezone.utc)
@@ -295,7 +330,15 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--hours", type=float, default=72)
     ap.add_argument("--step", type=float, default=60)
     ap.add_argument("--threshold-km", type=float, default=10)
+    ap.add_argument("--all-vs-all", action="store_true", help="run the all-vs-all benchmark and log it to metrics.json")
     args = ap.parse_args(argv)
+    if args.all_vs_all:
+        from orbitguard import evaluate
+        res = all_vs_all(hours=args.hours, step_s=args.step, radius_km=args.threshold_km)
+        scr = evaluate.load_metrics().get("screening", {})
+        evaluate.save_metrics({"screening": {**scr, "all_vs_all": res}})
+        print(res)
+        return 0
     res = screen(args.norad, args.hours, args.step, args.threshold_km)
     s = res["stats"]
     print(f"primary {res['primary']['name']}: {s['objects']} objects, {s['prefiltered_objects']} in band, "

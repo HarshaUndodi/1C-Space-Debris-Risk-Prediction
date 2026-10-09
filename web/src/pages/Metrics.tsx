@@ -173,6 +173,12 @@ export function MetricsPage() {
             <div><span className="kpi-label">Catalog screening</span>
               <span className="mono kpi">{m.screening.seconds ? `${m.screening.seconds.toFixed(1)} s` : '—'}</span>
               <span className="muted small">{m.screening.objects.toLocaleString()} objects · {m.screening.hours} h · {m.screening.step_s} s steps{m.screening.primary ? ` · primary ${m.screening.primary}` : ''}</span></div>
+            {m.screening.all_vs_all && (
+              <div><span className="kpi-label">All-vs-all (every LEO pair, sampled)</span>
+                <span className="mono kpi">{m.screening.all_vs_all.seconds.toFixed(0)} s</span>
+                <span className="muted small">{m.screening.all_vs_all.objects.toLocaleString()} objects · {m.screening.all_vs_all.hours} h ·
+                  {' '}{m.screening.all_vs_all.pairs_sampled_close.toLocaleString()} pairs within {m.screening.all_vs_all.radius_km} km at a {m.screening.all_vs_all.step_s} s sample (unrefined)</span></div>
+            )}
           </div>
         </section>
       </div>
