@@ -1,3 +1,4 @@
+import axios from 'axios'
 import { useCallback, useEffect, useState } from 'react'
 import { errorMessage } from './api'
 
@@ -17,13 +18,23 @@ export function useApi<T>(fetcher: () => Promise<T>, deps: unknown[]): ApiState<
 
   useEffect(() => {
     let alive = true
+    let retry: ReturnType<typeof setTimeout> | undefined
     setLoading(true)
     setError(null)
     fetcher()
       .then((d) => { if (alive) setData(d) })
-      .catch((e) => { if (alive) setError(errorMessage(e)) })
-      .finally(() => { if (alive) setLoading(false) })
-    return () => { alive = false }
+      .catch((e) => {
+        if (!alive) return
+        // 503 = the backend is still computing (e.g. live screening) → keep loading and poll
+        if (axios.isAxiosError(e) && e.response?.status === 503) {
+          retry = setTimeout(() => setTick((t) => t + 1), 2500)
+          return
+        }
+        setError(errorMessage(e))
+        setLoading(false)
+      })
+      .then(() => { if (alive && retry === undefined) setLoading(false) })
+    return () => { alive = false; if (retry) clearTimeout(retry) }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [...deps, tick])
 

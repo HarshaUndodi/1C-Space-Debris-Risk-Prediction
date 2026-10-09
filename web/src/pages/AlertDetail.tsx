@@ -48,6 +48,7 @@ export function AlertDetailPage({ id }: { id: string }) {
   const detail = useApi(() => api.alert(id, cutoff), [id, cutoff])
   const man = useApi(() => api.maneuver(id), [id])
   const d = detail.data
+  const live = d?.source === 'live'
   const cutoffs = useMemo(() => (d ? [...d.available_cutoffs].sort((a, b) => b - a) : [6, 5, 4, 3, 2]), [d])
 
   useEffect(() => { setCutoff(2) }, [id])
@@ -58,9 +59,9 @@ export function AlertDetailPage({ id }: { id: string }) {
         <button className="ghost" onClick={go.mission}>← Alerts</button>
         {d && (
           <>
-            <h1 className="mono">EVT {d.event_id}</h1>
+            <h1 className="mono">{live ? 'LIVE' : 'EVT'} {live ? d.event_id.replace(/^live-/, '') : d.event_id}</h1>
             <span className={`decision decision-${d.decision.toLowerCase()} big`}>{d.decision}</span>
-            <span className="muted">{d.chaser_type} · {d.source === 'historical' ? 'ESA Kelvins (held-out)' : 'live'}</span>
+            <span className="muted">{d.chaser_type} · {live ? 'live screening (CelesTrak, estimated Pc)' : 'ESA Kelvins (held-out)'}</span>
             <div className="spacer" />
             <button className="ghost" onClick={() => exportHtml(d, man.data, cutoff)}>Export report (HTML)</button>
             <button className="ghost" onClick={() => exportJson(d, man.data, cutoff)}>JSON</button>
@@ -74,21 +75,24 @@ export function AlertDetailPage({ id }: { id: string }) {
       {d && (
         <>
           <section className="panel replay">
-            <div className="replay-row">
-              <label htmlFor="replay" className="panel-label">Replay — “now” is</label>
-              <input id="replay" type="range" min={0} max={cutoffs.length - 1} step={1}
-                value={Math.max(0, cutoffs.indexOf(cutoff))}
-                onChange={(e) => setCutoff(cutoffs[Number(e.target.value)])} />
-              <span className="mono big">{cutoff} days before TCA</span>
-              {detail.loading && <span className="muted small">updating…</span>}
-            </div>
+            {cutoffs.length > 0 && (
+              <div className="replay-row">
+                <label htmlFor="replay" className="panel-label">Replay — “now” is</label>
+                <input id="replay" type="range" min={0} max={cutoffs.length - 1} step={1}
+                  value={Math.max(0, cutoffs.indexOf(cutoff))}
+                  onChange={(e) => setCutoff(cutoffs[Number(e.target.value)])} />
+                <span className="mono big">{cutoff} days before TCA</span>
+                {detail.loading && <span className="muted small">updating…</span>}
+              </div>
+            )}
             <div className="kpis">
-              <div><span className="kpi-label">P(high risk), calibrated</span><span className="mono kpi">{d.p_high.toFixed(3)}</span></div>
+              <div><span className="kpi-label">{live ? 'Pc (estimated)' : 'P(high risk), calibrated'}</span>
+                <span className="mono kpi">{d.p_high == null ? pcSci(Math.pow(10, d.risk_p50)) : d.p_high.toFixed(3)}</span></div>
               <div><span className="kpi-label">Final risk P50</span><span className="mono kpi">{oneInN(d.risk_p50)}</span></div>
               <div><span className="kpi-label">Band P10–P90</span><span className="mono kpi small">{oneInN(d.risk_p10)} … {oneInN(d.risk_p90)}</span></div>
-              <div><span className="kpi-label">Baseline (latest CDM)</span><span className="mono kpi">{oneInN(d.baseline_risk)}</span></div>
+              {!live && <div><span className="kpi-label">Baseline (latest CDM)</span><span className="mono kpi">{oneInN(d.baseline_risk)}</span></div>}
               <div><span className="kpi-label">Miss distance</span><span className="mono kpi">{meters(d.miss_distance_m)}</span></div>
-              <div><span className="kpi-label">Latest CDM</span><span className="mono kpi">{days(d.time_to_tca_days)} out</span></div>
+              <div><span className="kpi-label">{live ? 'Time to TCA' : 'Latest CDM'}</span><span className="mono kpi">{days(d.time_to_tca_days)}{live ? '' : ' out'}</span></div>
               {d.true_final_risk != null && (
                 <div><span className="kpi-label">Actual outcome</span><span className="mono kpi">{oneInN(d.true_final_risk)}</span></div>
               )}
@@ -98,11 +102,21 @@ export function AlertDetailPage({ id }: { id: string }) {
           <div className="detail-grid">
             <section className="panel">
               <div className="panel-title">CDM history · risk vs time to TCA</div>
-              <div className="panel-body"><CdmHistoryChart d={d} cutoff={cutoff} /></div>
+              <div className="panel-body">
+                {d.cdm_history.length ? <CdmHistoryChart d={d} cutoff={cutoff} /> : (
+                  <div className="status">No CDMs for live screening: catalog elements carry no covariance, so Pc is
+                    estimated with assumed, age-grown position sigmas (band = sigmas ×0.5 … ×2).</div>
+                )}
+              </div>
             </section>
             <section className="panel">
               <div className="panel-title">Why flagged · top SHAP drivers</div>
-              <div className="panel-body"><ShapChart items={d.shap_top} /></div>
+              <div className="panel-body">
+                {d.shap_top.length ? <ShapChart items={d.shap_top} /> : (
+                  <div className="status">The trained risk model runs on CDMs; live mode is screening only, so there are
+                    no model drivers. Geometry: miss {meters(d.miss_distance_m)}, {d.chaser_type.toLowerCase()}.</div>
+                )}
+              </div>
             </section>
             <section className="panel">
               <div className="panel-title">Operator briefing <span className="muted">· {d.briefing_source === 'llm' ? 'LLM' : 'template'}</span></div>
@@ -112,7 +126,7 @@ export function AlertDetailPage({ id }: { id: string }) {
               })}</pre>
             </section>
             <section className="panel">
-              <div className="panel-title">Avoidance maneuver · residual Pc vs Δv <span className="muted">(decision at 2 d)</span></div>
+              <div className="panel-title">Avoidance maneuver · residual Pc vs Δv <span className="muted">({live ? 'burn options from now' : 'decision at 2 d'})</span></div>
               <div className="panel-body">
                 {man.loading && <Loading what="maneuver options" />}
                 {man.error && <div className="status">Maneuver not available for this event ({man.error.includes('404') ? 'incomplete covariance in its CDM' : man.error}).</div>}

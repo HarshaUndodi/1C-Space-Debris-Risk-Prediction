@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { api } from '../api'
 import { AlertList } from '../components/AlertList'
 import { Globe } from '../components/Globe'
@@ -8,18 +9,19 @@ import type { Source } from '../types'
 import { useApi } from '../useApi'
 
 export function MissionControl({ source }: { source: Source }) {
+  const [norad, setNorad] = useState(25544)
   const alerts = useApi(() => api.alerts('historical', 50), [])
   const catalog = useApi(() => api.liveCatalog(3000), [])
-  const conj = useApi(() => api.liveConjunctions(25544, 72), [])
-  const orbit = useApi(() => api.liveOrbit(25544, 90, 30), [])
-  const metrics = useApi(() => api.metrics(), [])
-  const scr = metrics.data?.screening
+  const conj = useApi(() => api.liveConjunctions(norad, 72), [norad])
+  const orbit = useApi(() => api.liveOrbit(norad, 90, 30), [norad])
+  const presets = useApi(() => api.livePresets(), [])
+  const stats = (conj.data as { stats?: { objects?: number; hours?: number } } | null)?.stats
 
   return (
     <main className="mission">
       <section className="panel globe-panel">
         <div className="panel-title">
-          {source === 'live' ? 'Live sky · ISS (25544) · next 72 h' : 'Catalog overview'}
+          {source === 'live' ? `Live sky · ${conj.data?.primary.name ?? norad} · next 72 h` : 'Catalog overview'}
           {catalog.data && <span className="muted"> · {catalog.data.objects.length.toLocaleString()} objects shown</span>}
         </div>
         {catalog.error && <ErrorBox message={catalog.error} onRetry={catalog.reload} />}
@@ -47,20 +49,27 @@ export function MissionControl({ source }: { source: Source }) {
           </>
         ) : (
           <>
-            <div className="panel-title">Close approaches · ISS · next 72 h</div>
+            <div className="panel-title live-title">
+              <span>Close approaches &lt; 10 km · next 72 h</span>
+              <select value={norad} onChange={(e) => setNorad(Number(e.target.value))} aria-label="Primary satellite">
+                {(presets.data ?? [{ norad: 25544, name: 'ISS (ZARYA)' }]).map((p) => (
+                  <option key={p.norad} value={p.norad}>{p.name} ({p.norad})</option>
+                ))}
+              </select>
+            </div>
             {conj.loading && <Loading what="conjunctions (screening the catalog)" />}
             {conj.error && <ErrorBox message={conj.error} onRetry={conj.reload} />}
-            {conj.data && (
+            {conj.data && !conj.loading && (
               <>
                 <div className="footnote mono">
-                  Screened {scr?.objects ? scr.objects.toLocaleString() : '—'} objects over {scr?.hours ?? 72} h in{' '}
-                  {conj.data.compute_seconds.toFixed(1)} s
+                  Screened {stats?.objects ? stats.objects.toLocaleString() : '—'} objects over {stats?.hours ?? 72} h in{' '}
+                  {conj.data.compute_seconds.toFixed(1)} s (SGP4, 60 s grid + 1 s TCA refinement)
                 </div>
-                {conj.data.conjunctions.length === 0 && <div className="status">No close approaches under the threshold in the window.</div>}
+                {conj.data.conjunctions.length === 0 && <div className="status">No close approaches under 10 km in the window.</div>}
                 <ol className="alert-list">
                   {conj.data.conjunctions.map((c, i) => (
                     <li key={`${c.secondary.norad}-${c.tca}`} className="alert-row"
-                      onClick={() => go.alert(`live-${c.secondary.norad}`)}>
+                      onClick={() => c.event_id && go.alert(c.event_id)}>
                       <span className="rank mono">{i + 1}</span>
                       <span className={`decision ${c.pc_est >= 1e-4 ? 'decision-maneuver' : c.pc_est >= 1e-6 ? 'decision-watch' : 'decision-hold'}`}>
                         {c.pc_est >= 1e-4 ? 'MANEUVER' : c.pc_est >= 1e-6 ? 'WATCH' : 'HOLD'}

@@ -34,7 +34,7 @@ td,th{border:1px solid #ddd;padding:4px 8px;text-align:left}code{font-size:12px}
 <p>Generated ${new Date().toISOString()} · data source: ${d.source === 'historical' ? 'ESA Kelvins CDMs (held-out test set)' : 'CelesTrak catalog'} · assessment made ${cutoff} days before TCA using only CDMs available then.</p>
 <h2>Decision</h2>
 <p class="d">${d.decision}</p>
-<table><tr><th>Calibrated P(high risk)</th><td>${d.p_high.toFixed(4)}</td></tr>
+<table><tr><th>Calibrated P(high risk)</th><td>${d.p_high == null ? 'n/a (live screening — estimated Pc only)' : d.p_high.toFixed(4)}</td></tr>
 <tr><th>Final risk P50</th><td>${d.risk_p50.toFixed(2)} (${oneInN(d.risk_p50)})</td></tr>
 <tr><th>Confidence band P10–P90</th><td>${d.risk_p10.toFixed(2)} … ${d.risk_p90.toFixed(2)} (log10 PoC)</td></tr>
 <tr><th>Baseline (latest CDM risk)</th><td>${d.baseline_risk.toFixed(2)}</td></tr>

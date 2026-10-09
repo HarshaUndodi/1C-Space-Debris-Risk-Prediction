@@ -21,6 +21,7 @@ export const api = {
   liveCatalog: (limit = 3000) => get<LiveCatalog>('/live/catalog', { limit }),
   liveConjunctions: (norad = 25544, hours = 72) => get<LiveConjunctions>('/live/conjunctions', { norad, hours }),
   liveOrbit: (norad: number, minutes = 90, step_s = 30) => get<OrbitPath>(`/live/orbit/${norad}`, { minutes, step_s }),
+  livePresets: () => get<{ norad: number; name: string }[]>('/live/presets'),
   metrics: () => get<Metrics>('/metrics'),
   spaceWeather: () => get<SpaceWeather>('/space-weather'),
 }

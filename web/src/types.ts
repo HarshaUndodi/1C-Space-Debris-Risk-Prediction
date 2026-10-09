@@ -16,7 +16,7 @@ export interface AlertItem {
   source: Source
   decision: Decision
   time_to_tca_days: number
-  p_high: number
+  p_high: number | null // null for live screening (no CDM model)
   risk_p10: number
   risk_p50: number
   risk_p90: number
@@ -104,6 +104,10 @@ export interface LiveCatalog {
 }
 
 export interface Conjunction {
+  event_id?: string
+  primary_at_tca?: CatalogObject
+  pc_band?: { half: number; double: number }
+  element_age_days?: { primary: number; secondary: number }
   secondary: CatalogObject
   tca: string
   miss_km: number

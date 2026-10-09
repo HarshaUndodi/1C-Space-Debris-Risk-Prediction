@@ -75,9 +75,12 @@ export function Globe({ objects, primary, orbit, conjunctions }: {
     if (primary) {
       const pp = toCart(primary)
       for (const c of conjunctions) {
+        // both objects at TCA (the secondary's lat/lon/alt is its TCA position)
         const sp = toCart(c.secondary)
+        const ptca = c.primary_at_tca ? toCart(c.primary_at_tca) : pp
         pc.add({ position: sp, pixelSize: 7, color: COLORS.conj, outlineColor: Color.WHITE, outlineWidth: 1 })
-        lc.add({ positions: [pp, sp], width: 1.5, material: Material.fromType('Color', { color: COLORS.conj.withAlpha(0.8) }) })
+        if (c.primary_at_tca) pc.add({ position: ptca, pixelSize: 5, color: COLORS.primary.withAlpha(0.7) })
+        lc.add({ positions: [ptca, sp], width: 2, material: Material.fromType('Color', { color: COLORS.conj.withAlpha(0.9) }) })
       }
       pc.add({ position: pp, pixelSize: 10, color: COLORS.primary, outlineColor: Color.WHITE, outlineWidth: 2 })
     }

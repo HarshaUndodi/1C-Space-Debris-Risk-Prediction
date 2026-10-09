@@ -11,6 +11,7 @@ switch ($Target) {
     'train' { & $Py -m orbitguard.features; & $Py -m orbitguard.models }
     'eval'  { & $Py -m orbitguard.evaluate; & $Py -m orbitguard.pc }
     'demo'  { & $Py -m orbitguard.build_demo }
+    'live'  { & $Py -m orbitguard.live }
     'api'   { & $Py -m uvicorn api.main:app --reload --port 8000 }
     'web'   { Push-Location web; npm run dev; Pop-Location }
     'test'  { & $Py -m pytest -q }

@@ -41,7 +41,7 @@ export function AlertList({ alerts, selected, onSelect }: {
           </div>
           <div className="alert-nums">
             <div className="mono big">{oneInN(a.risk_p50)}</div>
-            <div className="muted mono">TCA {days(a.time_to_tca_days)} · p<sub>high</sub> {a.p_high.toFixed(2)}</div>
+            <div className="muted mono">TCA {days(a.time_to_tca_days)} · p<sub>high</sub> {a.p_high == null ? 'n/a' : a.p_high.toFixed(2)}</div>
           </div>
         </li>
       ))}

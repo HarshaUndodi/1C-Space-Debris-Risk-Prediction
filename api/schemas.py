@@ -22,7 +22,7 @@ class AlertItem(BaseModel):
     source: Source
     decision: Decision
     time_to_tca_days: float
-    p_high: float
+    p_high: Optional[float]   # calibrated P(high risk); null for live screening (no CDM model)
     risk_p10: float
     risk_p50: float
     risk_p90: float
@@ -110,6 +110,8 @@ class LiveCatalog(BaseModel):
 
 
 class Conjunction(BaseModel):
+    model_config = {"extra": "allow"}   # event_id, primary_at_tca, pc_band, hours_to_tca, element_age_days …
+
     secondary: CatalogObject
     tca: str
     miss_km: float
@@ -119,6 +121,8 @@ class Conjunction(BaseModel):
 
 
 class LiveConjunctions(BaseModel):
+    model_config = {"extra": "allow"}   # start_utc, stats
+
     primary: CatalogObject
     conjunctions: list[Conjunction]
     compute_seconds: float

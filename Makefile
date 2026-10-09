@@ -6,7 +6,7 @@ else
 PY ?= .venv/bin/python
 endif
 
-.PHONY: setup data mocks train eval demo api web test
+.PHONY: setup data mocks train eval demo live api web test
 
 setup:
 	python -m venv .venv
@@ -29,6 +29,9 @@ eval:
 
 demo:
 	$(PY) -m orbitguard.build_demo
+
+live:
+	$(PY) -m orbitguard.live
 
 api:
 	$(PY) -m uvicorn api.main:app --reload --port 8000

@@ -1,4 +1,6 @@
 """SPEC 14.7 — every endpoint returns JSON that validates against api/schemas.py, in mock AND real mode."""
+import time
+
 import pytest
 from fastapi.testclient import TestClient
 from pydantic import TypeAdapter
@@ -60,11 +62,20 @@ def test_unknown_event_404(client):
 
 def test_live_endpoints(client):
     schemas.LiveCatalog.model_validate(get_ok(client, "/api/live/catalog?limit=3000"))
-    r = client.get("/api/live/conjunctions?norad=25544&hours=72")
-    assert r.status_code in (200, 503)   # 503 = screening still running in the background
-    if r.status_code == 200:
-        schemas.LiveConjunctions.model_validate(r.json())
+    r = None
+    for _ in range(60):   # 503 = screening still running in the background thread
+        r = client.get("/api/live/conjunctions?norad=25544&hours=72")
+        if r.status_code != 503:
+            break
+        time.sleep(1)
+    assert r.status_code == 200, r.text[:200]
+    lc = schemas.LiveConjunctions.model_validate(r.json())
     schemas.OrbitPath.model_validate(get_ok(client, "/api/live/orbit/25544?minutes=90&step_s=30"))
+    if main.store.mode == "real" and lc.conjunctions:
+        eid = r.json()["conjunctions"][0]["event_id"]
+        d = schemas.AlertDetail.model_validate(get_ok(client, f"/api/alerts/{eid}"))
+        assert d.source == "live" and d.p_high is None and len(d.briefing) == 3
+        schemas.ManeuverResult.model_validate(get_ok(client, f"/api/alerts/{eid}/maneuver"))
 
 
 def test_metrics_and_space_weather(client):

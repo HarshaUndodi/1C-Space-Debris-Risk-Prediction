@@ -90,8 +90,8 @@ DETAIL_KEYS = list(schemas.AlertDetail.model_fields)
 
 
 def ranked(alerts: list[dict]) -> list[dict]:
-    """Rank by calibrated probability, then P50 risk (both descending)."""
-    return sorted(alerts, key=lambda a: (a["p_high"], a["risk_p50"]), reverse=True)
+    """Rank by calibrated probability, then P50 risk (both descending). Live items have no p_high."""
+    return sorted(alerts, key=lambda a: (a["p_high"] if a["p_high"] is not None else -1.0, a["risk_p50"]), reverse=True)
 
 
 def _event(eid: str) -> dict:
@@ -124,6 +124,12 @@ def alerts(source: schemas.Source = "historical", limit: int = Query(50, ge=1, l
 
 @router.get("/alerts/{event_id}", response_model=schemas.AlertDetail)
 def alert_detail(event_id: str, cutoff: int = 2) -> dict:
+    if event_id.startswith("live-") and store.mode == "real":
+        svc = store.live()
+        detail = svc.detail(event_id) if svc else None
+        if detail is None:
+            raise HTTPException(404, f"live event {event_id} not found (screening refreshed?)")
+        return detail
     if store.demo() is None:
         detail = mock("alert_details.json").get(event_id)
         if detail is None:
@@ -189,6 +195,15 @@ def live_orbit(norad: int, minutes: float = Query(90, gt=0, le=1440), step_s: fl
     if res is None:
         raise HTTPException(404, f"NORAD {norad} not in the cached catalog")
     return res
+
+
+@router.get("/live/presets")
+def live_presets() -> list[dict]:
+    """Selectable primaries: ISS + Indian satellites found by name in the cached catalog (ids never hard-coded)."""
+    svc = store.live()
+    if svc is None:
+        return [{"norad": 25544, "name": "ISS (ZARYA)"}]
+    return svc.presets()
 
 
 @router.get("/metrics", response_model=schemas.Metrics)
