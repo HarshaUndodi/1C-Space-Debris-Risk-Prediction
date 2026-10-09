@@ -9,8 +9,8 @@ switch ($Target) {
     'data'  { & $Py -m orbitguard.download }
     'mocks' { & $Py -m api.mock.generate_mocks }
     'train' { & $Py -m orbitguard.features; & $Py -m orbitguard.models }
-    'eval'  { Write-Host 'Milestone 2: orbitguard.evaluate (not built yet)' }
-    'demo'  { Write-Host 'Milestone 2: orbitguard.build_demo (not built yet)' }
+    'eval'  { & $Py -m orbitguard.evaluate; & $Py -m orbitguard.pc }
+    'demo'  { & $Py -m orbitguard.build_demo }
     'api'   { & $Py -m uvicorn api.main:app --reload --port 8000 }
     'web'   { Push-Location web; npm run dev; Pop-Location }
     'test'  { & $Py -m pytest -q }

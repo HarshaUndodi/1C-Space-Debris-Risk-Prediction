@@ -57,17 +57,45 @@ def model_dir(cutoff: float) -> Path:
     return MODELS_DIR / f"cutoff{int(cutoff)}"
 
 
+class FoldEnsemble:
+    """The 5 fold models used as one predictor (CV bagging).
+
+    Production predictions come from the SAME models whose out-of-fold scores set tau, so the
+    threshold transfers (a refit-on-all model has a different score scale). Classifier members are
+    averaged in log-odds, which keeps TreeSHAP contributions exactly additive (mean of members').
+    """
+
+    def __init__(self, members: list, classifier: bool):
+        self.members = members
+        self.classifier = classifier
+
+    def _margin(self, X) -> np.ndarray:
+        return np.mean([m.predict(X, raw_score=True) for m in self.members], axis=0)
+
+    def predict(self, X, pred_contrib: bool = False):
+        if pred_contrib:
+            return np.mean([m.predict(X, pred_contrib=True) for m in self.members], axis=0)
+        if self.classifier:
+            return (self.predict_proba(X)[:, 1] >= 0.5).astype(int)
+        return np.mean([m.predict(X) for m in self.members], axis=0)
+
+    def predict_proba(self, X) -> np.ndarray:
+        p = 1.0 / (1.0 + np.exp(-self._margin(X)))
+        return np.column_stack([1 - p, p])
+
+
 @dataclass
 class Bundle:
     cutoff: float
     features: list[str]
-    reg: lgb.LGBMRegressor
-    clf: lgb.LGBMClassifier
-    q10: lgb.LGBMRegressor
-    q90: lgb.LGBMRegressor
+    reg: FoldEnsemble
+    clf: FoldEnsemble
+    q10: FoldEnsemble
+    q90: FoldEnsemble
     iso: object
     baseline_lr: object
-    tau: float
+    tau: float          # calibrated-probability value shown in the UI (= iso(tau_raw))
+    tau_raw: float      # decision threshold on the raw classifier score
     baseline_level: float
     alpha: float
     risk_range: tuple[float, float]
@@ -122,6 +150,7 @@ def train_cutoff(cutoff: float) -> tuple[Bundle, pd.DataFrame]:
     # 1) out-of-fold
     oof = {k: np.full(len(train), np.nan) for k in KINDS}
     best: dict[str, list[int]] = {k: [] for k in KINDS}
+    members: dict[str, list] = {k: [] for k in KINDS}
     for k in range(config.N_FOLDS):
         es_fold = (k + 1) % config.N_FOLDS
         tr = train[(train["fold"] != k) & (train["fold"] != es_fold)]
@@ -131,14 +160,14 @@ def train_cutoff(cutoff: float) -> tuple[Bundle, pd.DataFrame]:
                          sample_weight=_weights(tr, kind)) for kind in KINDS}
         for kind in KINDS:
             best[kind].append(_best_iter(fm[kind]))
+            members[kind].append(fm[kind])
         raw = _raw(fm, train.loc[ho, feats])
         for kind in KINDS:
             oof[kind][ho] = raw[kind]
     log.info("cutoff %s best iterations: %s", cutoff, best)
 
-    # 2) final models on all train events
-    final = {kind: _fit(kind, train[feats], _target(train, kind), n_estimators=max(50, int(np.median(best[kind]))),
-                        sample_weight=_weights(train, kind)) for kind in KINDS}
+    # 2) production predictor = the fold models themselves (see FoldEnsemble)
+    final = {kind: FoldEnsemble(members[kind], classifier=(kind == "clf")) for kind in KINDS}
 
     # 3) choices fitted on OOF predictions
     y = train["is_high_risk"].to_numpy()
@@ -148,18 +177,22 @@ def train_cutoff(cutoff: float) -> tuple[Bundle, pd.DataFrame]:
     alpha = min(alpha_scores, key=alpha_scores.get)
     iso = calibrate.fit_isotonic(oof["clf"], y)
     p_cal_oof = iso.predict(oof["clf"])
-    tau = calibrate.choose_threshold(p_cal_oof, y, 0.95)
+    # Threshold on the RAW score: isotonic output is a step function, and its lowest plateau holds most
+    # events, so a 95%-recall cut on calibrated values can collapse to "flag everything". The raw score
+    # keeps the ranking; tau (calibrated) = iso(tau_raw) is what the UI shows.
+    tau_raw = calibrate.choose_threshold(oof["clf"], y, 0.95)
+    tau = float(iso.predict([tau_raw])[0])
     base_level = calibrate.baseline_level_for_recall(train["naive_pred"].to_numpy(), y, 0.95)
     base_lr = calibrate.fit_baseline_logistic(train["naive_pred"].to_numpy(), y)
 
     p50_oof = np.clip(nc + alpha * oof["reg"], FLOOR, hi)
     bundle = Bundle(cutoff=cutoff, features=feats, reg=final["reg"], clf=final["clf"], q10=final["q10"],
-                    q90=final["q90"], iso=iso, baseline_lr=base_lr, tau=float(tau), baseline_level=float(base_level),
-                    alpha=float(alpha), risk_range=(FLOOR, hi),
+                    q90=final["q90"], iso=iso, baseline_lr=base_lr, tau=tau, tau_raw=float(tau_raw),
+                    baseline_level=float(base_level), alpha=float(alpha), risk_range=(FLOOR, hi),
                     info={"n_train": int(len(train)), "n_train_high_risk": int(y.sum()),
                           "best_iterations": best, "alpha_oof_scores": {str(a): s for a, s in alpha_scores.items()},
-                          "oof_recall_at_tau": metrics.recall(y, p_cal_oof >= tau),
-                          "oof_far_at_tau": metrics.false_alarm_rate(y, p_cal_oof >= tau),
+                          "oof_recall_at_tau": metrics.recall(y, oof["clf"] >= tau_raw),
+                          "oof_far_at_tau": metrics.false_alarm_rate(y, oof["clf"] >= tau_raw),
                           "oof_kelvins_model": metrics.kelvins_score(t, p50_oof),
                           "oof_kelvins_baseline_clipped": metrics.kelvins_score(t, nc)})
     oof_df = train[["event_key", "is_high_risk", "target_final_risk", "naive_pred"]].copy()
@@ -188,7 +221,7 @@ def write_model_config(bundles: dict[float, Bundle]) -> None:
     if config.MODEL_CONFIG_PATH.exists():
         cfg["cutoffs"] = json.loads(config.MODEL_CONFIG_PATH.read_text()).get("cutoffs", {})
     for d, b in bundles.items():
-        cfg["cutoffs"][str(int(d))] = {"tau": b.tau, "baseline_level": b.baseline_level, "alpha": b.alpha,
+        cfg["cutoffs"][str(int(d))] = {"tau": b.tau, "tau_raw": b.tau_raw, "baseline_level": b.baseline_level, "alpha": b.alpha,
                                        "risk_range": list(b.risk_range), "n_features": len(b.features), **b.info}
     config.ARTIFACTS_DIR.mkdir(parents=True, exist_ok=True)
     config.MODEL_CONFIG_PATH.write_text(json.dumps(cfg, indent=2))
@@ -210,7 +243,7 @@ def predict(b: Bundle, ev: pd.DataFrame) -> pd.DataFrame:
         "naive_pred": ev["naive_pred"].to_numpy(), "naive_clipped": nc,
         "p_baseline": b.baseline_lr.predict_proba(ev[["naive_pred"]].to_numpy())[:, 1],
     })
-    out["flag_model"] = out["p_high"] >= b.tau
+    out["flag_model"] = out["p_high_raw"] >= b.tau_raw
     out["flag_baseline_95"] = out["naive_pred"] >= b.baseline_level
     if "target_final_risk" in ev:
         out["target_final_risk"] = ev["target_final_risk"].to_numpy()
@@ -249,8 +282,8 @@ def main(argv: list[str] | None = None) -> int:
         ev = features.load_events(d)
         test = ev[ev["split"] == "test"]
         tab = core_table(predict(b, test))
-        print(f"\n=== cutoff {d:g} d · TEST events {len(test)} (high-risk {int(test['is_high_risk'].sum())}) "
-              f"· tau={b.tau:.4f} · alpha={b.alpha} · baseline 95% level={b.baseline_level:.2f} ===")
+        print(f"\n=== cutoff {d:g} d | TEST events {len(test)} (high-risk {int(test['is_high_risk'].sum())}) "
+              f"| tau_raw={b.tau_raw:.4f} (calibrated {b.tau:.4f}) | alpha={b.alpha} | baseline 95% level={b.baseline_level:.2f} ===")
         print(tab.round(4).to_string())
     write_model_config(bundles)
     return 0

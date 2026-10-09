@@ -91,6 +91,8 @@ class ManeuverResult(BaseModel):
     points: list[ManeuverOption]
     pareto: list[ParetoPoint]
     secondary_check: SecondaryCheck
+    note: Optional[str] = None
+    assumptions: Optional[dict] = None
 
 
 class CatalogObject(BaseModel):
@@ -134,6 +136,8 @@ class OrbitPath(BaseModel):
 
 
 class LeadTimePoint(BaseModel):
+    model_config = {"extra": "allow"}   # model_far, baseline_far, n_available, …
+
     cutoff_days: float
     model_recall: float
     baseline_recall: float
@@ -142,8 +146,11 @@ class LeadTimePoint(BaseModel):
 
 
 class BaselineMetrics(BaseModel):
-    kelvins_score: float
-    mse_hr: float
+    model_config = {"extra": "allow"}
+
+    # Optional: a score is null when undefined (e.g. Kelvins score with F2 = 0 is infinite).
+    kelvins_score: Optional[float]
+    mse_hr: Optional[float]
     f2: float
     recall: float
     false_alarm_rate: float
@@ -157,6 +164,8 @@ class ModelMetrics(BaselineMetrics):
 
 
 class ScreeningMetrics(BaseModel):
+    model_config = {"extra": "allow"}
+
     objects: int
     hours: float
     step_s: float

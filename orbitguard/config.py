@@ -76,4 +76,4 @@ LLM_MODEL = os.getenv("LLM_MODEL", "claude-haiku-4-5-20251001").strip()
 LLM_TIMEOUT_S = 8.0
 
 # --- API ---------------------------------------------------------------------
-API_MODE = os.getenv("API_MODE", "mock").strip().lower()  # "mock" | "real"
+API_MODE = os.getenv("API_MODE", "auto").strip().lower()  # "auto" | "mock" | "real"

@@ -1,55 +1,77 @@
-"""SPEC 14.7 — every endpoint returns JSON that validates against api/schemas.py (mock mode for now)."""
+"""SPEC 14.7 — every endpoint returns JSON that validates against api/schemas.py, in mock AND real mode."""
+import pytest
 from fastapi.testclient import TestClient
 from pydantic import TypeAdapter
 
-from api import schemas
-from api.main import app
-
-client = TestClient(app)
+from api import main, schemas
+from orbitguard import config
 
 
-def get_ok(path: str):
+@pytest.fixture(params=["mock", "real"])
+def client(request, monkeypatch):
+    if request.param == "real" and not config.DEMO_EVENTS_PATH.exists():
+        pytest.skip("artifacts/demo_events.json not built (python -m orbitguard.build_demo)")
+    monkeypatch.setattr(main, "store", main.Store(request.param))
+    with TestClient(main.app) as c:   # runs lifespan (starts live screening thread in real mode)
+        yield c
+
+
+def get_ok(client, path: str):
     r = client.get(path)
     assert r.status_code == 200, (path, r.status_code, r.text[:300])
     return r.json()
 
 
-def test_health():
-    schemas.Health.model_validate(get_ok("/api/health"))
+def test_health(client):
+    h = schemas.Health.model_validate(get_ok(client, "/api/health"))
+    assert h.mode == main.store.mode
 
 
-def test_alert_list_ranked_and_valid():
-    items = TypeAdapter(list[schemas.AlertItem]).validate_python(get_ok("/api/alerts?source=historical&limit=50"))
-    assert items, "mock alert list must not be empty"
+def test_alert_list_ranked_and_valid(client):
+    items = TypeAdapter(list[schemas.AlertItem]).validate_python(get_ok(client, "/api/alerts?source=historical&limit=50"))
+    assert items, "alert list must not be empty"
     keys = [(a.p_high, a.risk_p50) for a in items]
     assert keys == sorted(keys, reverse=True)
     for a in items:
         assert a.risk_p10 <= a.risk_p50 <= a.risk_p90
 
 
-def test_alert_detail_and_maneuver_for_every_alert():
-    for a in get_ok("/api/alerts"):
-        d = schemas.AlertDetail.model_validate(get_ok(f"/api/alerts/{a['event_id']}?cutoff=2"))
-        assert len(d.briefing) == 3
-        assert d.briefing[0].startswith("[ALERT]") and d.briefing[1].startswith("[DIAGNOSTIC]") and d.briefing[2].startswith("[ACTION]")
-        schemas.ManeuverResult.model_validate(get_ok(f"/api/alerts/{a['event_id']}/maneuver"))
+def test_alert_detail_every_alert_every_cutoff(client):
+    for a in get_ok(client, "/api/alerts"):
+        d = schemas.AlertDetail.model_validate(get_ok(client, f"/api/alerts/{a['event_id']}?cutoff=2"))
+        assert [ln.split("]")[0] + "]" for ln in d.briefing] == ["[ALERT]", "[DIAGNOSTIC]", "[ACTION]"]
+        assert len(d.shap_top) <= 5
+        for c in d.available_cutoffs:
+            schemas.AlertDetail.model_validate(get_ok(client, f"/api/alerts/{a['event_id']}?cutoff={c}"))
 
 
-def test_unknown_event_404():
+def test_maneuver_for_every_maneuver_or_watch_alert(client):
+    for a in get_ok(client, "/api/alerts"):
+        if a["decision"] in ("MANEUVER", "WATCH"):
+            m = schemas.ManeuverResult.model_validate(get_ok(client, f"/api/alerts/{a['event_id']}/maneuver"))
+            assert m.pareto and m.points
+            front = [p.post_pc for p in m.pareto]
+            assert all(b <= a_ * (1 + 1e-6) for a_, b in zip(front, front[1:]))
+
+
+def test_unknown_event_404(client):
     assert client.get("/api/alerts/does-not-exist").status_code == 404
 
 
-def test_live_endpoints():
-    schemas.LiveCatalog.model_validate(get_ok("/api/live/catalog?limit=3000"))
-    schemas.LiveConjunctions.model_validate(get_ok("/api/live/conjunctions?norad=25544&hours=72"))
-    schemas.OrbitPath.model_validate(get_ok("/api/live/orbit/25544?minutes=90&step_s=30"))
+def test_live_endpoints(client):
+    schemas.LiveCatalog.model_validate(get_ok(client, "/api/live/catalog?limit=3000"))
+    r = client.get("/api/live/conjunctions?norad=25544&hours=72")
+    assert r.status_code in (200, 503)   # 503 = screening still running in the background
+    if r.status_code == 200:
+        schemas.LiveConjunctions.model_validate(r.json())
+    schemas.OrbitPath.model_validate(get_ok(client, "/api/live/orbit/25544?minutes=90&step_s=30"))
 
 
-def test_metrics_and_space_weather():
-    schemas.Metrics.model_validate(get_ok("/api/metrics"))
-    schemas.SpaceWeather.model_validate(get_ok("/api/space-weather"))
+def test_metrics_and_space_weather(client):
+    schemas.Metrics.model_validate(get_ok(client, "/api/metrics"))
+    schemas.SpaceWeather.model_validate(get_ok(client, "/api/space-weather"))
 
 
-def test_cors_for_vite_dev_server():
+def test_cors_for_vite_dev_server(client):
     r = client.get("/api/health", headers={"Origin": "http://localhost:5173"})
     assert r.headers.get("access-control-allow-origin") == "http://localhost:5173"

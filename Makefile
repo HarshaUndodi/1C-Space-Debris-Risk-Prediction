@@ -24,10 +24,11 @@ train:
 	$(PY) -m orbitguard.models
 
 eval:
-	@echo "Milestone 2: $(PY) -m orbitguard.evaluate (not built yet)"
+	$(PY) -m orbitguard.evaluate
+	$(PY) -m orbitguard.pc
 
 demo:
-	@echo "Milestone 2: $(PY) -m orbitguard.build_demo (not built yet)"
+	$(PY) -m orbitguard.build_demo
 
 api:
 	$(PY) -m uvicorn api.main:app --reload --port 8000

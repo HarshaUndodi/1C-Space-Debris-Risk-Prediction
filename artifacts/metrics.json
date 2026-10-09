@@ -1,0 +1,448 @@
+{
+  "generated_at": "2026-10-09T10:44:07+00:00",
+  "cutoff_days": 2,
+  "n_test_events": 2167,
+  "n_test_high_risk": 150,
+  "n_train_events": 8293,
+  "n_train_high_risk": 66,
+  "baseline": {
+    "kelvins_score": 36.0491,
+    "mse_hr": 26.643,
+    "f2": 0.7391,
+    "recall": 0.7667,
+    "false_alarm_rate": 0.0312,
+    "brier": 0.0563
+  },
+  "baseline_clipped": {
+    "kelvins_score": 0.981,
+    "mse_hr": 0.725,
+    "f2": 0.7391
+  },
+  "baseline_at_95_recall_level": {
+    "level_log10": -12.2395,
+    "recall": 0.94,
+    "false_alarm_rate": 0.2142,
+    "f2": 0.601
+  },
+  "model": {
+    "kelvins_score": 2.2977,
+    "mse_hr": 1.376,
+    "f2": 0.5989,
+    "recall": 0.9467,
+    "false_alarm_rate": 0.1839,
+    "precision": 0.2768,
+    "f2_at_tau": 0.6379,
+    "brier": 0.053,
+    "brier_uncalibrated": 0.0568,
+    "band_coverage_p10_p90": 0.9386,
+    "threshold": 0.0013,
+    "threshold_raw": 0.0023
+  },
+  "ranking": {
+    "auc_pr_model": 0.6797,
+    "auc_pr_baseline": 0.6651,
+    "roc_auc_model": 0.9623,
+    "roc_auc_baseline": 0.9445,
+    "far_at_recall_diagnostic": {
+      "0.9": {
+        "model": 0.0937,
+        "baseline": 0.0892
+      },
+      "0.94": {
+        "model": 0.1205,
+        "baseline": 0.1943
+      },
+      "0.95": {
+        "model": 0.2008,
+        "baseline": 0.2821
+      },
+      "0.97": {
+        "model": 0.3183,
+        "baseline": 1.0
+      },
+      "1.0": {
+        "model": 0.5156,
+        "baseline": 1.0
+      }
+    }
+  },
+  "reliability": {
+    "model_calibrated": [
+      {
+        "p_mean": 0.0,
+        "frac_pos": 0.0,
+        "n": 217,
+        "p_min": 0.0,
+        "p_max": 0.0
+      },
+      {
+        "p_mean": 0.0,
+        "frac_pos": 0.0,
+        "n": 217,
+        "p_min": 0.0,
+        "p_max": 0.0
+      },
+      {
+        "p_mean": 0.00023788491301970238,
+        "frac_pos": 0.004608294930875576,
+        "n": 217,
+        "p_min": 0.0,
+        "p_max": 0.0012590494176896443
+      },
+      {
+        "p_mean": 0.0012590494176896443,
+        "frac_pos": 0.004608294930875576,
+        "n": 217,
+        "p_min": 0.0012590494176896443,
+        "p_max": 0.0012590494176896443
+      },
+      {
+        "p_mean": 0.0012590494176896443,
+        "frac_pos": 0.009216589861751152,
+        "n": 217,
+        "p_min": 0.0012590494176896443,
+        "p_max": 0.0012590494176896443
+      },
+      {
+        "p_mean": 0.0012590494176896443,
+        "frac_pos": 0.004608294930875576,
+        "n": 217,
+        "p_min": 0.0012590494176896443,
+        "p_max": 0.0012590494176896443
+      },
+      {
+        "p_mean": 0.0012590494176896443,
+        "frac_pos": 0.009216589861751152,
+        "n": 217,
+        "p_min": 0.0012590494176896443,
+        "p_max": 0.0012590494176896443
+      },
+      {
+        "p_mean": 0.001345360872093984,
+        "frac_pos": 0.009259259259259259,
+        "n": 216,
+        "p_min": 0.0012590494176896443,
+        "p_max": 0.002355712603062426
+      },
+      {
+        "p_mean": 0.010255295472639096,
+        "frac_pos": 0.06944444444444445,
+        "n": 216,
+        "p_min": 0.002355712603062426,
+        "p_max": 0.023809523809523808
+      },
+      {
+        "p_mean": 0.1430030264984983,
+        "frac_pos": 0.5833333333333334,
+        "n": 216,
+        "p_min": 0.023809523809523808,
+        "p_max": 0.6666666666666666
+      }
+    ],
+    "model_uncalibrated": [
+      {
+        "p_mean": 0.0012403739930200892,
+        "frac_pos": 0.0,
+        "n": 217,
+        "p_min": 0.0012336315310634736,
+        "p_max": 0.001244982442285533
+      },
+      {
+        "p_mean": 0.0012543561368092457,
+        "frac_pos": 0.0,
+        "n": 217,
+        "p_min": 0.001245058726208943,
+        "p_max": 0.0012624418838833164
+      },
+      {
+        "p_mean": 0.0012733323947720012,
+        "frac_pos": 0.0,
+        "n": 217,
+        "p_min": 0.0012624436352410623,
+        "p_max": 0.0012861960333733218
+      },
+      {
+        "p_mean": 0.0013081169440230323,
+        "frac_pos": 0.0,
+        "n": 217,
+        "p_min": 0.0012861960333733218,
+        "p_max": 0.0013359185174788213
+      },
+      {
+        "p_mean": 0.0013790665374405868,
+        "frac_pos": 0.004608294930875576,
+        "n": 217,
+        "p_min": 0.0013359745456613806,
+        "p_max": 0.001430020984199415
+      },
+      {
+        "p_mean": 0.001505201775593267,
+        "frac_pos": 0.013824884792626729,
+        "n": 217,
+        "p_min": 0.0014301539819347965,
+        "p_max": 0.0016001419860032678
+      },
+      {
+        "p_mean": 0.0017409451020402138,
+        "frac_pos": 0.009216589861751152,
+        "n": 217,
+        "p_min": 0.00160094194853705,
+        "p_max": 0.0018924627788831012
+      },
+      {
+        "p_mean": 0.002212684631918168,
+        "frac_pos": 0.009259259259259259,
+        "n": 216,
+        "p_min": 0.0018982332826855592,
+        "p_max": 0.002660102245567725
+      },
+      {
+        "p_mean": 0.0057447120856585826,
+        "frac_pos": 0.07407407407407407,
+        "n": 216,
+        "p_min": 0.0026693217591390317,
+        "p_max": 0.013728966635939846
+      },
+      {
+        "p_mean": 0.10066333178756225,
+        "frac_pos": 0.5833333333333334,
+        "n": 216,
+        "p_min": 0.013845439484457319,
+        "p_max": 0.5534561039978928
+      }
+    ],
+    "baseline_logistic": [
+      {
+        "p_mean": 3.255858330455855e-08,
+        "frac_pos": 0.009216589861751152,
+        "n": 217,
+        "p_min": 3.255858330455854e-08,
+        "p_max": 3.255858330455854e-08
+      },
+      {
+        "p_mean": 3.255858330455855e-08,
+        "frac_pos": 0.009216589861751152,
+        "n": 217,
+        "p_min": 3.255858330455854e-08,
+        "p_max": 3.255858330455854e-08
+      },
+      {
+        "p_mean": 3.255858330455855e-08,
+        "frac_pos": 0.0,
+        "n": 217,
+        "p_min": 3.255858330455854e-08,
+        "p_max": 3.255858330455854e-08
+      },
+      {
+        "p_mean": 3.255858330455855e-08,
+        "frac_pos": 0.004608294930875576,
+        "n": 217,
+        "p_min": 3.255858330455854e-08,
+        "p_max": 3.255858330455854e-08
+      },
+      {
+        "p_mean": 3.255858330455855e-08,
+        "frac_pos": 0.0,
+        "n": 217,
+        "p_min": 3.255858330455854e-08,
+        "p_max": 3.255858330455854e-08
+      },
+      {
+        "p_mean": 1.6581889848723075e-06,
+        "frac_pos": 0.004608294930875576,
+        "n": 217,
+        "p_min": 3.255858330455854e-08,
+        "p_max": 1.3969617865036003e-05
+      },
+      {
+        "p_mean": 0.00025216465257612826,
+        "frac_pos": 0.009216589861751152,
+        "n": 217,
+        "p_min": 1.4320122620279153e-05,
+        "p_max": 0.0005746139828595989
+      },
+      {
+        "p_mean": 0.00403958329752477,
+        "frac_pos": 0.023148148148148147,
+        "n": 216,
+        "p_min": 0.0005825959206628412,
+        "p_max": 0.013515781709354774
+      },
+      {
+        "p_mean": 0.03037216324222635,
+        "frac_pos": 0.06018518518518518,
+        "n": 216,
+        "p_min": 0.013555864477118044,
+        "p_max": 0.05213310564744096
+      },
+      {
+        "p_mean": 0.10950734744277116,
+        "frac_pos": 0.5740740740740741,
+        "n": 216,
+        "p_min": 0.052788211292939015,
+        "p_max": 0.3095632308553092
+      }
+    ]
+  },
+  "lead_time": [
+    {
+      "cutoff_days": 2,
+      "n_available": 2167,
+      "model_recall": 0.9467,
+      "baseline_recall": 0.94,
+      "model_f2": 0.6379,
+      "baseline_f2": 0.601,
+      "model_far": 0.1839,
+      "baseline_far": 0.2142,
+      "baseline_minus6_recall": 0.7667,
+      "baseline_minus6_far": 0.0312
+    },
+    {
+      "cutoff_days": 3,
+      "n_available": 2045,
+      "model_recall": 0.9,
+      "baseline_recall": 0.8533,
+      "model_f2": 0.3689,
+      "baseline_f2": 0.4301,
+      "model_far": 0.5429,
+      "baseline_far": 0.3768,
+      "baseline_minus6_recall": 0.7333,
+      "baseline_minus6_far": 0.0555
+    },
+    {
+      "cutoff_days": 4,
+      "n_available": 1890,
+      "model_recall": 0.8067,
+      "baseline_recall": 0.74,
+      "model_f2": 0.243,
+      "baseline_f2": 0.3337,
+      "model_far": 0.877,
+      "baseline_far": 0.472,
+      "baseline_minus6_recall": 0.6067,
+      "baseline_minus6_far": 0.0739
+    },
+    {
+      "cutoff_days": 5,
+      "n_available": 1753,
+      "model_recall": 0.66,
+      "baseline_recall": 0.6533,
+      "model_f2": 0.3471,
+      "baseline_f2": 0.3258,
+      "model_far": 0.3604,
+      "baseline_far": 0.3996,
+      "baseline_minus6_recall": 0.56,
+      "baseline_minus6_far": 0.0878
+    },
+    {
+      "cutoff_days": 6,
+      "n_available": 1619,
+      "model_recall": 0.64,
+      "baseline_recall": 0.6,
+      "model_f2": 0.2163,
+      "baseline_f2": 0.2769,
+      "model_far": 0.7551,
+      "baseline_far": 0.4636,
+      "baseline_minus6_recall": 0.4667,
+      "baseline_minus6_far": 0.0937
+    }
+  ],
+  "shap_global": [
+    {
+      "feature": "last_risk",
+      "label": "Latest CDM risk",
+      "mean_abs_shap": 0.2671
+    },
+    {
+      "feature": "risk_mean",
+      "label": "Average risk so far",
+      "mean_abs_shap": 0.1194
+    },
+    {
+      "feature": "risk_min",
+      "label": "Lowest risk seen so far",
+      "mean_abs_shap": 0.1019
+    },
+    {
+      "feature": "last_max_risk_scaling",
+      "label": "Covariance scaling needed for worst case",
+      "mean_abs_shap": 0.0853
+    },
+    {
+      "feature": "last_miss_distance",
+      "label": "Latest miss distance",
+      "mean_abs_shap": 0.0506
+    },
+    {
+      "feature": "slope_risk",
+      "label": "Risk trend over time",
+      "mean_abs_shap": 0.0396
+    },
+    {
+      "feature": "mahalanobis_proxy",
+      "label": "Miss distance in units of uncertainty",
+      "mean_abs_shap": 0.034
+    },
+    {
+      "feature": "last_c_sigma_ndot",
+      "label": "Debris cross-track-velocity uncertainty",
+      "mean_abs_shap": 0.0329
+    },
+    {
+      "feature": "last_c_j2k_ecc",
+      "label": "Debris eccentricity",
+      "mean_abs_shap": 0.03
+    },
+    {
+      "feature": "delta_t_sigma_n",
+      "label": "Change in satellite cross-track uncertainty",
+      "mean_abs_shap": 0.024
+    },
+    {
+      "feature": "last_max_risk_estimate",
+      "label": "Worst-case risk (scaled covariance)",
+      "mean_abs_shap": 0.0167
+    },
+    {
+      "feature": "last_t_crdot_n",
+      "label": "Satellite crdot n",
+      "mean_abs_shap": 0.0157
+    },
+    {
+      "feature": "last_c_sigma_n",
+      "label": "Debris cross-track uncertainty",
+      "mean_abs_shap": 0.0145
+    },
+    {
+      "feature": "last_mahalanobis_distance",
+      "label": "Mahalanobis distance (ESA)",
+      "mean_abs_shap": 0.0132
+    },
+    {
+      "feature": "last_c_rcs_estimate",
+      "label": "Debris radar cross-section",
+      "mean_abs_shap": 0.0131
+    }
+  ],
+  "notes": [
+    "Held-out test = official Kelvins test set (labels from test_data_private.csv); never used for any choice.",
+    "Test is hand-picked to over-represent high-risk events (6.9% vs 0.8% in training), so calibrated probabilities (fitted on training prevalence) read low on test; see reliability diagram.",
+    "baseline = latest CDM risk (Kelvins naive). baseline_clipped = same, floored at -6.5: this alone beats our regressor on the Kelvins score.",
+    "model recall/false_alarm_rate are at tau, chosen out-of-fold on training data for >=95% recall.",
+    "Band coverage is measured against the true final risk floored at -6.5 (risks below the floor are reported as '< 1 in 3.2 million').",
+    "Lead-time cutoffs [2, 3, 4, 5, 6]: Kelvins CDMs start < 7 days before TCA, so 6 replaces 7."
+  ],
+  "screening": {
+    "objects": 0,
+    "hours": 72,
+    "step_s": 60,
+    "seconds": 0.0
+  },
+  "pc_validation": {
+    "n_cdms": 19997,
+    "spearman_all": 0.9750277290270888,
+    "n_above_floor": 11445,
+    "spearman_above_floor": 0.9507211553550841,
+    "median_abs_log10_diff_above_floor": 0.1206456639992215,
+    "within_1_order_of_magnitude": 0.8189602446483181
+  }
+}
