@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { api } from './api'
 import { Header } from './components/Header'
+import { VoiceAgent } from './components/VoiceAgent'
 import { AlertDetailPage } from './pages/AlertDetail'
 import { MetricsPage } from './pages/Metrics'
 import { MissionControl } from './pages/MissionControl'
@@ -20,6 +21,7 @@ export default function App() {
       {route.page === 'alert' && <AlertDetailPage id={route.id} />}
       {route.page === 'metrics' && <MetricsPage />}
       {health.error && <div className="api-down">{health.error}</div>}
+      <VoiceAgent route={route} />
     </div>
   )
 }

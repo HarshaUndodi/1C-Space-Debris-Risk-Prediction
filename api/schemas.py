@@ -205,6 +205,22 @@ class Metrics(BaseModel):
     screening: ScreeningMetrics
 
 
+class AgentTurn(BaseModel):
+    role: Literal["user", "assistant"]
+    text: str
+
+
+class AgentRequest(BaseModel):
+    message: str
+    history: list[AgentTurn] = []
+
+
+class AgentReply(BaseModel):
+    reply: str
+    source: Literal["claude", "rules"]
+    event_ids: list[str] = []
+
+
 class SpaceWeather(BaseModel):
     date: str
     f107: float

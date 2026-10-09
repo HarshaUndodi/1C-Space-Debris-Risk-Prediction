@@ -36,6 +36,13 @@ In the dashboard, the globe animates about 1,500 real catalog objects along thei
 1× / 10× / 60×), charts and numbers build in, and ambient space music (generated live in the browser with the
 Web Audio API) plays continuously from the visitor's first click, because browsers block sound until then.
 
+**Nova, the voice assistant** (the orb, bottom right) gives spoken status updates and decision support:
+"status update", "tell me about event 1568", "should we maneuver for the top alert?", "any live close
+approaches?". It uses browser speech in and out (Chrome/Edge, over HTTPS or localhost) with a female voice.
+Every number comes from the same API the dashboard uses. With `ANTHROPIC_API_KEY` set it runs as a Claude
+(`claude-opus-5`) tool-use agent, with server-side refusal fallbacks; without a key it uses a built-in
+rule-based agent.
+
 All artifacts (models, metrics, demo events, catalog snapshot) are committed, so **`make api` + `make web`
 runs the full demo offline on a fresh clone**. You don't need a Cesium Ion token (the globe uses Cesium's
 bundled Natural Earth II imagery) or an LLM key (the template briefing is always available).

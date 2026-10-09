@@ -250,6 +250,13 @@ def live_presets() -> list[dict]:
     return svc.presets()
 
 
+@router.post("/agent", response_model=schemas.AgentReply)
+def agent_chat(req: schemas.AgentRequest) -> dict:
+    """Voice agent: status updates and decision support grounded in the app's own data."""
+    from api import agent
+    return agent.reply(req.message, [h.model_dump() for h in req.history])
+
+
 @router.get("/metrics", response_model=schemas.Metrics)
 def metrics() -> dict:
     if store.mode == "real" and config.METRICS_PATH.exists():

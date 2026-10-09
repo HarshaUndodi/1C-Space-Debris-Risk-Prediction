@@ -27,6 +27,9 @@ export const api = {
     get<LiveTracks>('/live/tracks', { start, limit, minutes, step_s }),
   livePresets: () => get<{ norad: number; name: string }[]>('/live/presets'),
   metrics: () => get<Metrics>('/metrics'),
+  agent: async (message: string, history: { role: 'user' | 'assistant'; text: string }[]) =>
+    (await http.post<{ reply: string; source: 'claude' | 'rules'; event_ids: string[] }>('/agent', { message, history },
+      { timeout: 60000 })).data,
   spaceWeather: () => get<SpaceWeather>('/space-weather'),
 }
 

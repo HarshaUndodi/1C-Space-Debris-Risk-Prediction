@@ -118,6 +118,15 @@ export class Ambient {
     this.playing = true
   }
 
+  /** Lower the music under the voice agent, then bring it back. */
+  duck(on: boolean) {
+    if (!this.ctx || !this.master) return
+    const t = this.ctx.currentTime
+    this.master.gain.cancelScheduledValues(t)
+    this.master.gain.setValueAtTime(this.master.gain.value, t)
+    this.master.gain.linearRampToValueAtTime(on ? 0.06 : 0.22, t + (on ? 0.4 : 1.6))
+  }
+
   stop() {
     if (!this.playing || !this.ctx || !this.master) return
     const ctx = this.ctx
