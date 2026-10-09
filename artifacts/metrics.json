@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-10-09T10:44:07+00:00",
+  "generated_at": "2026-10-09T11:22:34+00:00",
   "cutoff_days": 2,
   "n_test_events": 2167,
   "n_test_high_risk": 150,
@@ -25,9 +25,9 @@
     "f2": 0.601
   },
   "model": {
-    "kelvins_score": 2.2977,
-    "mse_hr": 1.376,
-    "f2": 0.5989,
+    "kelvins_score": 0.9949,
+    "mse_hr": 0.7372,
+    "f2": 0.741,
     "recall": 0.9467,
     "false_alarm_rate": 0.1839,
     "precision": 0.2768,
@@ -426,7 +426,7 @@
   "notes": [
     "Held-out test = official Kelvins test set (labels from test_data_private.csv); never used for any choice.",
     "Test is hand-picked to over-represent high-risk events (6.9% vs 0.8% in training), so calibrated probabilities (fitted on training prevalence) read low on test; see reliability diagram.",
-    "baseline = latest CDM risk (Kelvins naive). baseline_clipped = same, floored at -6.5: this alone beats our regressor on the Kelvins score.",
+    "baseline = latest CDM risk (Kelvins naive). baseline_clipped = same, floored at -6.5: flooring alone takes the Kelvins score from ~36 to ~1, and our regressor only ties it.",
     "model recall/false_alarm_rate are at tau, chosen out-of-fold on training data for >=95% recall.",
     "Band coverage is measured against the true final risk floored at -6.5 (risks below the floor are reported as '< 1 in 3.2 million').",
     "Lead-time cutoffs [2, 3, 4, 5, 6]: Kelvins CDMs start < 7 days before TCA, so 6 replaces 7."
@@ -435,12 +435,14 @@
     "objects": 19376,
     "hours": 72,
     "step_s": 60,
-    "seconds": 1.07,
+    "seconds": 1.18,
     "primary": "ISS (ZARYA)",
     "prefiltered_objects": 519,
     "conjunctions": 8,
     "threshold_km": 10,
-    "run_utc": "2026-10-09T11:09:39Z"
+    "catalog_load_seconds": 0.5,
+    "note": "seconds = SGP4 propagation + screening + TCA refinement; catalog parsing is catalog_load_seconds",
+    "run_utc": "2026-10-09T11:16:41Z"
   },
   "pc_validation": {
     "n_cdms": 19997,

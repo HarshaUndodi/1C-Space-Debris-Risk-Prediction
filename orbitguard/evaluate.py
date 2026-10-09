@@ -199,8 +199,8 @@ def main() -> int:
             "Held-out test = official Kelvins test set (labels from test_data_private.csv); never used for any choice.",
             "Test is hand-picked to over-represent high-risk events (6.9% vs 0.8% in training), so calibrated "
             "probabilities (fitted on training prevalence) read low on test; see reliability diagram.",
-            "baseline = latest CDM risk (Kelvins naive). baseline_clipped = same, floored at -6.5: this alone "
-            "beats our regressor on the Kelvins score.",
+            "baseline = latest CDM risk (Kelvins naive). baseline_clipped = same, floored at -6.5: flooring alone "
+            "takes the Kelvins score from ~36 to ~1, and our regressor only ties it.",
             "model recall/false_alarm_rate are at tau, chosen out-of-fold on training data for >=95% recall.",
             "Band coverage is measured against the true final risk floored at -6.5 (risks below the floor are "
             "reported as '< 1 in 3.2 million').",

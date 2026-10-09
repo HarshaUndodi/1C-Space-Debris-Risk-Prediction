@@ -234,7 +234,11 @@ def predict(b: Bundle, ev: pd.DataFrame) -> pd.DataFrame:
     lo, hi = b.risk_range
     nc = clip_risk(ev["naive_pred"])
     p50 = np.clip(nc + b.alpha * b.reg.predict(X), lo, hi)
-    q = np.sort(np.column_stack([np.clip(b.q10.predict(X), lo, hi), p50, np.clip(b.q90.predict(X), lo, hi)]), axis=1)
+    # Enforce P10 <= P50 <= P90 by widening the band around the point estimate. (SPEC says "by sorting",
+    # but at long lead times the quantile models can collapse to the floor, and sorting would then drag
+    # the point estimate down with them.)
+    q10, q90 = np.clip(b.q10.predict(X), lo, hi), np.clip(b.q90.predict(X), lo, hi)
+    q = np.column_stack([np.minimum(np.minimum(q10, q90), p50), p50, np.maximum(np.maximum(q10, q90), p50)])
     p_raw = b.clf.predict_proba(X)[:, 1]
     out = pd.DataFrame({
         "event_key": ev["event_key"].to_numpy(),

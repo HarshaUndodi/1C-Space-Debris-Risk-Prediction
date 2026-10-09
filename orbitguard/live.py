@@ -22,7 +22,7 @@ from scipy.integrate import solve_ivp
 from scipy.optimize import minimize_scalar
 from sgp4.api import SatrecArray, jday
 
-from orbitguard import config, download, explain, maneuver, screen
+from orbitguard import config, download, maneuver, screen
 
 log = logging.getLogger("orbitguard.live")
 
@@ -124,12 +124,15 @@ class LiveService:
         self._maneuvers: dict[str, dict] = {}
         self._positions: tuple[float, dict] | None = None
         self._started = False
+        self.catalog_load_seconds: float | None = None
 
     # catalog ------------------------------------------------------------------
     def catalog_entries(self):
         with self._lock:
             if self._catalog is None or (time.time() - (self._catalog_at or 0)) > CACHE_HOURS * 3600:
+                t0 = time.perf_counter()
                 self._catalog, _ = screen.load_catalog()
+                self.catalog_load_seconds = round(time.perf_counter() - t0, 2)
                 self._catalog_at = time.time()
             return self._catalog
 
@@ -179,6 +182,8 @@ class LiveService:
                     "objects": s["objects"], "hours": s["hours"], "step_s": s["step_s"], "seconds": s["seconds"],
                     "primary": res["primary"]["name"], "prefiltered_objects": s["prefiltered_objects"],
                     "conjunctions": len(res["conjunctions"]), "threshold_km": s["threshold_km"],
+                    "catalog_load_seconds": self.catalog_load_seconds,
+                    "note": "seconds = SGP4 propagation + screening + TCA refinement; catalog parsing is catalog_load_seconds",
                     "run_utc": res["start_utc"]}})
         finally:
             self._running.discard(norad)
