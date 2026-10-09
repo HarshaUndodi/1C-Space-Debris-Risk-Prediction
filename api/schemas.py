@@ -213,6 +213,7 @@ class AgentTurn(BaseModel):
 class AgentRequest(BaseModel):
     message: str
     history: list[AgentTurn] = []
+    client_hour: Optional[int] = None   # visitor's local hour (0-23), for time-of-day greetings
 
 
 class AgentReply(BaseModel):

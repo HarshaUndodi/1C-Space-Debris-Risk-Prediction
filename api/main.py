@@ -254,7 +254,7 @@ def live_presets() -> list[dict]:
 def agent_chat(req: schemas.AgentRequest) -> dict:
     """Voice agent: status updates and decision support grounded in the app's own data."""
     from api import agent
-    return agent.reply(req.message, [h.model_dump() for h in req.history])
+    return agent.reply(req.message, [h.model_dump() for h in req.history], req.client_hour)
 
 
 @router.get("/metrics", response_model=schemas.Metrics)

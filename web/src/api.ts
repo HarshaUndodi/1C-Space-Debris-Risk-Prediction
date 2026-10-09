@@ -28,7 +28,8 @@ export const api = {
   livePresets: () => get<{ norad: number; name: string }[]>('/live/presets'),
   metrics: () => get<Metrics>('/metrics'),
   agent: async (message: string, history: { role: 'user' | 'assistant'; text: string }[]) =>
-    (await http.post<{ reply: string; source: 'claude' | 'rules'; event_ids: string[] }>('/agent', { message, history },
+    (await http.post<{ reply: string; source: 'claude' | 'rules'; event_ids: string[] }>('/agent',
+      { message, history, client_hour: new Date().getHours() },
       { timeout: 60000 })).data,
   spaceWeather: () => get<SpaceWeather>('/space-weather'),
 }

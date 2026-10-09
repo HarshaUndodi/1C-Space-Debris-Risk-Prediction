@@ -177,13 +177,16 @@ Your replies are spoken aloud, so:
 - Use only numbers returned by your tools. If you do not have a number, say so; never invent one.
 When helping with a decision, give: your recommendation (maneuver, watch, or hold), the main reason, the
 uncertainty, and the cheapest burn if relevant. The operator makes the final call; say so briefly when recommending a burn.
+Be warm and natural with greetings, thanks and small talk: answer in a sentence, then offer something useful
+(usually a status update). Greet by time of day when you know the operator's local hour. If asked what a term means
+(CDM, TCA, Pc, delta-v, SHAP, calibration), explain it in one or two plain sentences.
 Historical events are real ESA conjunctions from 2015 to 2019 replayed as a test set. Live data is screening only,
 with assumed uncertainties. Refer to events by their number, for example "event 1568"."""
 
 
 # --- Claude agent ------------------------------------------------------------------------------
 
-def _claude_reply(message: str, history: list[dict]) -> tuple[str, list[str]] | None:
+def _claude_reply(message: str, history: list[dict], client_hour: int | None = None) -> tuple[str, list[str]] | None:
     if not (config.LLM_PROVIDER == "anthropic" and config.ANTHROPIC_API_KEY):
         return None
     try:
@@ -199,8 +202,9 @@ def _claude_reply(message: str, history: list[dict]) -> tuple[str, list[str]] | 
         tools = [{"name": n, **spec} for n, (_, spec) in TOOLS.items()]
         mentioned: list[str] = []
         for _ in range(MAX_TOOL_ROUNDS):
+            system = SYSTEM + (f"\nThe operator's local hour is {client_hour}." if client_hour is not None else "")
             resp = client.with_options(timeout=45.0, max_retries=1).beta.messages.create(
-                model=AGENT_MODEL, max_tokens=4000, system=SYSTEM, tools=tools, messages=msgs,
+                model=AGENT_MODEL, max_tokens=4000, system=system, tools=tools, messages=msgs,
                 output_config={"effort": "low"},                       # voice: favour latency
                 betas=["server-side-fallback-2026-07-01"], fallbacks="default",
             )
@@ -289,6 +293,8 @@ def _explain(eid: str) -> tuple[str, list[str]]:
         text += f" OrbitGuard first flagged it {first_flag} days before closest approach."
     if e.get("actual_outcome"):
         text += f" For the record, the actual outcome was {e['actual_outcome']}."
+    if e["decision"] in ("MANEUVER", "WATCH"):
+        text += f" Want me to check whether event {eid} needs a burn?"
     return text, [eid]
 
 
@@ -343,9 +349,128 @@ def _metrics() -> tuple[str, list[str]]:
 HELP = ("You can ask me for a status update, about a specific event like event 1568, whether we should maneuver for the top alert, "
         "about live close approaches for the ISS, or how accurate the model is.")
 
+# --- small talk ---------------------------------------------------------------------------------
 
-def _rules_reply(message: str, history: list[dict]) -> tuple[str, list[str]]:
-    t = message.lower()
+OFFER_STATUS = "Would you like a status update?"
+JOKES = [
+    "I'd tell you a joke about orbital decay, but it would take a few years to land.",
+    "Why don't satellites get lonely? They're surrounded by about twenty-six thousand tracked objects. Some of them are just a little too close.",
+    "How does the space station stay so calm? It just goes with the flow. About seven point six kilometres per second of it.",
+    "Space debris has excellent confidence. It's always making a close approach.",
+    "I asked a satellite how it was doing. It said things were looking up. Then it remembered which way up was.",
+]
+GLOSSARY = {
+    r"conjunctions?": "A conjunction is a predicted close approach between two objects in orbit. Operators get warned days before it happens.",
+    r"cdms?|conjunction data messages?": "A CDM, or conjunction data message, is the warning an operator receives about a close approach. "
+                                         "It carries the predicted miss distance, the uncertainties, and a collision probability. Several arrive per event as tracking improves.",
+    r"tca|time of closest approach": "TCA means time of closest approach, the moment the two objects pass nearest to each other.",
+    r"pc|poc|probability of collision|collision probability": "Pc is the probability of collision. We compute it by integrating the combined position uncertainty "
+                                                              "over a disk the size of both objects. One in ten thousand or worse is the usual maneuver trigger.",
+    r"delta[- ]?v|dv": "Delta-v is the change in velocity a burn gives the satellite, in metres per second. Small burns made early are far cheaper than big burns made late.",
+    r"shap": "SHAP values show how much each input pushed the model's prediction up or down. I use them to explain why an alert fired.",
+    r"calibrat\w*": "Calibrated means the probabilities can be taken at face value. If I say ten percent, it should happen about one time in ten.",
+    r"kelvins?": "Kelvins is the European Space Agency's collision avoidance challenge. Its real conjunction data is what my model was trained and tested on.",
+    r"p10|p90|band|confidence band": "The P10 to P90 band is the range I expect the final risk to fall in, eight times out of ten. P90 is the pessimistic end.",
+    r"watch|hold|maneuver decision|decisions": "Maneuver means plan a burn. Watch means it's high risk but below the maneuver trigger, so keep a burn ready. Hold means no action for now.",
+    r"orbitguard": "OrbitGuard is an AI co-pilot for satellite operators. It turns noisy collision warnings into calibrated decisions, explains them, and plans the cheapest avoidance burn.",
+    r"sgp4": "SGP4 is the standard model for predicting where catalogued objects will be, from their published orbital elements. I use it for live screening.",
+}
+
+_GREET = r"(hi|hello|hey|hiya|howdy|yo|greetings|namaste|good (morning|afternoon|evening|day))"
+_DOMAIN = re.compile(r"\b(\d{2,5}|event|evt|alert|alerts|maneuver\w*|burn\w*|should|live|iss|conjunction\w*|close approach\w*|"
+                     r"status|update|brief\w*|accura\w*|metrics?|baseline|recall|weather|solar|threat|risk\w*|recommend\w*)\b", re.I)
+
+
+def _time_greeting(hour: int | None) -> str:
+    if hour is None:
+        return "Hello"
+    return "Good morning" if 5 <= hour < 12 else "Good afternoon" if 12 <= hour < 17 else "Good evening" if 17 <= hour < 22 else "Hello"
+
+
+def _last_assistant(history: list[dict]) -> str:
+    return next((h.get("text", "") for h in reversed(history) if h.get("role") == "assistant"), "")
+
+
+def _glossary(t: str) -> str | None:
+    m = re.search(r"\b(what(?:'s| is| are| does)|define|meaning of|explain|tell me what)\b(.*)", t)
+    if not m:
+        return None
+    rest = m.group(2)
+    for pat, text in GLOSSARY.items():
+        if re.search(rf"\b({pat})\b", rest, re.I):
+            return text
+    return None
+
+
+def _small_talk(t: str, history: list[dict], hour: int | None) -> tuple[str, list[str]] | None:
+    """Casual conversation. Returns None when the message is really a domain question."""
+    words = re.findall(r"[a-z']+", t)
+    short = len(words) <= 7
+    last = _last_assistant(history)
+
+    if gl := _glossary(t):
+        return gl, []
+    # yes / no to something Nova just offered
+    if short and re.fullmatch(r"\s*(yes|yeah|yep|sure|ok(ay)?|please|go ahead|do it|yes please|sounds good|why not)[.! ]*", t):
+        if OFFER_STATUS in last or "status update?" in last:
+            return _status()
+        m = re.search(r"Want me to check whether event (\d+) needs a burn\?", last)
+        if m:
+            return _decide(m.group(1))
+        return "Great. " + HELP, []
+    if short and re.fullmatch(r"\s*(no|nope|nah|not now|no thanks|later)[.! ]*", t):
+        return "No problem. I'll be here when you need me.", []
+    if re.search(r"\b(say (that|it) again|repeat( that)?|come again|pardon|what did you say)\b", t) and last:
+        return last, re.findall(r"event (\d{2,5})", last, re.I)[:1]
+    if _DOMAIN.search(t):
+        return None
+    if re.search(rf"^\s*{_GREET}\b", t) and short:
+        return f"{_time_greeting(hour)}! I'm Nova, your OrbitGuard assistant. {OFFER_STATUS}", []
+    if re.search(r"\bhow (are|r) (you|u)\b|\bhow's it going\b|\bhow are things\b|\bwhat'?s up\b|\bsup\b", t):
+        return f"All systems nominal, thanks for asking. I'm keeping an eye on the sky. {OFFER_STATUS}", []
+    if re.search(r"\b(are you there|can you hear me|you there|testing|test)\b", t):
+        return f"I'm here and listening, loud and clear. {OFFER_STATUS}", []
+    if re.search(r"\b(who|what) are you\b|\byour name\b|\bintroduce yourself\b", t):
+        return ("I'm Nova, the voice of OrbitGuard. I watch collision warnings for satellites, tell you which ones matter, "
+                "explain why, and suggest the cheapest way to dodge. " + OFFER_STATUS), []
+    if re.search(r"\bwho (made|built|created|designed) you\b|\bwho'?s your (maker|creator)\b", t):
+        return ("I was built for the KLE Tech Hackfest by the OrbitGuard team, on real European Space Agency conjunction data "
+                "and the live US satellite catalog."), []
+    if re.search(r"\bwhat can you do\b|\bhelp\b|\bhow do (i|you) (use|work)\b", t):
+        return HELP, []
+    if re.search(r"\b(thanks|thank you|thx|cheers|appreciate)\b", t):
+        return "You're welcome. Fly safe.", []
+    if re.search(r"\b(bye|goodbye|good night|goodnight|see you|later|that's all|thats all)\b", t):
+        return "Goodbye. I'll keep watching the sky.", []
+    if re.search(r"\b(joke|funny|make me laugh)\b", t):
+        return JOKES[len(history) % len(JOKES)], []
+    if short and re.fullmatch(r"\s*(ok(ay)?|cool|great|nice|got it|alright|fine|hmm+|interesting|wow)[.! ]*", t):
+        return "Anything else I can check for you?", []
+    if re.search(r"\b(good job|well done|great job|nice work|awesome|amazing|you'?re (great|smart|awesome|the best|cool)|love you)\b", t):
+        return "Thank you! I learned from the best. Thirteen thousand real conjunction events, to be exact.", []
+    if re.search(r"\b(sorry|my bad|oops)\b", t):
+        return "No worries at all.", []
+    if re.search(r"\bwhat time is it\b|\bcurrent time\b|\btime now\b", t):
+        from datetime import datetime, timezone
+        now = datetime.now(timezone.utc)
+        return f"It's {now.strftime('%H:%M')} UTC.", []
+    return None
+
+
+def _greeting_prefix(t: str, hour: int | None) -> str:
+    return f"{_time_greeting(hour)}! " if re.search(rf"^\s*{_GREET}\b", t) else ""
+
+
+def _rules_reply(message: str, history: list[dict], hour: int | None = None) -> tuple[str, list[str]]:
+    t = message.lower().strip()
+    chat = _small_talk(t, history, hour)
+    if chat:
+        return chat
+    text, ids = _domain_reply(t, history)
+    return _greeting_prefix(t, hour) + text, ids
+
+
+def _domain_reply(t: str, history: list[dict]) -> tuple[str, list[str]]:
     eid = _event_ref(t, history)
     if re.search(r"\b(should|maneuver\w*|manoeuvre\w*|burn\w*|avoid\w*|delta|decide|decision|recommend\w*)\b", t):
         if eid:
@@ -362,7 +487,7 @@ def _rules_reply(message: str, history: list[dict]) -> tuple[str, list[str]]:
         sw = tool_get_space_weather()
         return (f"Solar flux is {sw['f107']:.0f} and the Ap index is {sw['ap']:.0f}, so drag uncertainty is "
                 f"{sw['heuristic_drag_flag']}. That flag is a rule of thumb."), []
-    if re.search(r"\b(update|status|brief|summary|overview|what's happening|whats happening|situation|hello|hi|hey)\b", t):
+    if re.search(r"\b(update|status|brief\w*|summary|overview|what's happening|whats happening|situation|threat|hello|hi|hey)\b", t):
         return _status()
     if re.search(r"\b(help|what can you)\b", t):
         return HELP, []
@@ -371,17 +496,17 @@ def _rules_reply(message: str, history: list[dict]) -> tuple[str, list[str]]:
 
 # --- entry point --------------------------------------------------------------------------------
 
-def reply(message: str, history: list[dict] | None = None) -> dict:
+def reply(message: str, history: list[dict] | None = None, client_hour: int | None = None) -> dict:
     history = history or []
     message = (message or "").strip()[:500]
     if not message:
         message = "Give me a status update."
-    out = _claude_reply(message, history)
+    out = _claude_reply(message, history, client_hour)
     if out and out[0]:
         text, mentioned = out
         source = "claude"
     else:
-        text, mentioned = _rules_reply(message, history)
+        text, mentioned = _rules_reply(message, history, client_hour)
         source = "rules"
     ids = list(dict.fromkeys(mentioned)) or re.findall(r"event (\d{2,5})", text, re.I)[:1]
     return {"reply": text, "source": source, "event_ids": ids[:3]}

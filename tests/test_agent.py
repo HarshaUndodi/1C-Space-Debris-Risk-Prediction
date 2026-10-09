@@ -95,6 +95,61 @@ def test_claude_failure_falls_back_to_rules(monkeypatch, client):
     assert a.source == "rules" and "need a maneuver" in a.reply
 
 
+def chat(client, message, history=None, hour=None):
+    r = client.post("/api/agent", json={"message": message, "history": history or [], "client_hour": hour})
+    assert r.status_code == 200, r.text
+    return r.json()["reply"]
+
+
+@pytest.mark.parametrize("hour,greeting", [(8, "Good morning"), (14, "Good afternoon"), (19, "Good evening"), (2, "Hello"), (None, "Hello")])
+def test_time_aware_greeting(client, hour, greeting):
+    a = chat(client, "Hi Nova", hour=hour)
+    assert a.startswith(f"{greeting}! I'm Nova") and "status update?" in a
+
+
+@pytest.mark.parametrize("msg,expect", [
+    ("hello", "I'm Nova"), ("good evening", "I'm Nova"), ("how are you?", "All systems nominal"),
+    ("are you there", "listening"), ("who are you", "voice of OrbitGuard"), ("who built you", "Hackfest"),
+    ("thank you so much", "welcome"), ("bye nova", "Goodbye"), ("tell me a joke", ""), ("great job", "Thank you"),
+    ("sorry", "No worries"), ("what time is it", "UTC"), ("cool", "Anything else"), ("what can you do", "status update"),
+])
+def test_small_talk(client, msg, expect):
+    a = chat(client, msg)
+    assert expect in a and "I didn't catch that" not in a
+
+
+@pytest.mark.parametrize("msg,expect", [
+    ("what is a CDM", "conjunction data message"), ("what does TCA mean", "closest approach"),
+    ("explain delta-v", "change in velocity"), ("what's SHAP", "pushed the model"), ("what is calibration", "face value"),
+    ("what is OrbitGuard", "co-pilot"),
+])
+def test_glossary(client, msg, expect):
+    assert expect in chat(client, msg)
+
+
+def test_greeting_does_not_swallow_a_real_question(client):
+    a = chat(client, "hey nova, any live conjunctions for the ISS?", hour=10)
+    assert a.startswith("Good morning! ") and ("kilometres" in a or "screening" in a)
+    b = chat(client, "hi, should we maneuver for event 1568?")
+    assert "millimetres per second" in b
+
+
+def test_yes_accepts_the_offer(client):
+    greet = chat(client, "hello")
+    status = chat(client, "yes please", history=[{"role": "user", "text": "hello"}, {"role": "assistant", "text": greet}])
+    assert "need a maneuver" in status
+    explain = chat(client, "tell me about event 1568")
+    assert "Want me to check whether event 1568 needs a burn?" in explain
+    burn = chat(client, "sure", history=[{"role": "assistant", "text": explain}])
+    assert "millimetres per second" in burn
+
+
+def test_no_and_repeat(client):
+    assert "No problem" in chat(client, "no thanks")
+    last = "Event 1568 is a maneuver."
+    assert chat(client, "say that again", history=[{"role": "assistant", "text": last}]) == last
+
+
 def test_spoken_formatting():
     assert agent.one_in(-3.283) == "1 in 1,919"
     assert agent.one_in(-6.5) == "below 1 in 3 million"

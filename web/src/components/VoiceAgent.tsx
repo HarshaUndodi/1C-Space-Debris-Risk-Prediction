@@ -45,7 +45,7 @@ export function VoiceAgent({ route }: { route: Route }) {
   useEffect(() => {
     if (open && !greeted.current) {
       greeted.current = true
-      void ask('Give me a status update.')
+      void ask('Hi Nova, give me a status update.')
     }
   }, [open]) // eslint-disable-line react-hooks/exhaustive-deps
 
