@@ -205,9 +205,8 @@ button.ghost { border-color: var(--line); }
 .music {
   display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--muted);
   border: 1px solid var(--line); border-radius: 6px; padding: 6px 12px; font-size: 0.85rem;
-  transition: color 0.2s, border-color 0.2s, box-shadow 0.3s;
+  transition: color 0.2s, border-color 0.2s, box-shadow 0.3s; cursor: default; user-select: none;
 }
-.music:hover { color: var(--text); }
 .music.on { color: var(--cyan); border-color: #155e6b; box-shadow: 0 0 16px rgba(34, 211, 238, 0.18); }
 .eq { display: inline-flex; align-items: flex-end; gap: 2px; height: 12px; }
 .eq i { width: 3px; height: 12px; background: currentColor; border-radius: 1px; transform: scaleY(0.25); transform-origin: bottom; }

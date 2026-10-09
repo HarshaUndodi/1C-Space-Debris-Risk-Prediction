@@ -33,8 +33,8 @@ make test      # pytest (61 tests)
 To share it: `make serve` (dashboard and API on one port), then `make share` for a public Cloudflare link.
 
 In the dashboard, the globe animates about 1,500 real catalog objects along their SGP4 tracks (time warp
-1× / 10× / 60×), charts and numbers build in, and the **Ambient** button plays space music generated live in
-the browser with the Web Audio API.
+1× / 10× / 60×), charts and numbers build in, and ambient space music (generated live in the browser with the
+Web Audio API) plays continuously from the visitor's first click, because browsers block sound until then.
 
 All artifacts (models, metrics, demo events, catalog snapshot) are committed, so **`make api` + `make web`
 runs the full demo offline on a fresh clone**. You don't need a Cesium Ion token (the globe uses Cesium's

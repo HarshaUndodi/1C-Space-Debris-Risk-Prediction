@@ -28,20 +28,28 @@ function SpaceWeatherChip() {
   )
 }
 
-function MusicToggle() {
+/**
+ * Ambient music is always on. Browsers block audio until the visitor interacts with the page, so it
+ * starts on the first click / tap / key press anywhere and is never stopped. This is only an indicator.
+ */
+function MusicIndicator() {
   const [on, setOn] = useState(false)
-  useEffect(() => () => ambient.stop(), [])
-  const toggle = () => {
-    if (on) ambient.stop()
-    else ambient.start()
-    setOn(!on)
-  }
+  useEffect(() => {
+    const events = ['pointerdown', 'keydown', 'touchstart'] as const
+    const start = () => {
+      ambient.start()
+      setOn(true)
+      events.forEach((e) => window.removeEventListener(e, start, true))
+    }
+    events.forEach((e) => window.addEventListener(e, start, { capture: true, passive: true }))
+    return () => events.forEach((e) => window.removeEventListener(e, start, true))
+  }, [])
   return (
-    <button className={`music ${on ? 'on' : ''}`} onClick={toggle} aria-pressed={on}
-      title={on ? 'Stop ambient music' : 'Play ambient space music (generated live in your browser)'}>
+    <span className={`music ${on ? 'on' : ''}`} role="status"
+      title={on ? 'Ambient space music, generated live in your browser' : 'Music starts on your first click'}>
       <span className="eq" aria-hidden="true"><i /><i /><i /><i /></span>
-      <span>{on ? 'Ambient on' : 'Ambient'}</span>
-    </button>
+      <span>{on ? 'Ambient' : 'Click anywhere for sound'}</span>
+    </span>
   )
 }
 
@@ -59,7 +67,7 @@ export function Header({ route, source, onSource, mode }: {
         <button className={route === 'metrics' ? 'active' : ''} onClick={go.metrics}>Metrics</button>
       </nav>
       <div className="header-right">
-        <MusicToggle />
+        <MusicIndicator />
         <SpaceWeatherChip />
         {route === 'mission' && (
           <div className="toggle" role="tablist">
