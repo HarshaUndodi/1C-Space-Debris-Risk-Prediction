@@ -1,6 +1,6 @@
 import { Bar, BarChart, CartesianGrid, Cell, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts'
 import type { ShapItem } from '../types'
-import { C, axisProps, tooltipStyle } from './theme'
+import { C, anim, axisProps, tooltipStyle } from './theme'
 
 /** Top-5 SHAP drivers (classifier log-odds). Red pushes toward high risk, blue away (diverging pair). */
 export function ShapChart({ items }: { items: ShapItem[] }) {
@@ -19,7 +19,7 @@ export function ShapChart({ items }: { items: ShapItem[] }) {
               const val = item?.payload?.value
               return [`${Number(v) >= 0 ? '+' : ''}${Number(v).toFixed(3)} log-odds · feature value ${val == null ? 'n/a' : Number(val).toPrecision(4)}`, item?.payload?.feature ?? '']
             }} />
-          <Bar dataKey="shap" radius={4} isAnimationActive={false}>
+          <Bar dataKey="shap" radius={4} {...anim(250, 1000)}>
             {data.map((d) => <Cell key={d.feature} fill={d.shap >= 0 ? C.critical : C.series1} />)}
           </Bar>
         </BarChart>

@@ -4,7 +4,7 @@ import {
 } from 'recharts'
 import type { AlertDetail } from '../types'
 import { oneInN } from '../format'
-import { C, RISK_MAX, RISK_MIN, axisProps, clampRisk, tooltipStyle } from './theme'
+import { C, RISK_MAX, RISK_MIN, anim, axisProps, clampRisk, tooltipStyle } from './theme'
 
 /** Risk (log10 PoC) vs days to TCA: CDMs received so far, unseen later CDMs, the model's band at TCA. */
 export function CdmHistoryChart({ d, cutoff }: { d: AlertDetail; cutoff: number }) {
@@ -42,10 +42,10 @@ export function CdmHistoryChart({ d, cutoff }: { d: AlertDetail; cutoff: number 
           label={{ value: `now (${cutoff} d)`, fill: C.warning, fontSize: 11, position: 'top' }} />
 
         <Line data={seen} dataKey="risk" name="CDM risk (received)" stroke={C.series1} strokeWidth={2}
-          dot={{ r: 4, fill: C.series1, stroke: C.surface, strokeWidth: 2 }} isAnimationActive={false} />
-        <Scatter data={unseen} dataKey="risk" name="later CDMs (not yet received)" fill={C.muted} fillOpacity={0.45} />
-        <Scatter data={p50} dataKey="risk" name="model P50 at TCA (band = P10–P90)" fill={C.series3} shape="diamond" />
-        {actual.length > 0 && <Scatter data={actual} dataKey="risk" name="actual outcome" fill={C.ink} shape="star" />}
+          dot={{ r: 4, fill: C.series1, stroke: C.surface, strokeWidth: 2 }} {...anim(150, 1400)} />
+        <Scatter data={unseen} dataKey="risk" name="later CDMs (not yet received)" fill={C.muted} fillOpacity={0.45} {...anim(700, 600)} />
+        <Scatter data={p50} dataKey="risk" name="model P50 at TCA (band = P10–P90)" fill={C.series3} shape="diamond" {...anim(1300, 500)} />
+        {actual.length > 0 && <Scatter data={actual} dataKey="risk" name="actual outcome" fill={C.ink} shape="star" {...anim(1600, 500)} />}
       </ComposedChart>
     </ResponsiveContainer>
   )

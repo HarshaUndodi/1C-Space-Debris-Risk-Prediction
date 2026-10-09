@@ -301,6 +301,23 @@ def positions_now(catalog: list[CatalogEntry], when: datetime | None = None) -> 
     return lat, lon, alt, ok
 
 
+def tracks_ecef(catalog: list[CatalogEntry], start: datetime, minutes: float, step_s: float) -> tuple[np.ndarray, np.ndarray]:
+    """Earth-fixed positions (km) for many objects over a short window, for client-side animation.
+
+    Returns (samples (n, t, 3) with NaN where SGP4 failed, seconds offsets (t,)). TEME → Earth-fixed by
+    GMST rotation, same as the rest of the display path; the client interpolates between samples.
+    """
+    jd, fr = time_grid(start, minutes / 60.0, step_s)
+    e, r, _ = SatrecArray([c.sat for c in catalog]).sgp4(jd, fr)
+    th = np.array([gmst_rad(j + f) for j, f in zip(jd, fr)])            # (t,)
+    c, s = np.cos(th)[None, :], np.sin(th)[None, :]
+    x = r[..., 0] * c + r[..., 1] * s
+    y = -r[..., 0] * s + r[..., 1] * c
+    out = np.stack([x, y, r[..., 2]], axis=-1)
+    out[e != 0] = np.nan
+    return out, (fr - fr[0]) * 86400.0
+
+
 def orbit_track(entry: CatalogEntry, minutes: float, step_s: float, start: datetime | None = None) -> list[dict]:
     start = start or datetime.now(timezone.utc)
     jd, fr = time_grid(start, minutes / 60.0, step_s)

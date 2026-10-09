@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { ambient } from '../ambient'
 import { api } from '../api'
 import { go, type Route } from '../router'
 import type { Source } from '../types'
@@ -27,6 +28,23 @@ function SpaceWeatherChip() {
   )
 }
 
+function MusicToggle() {
+  const [on, setOn] = useState(false)
+  useEffect(() => () => ambient.stop(), [])
+  const toggle = () => {
+    if (on) ambient.stop()
+    else ambient.start()
+    setOn(!on)
+  }
+  return (
+    <button className={`music ${on ? 'on' : ''}`} onClick={toggle} aria-pressed={on}
+      title={on ? 'Stop ambient music' : 'Play ambient space music (generated live in your browser)'}>
+      <span className="eq" aria-hidden="true"><i /><i /><i /><i /></span>
+      <span>{on ? 'Ambient on' : 'Ambient'}</span>
+    </button>
+  )
+}
+
 export function Header({ route, source, onSource, mode }: {
   route: Route['page']; source: Source; onSource: (s: Source) => void; mode?: string
 }) {
@@ -41,6 +59,7 @@ export function Header({ route, source, onSource, mode }: {
         <button className={route === 'metrics' ? 'active' : ''} onClick={go.metrics}>Metrics</button>
       </nav>
       <div className="header-right">
+        <MusicToggle />
         <SpaceWeatherChip />
         {route === 'mission' && (
           <div className="toggle" role="tablist">

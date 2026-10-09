@@ -25,6 +25,16 @@ export const tooltipStyle = {
   itemStyle: { color: C.ink },
 }
 
+const reduce = typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
+/** Charts build up on entry: lines draw in, bars grow, points bloom (off under reduced motion). */
+export const anim = (delay = 0, duration = 1200) => ({
+  isAnimationActive: !reduce,
+  animationBegin: delay,
+  animationDuration: duration,
+  animationEasing: 'ease-out' as const,
+})
+
 /** Clamp a log10 risk to the plotted range so -30 floors sit on the axis instead of off-chart. */
 export const RISK_MIN = -12
 export const RISK_MAX = -1

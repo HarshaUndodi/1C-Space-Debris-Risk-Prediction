@@ -28,7 +28,8 @@ export function AlertList({ alerts, selected, onSelect }: {
     <ol className="alert-list">
       {alerts.map((a, i) => (
         <li key={a.event_id}
-          className={`alert-row ${selected === a.event_id ? 'selected' : ''}`}
+          className={`alert-row row-in ${selected === a.event_id ? 'selected' : ''}`}
+          style={{ animationDelay: `${150 + i * 45}ms` }}
           onClick={() => onSelect?.(a.event_id)}>
           <span className="rank mono">{i + 1}</span>
           <span className={`decision decision-${a.decision.toLowerCase()}`}>{a.decision}</span>

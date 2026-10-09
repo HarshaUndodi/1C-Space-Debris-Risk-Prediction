@@ -10,6 +10,7 @@ or on any error, a deterministic template does. Cached per event id in artifacts
 """
 from __future__ import annotations
 
+import hashlib
 import json
 import logging
 import re
@@ -216,16 +217,25 @@ def _load_cache() -> dict:
         return {}
 
 
+def _ctx_hash(ctx: dict) -> str:
+    return hashlib.sha1(json.dumps(ctx, sort_keys=True, default=str).encode()).hexdigest()[:16]
+
+
 def briefing(ctx: dict, cache_key: str, *, use_llm: bool = True, cache: dict | None = None) -> tuple[list[str], str]:
-    """Return (three lines, source) where source is "llm" or "template". Uses/updates the cache dict."""
+    """Return (three lines, source) where source is "llm" or "template". Uses/updates the cache dict.
+
+    Entries are reused only when the input numbers are identical (content hash), so a retrained model
+    can never be described by a stale briefing.
+    """
     cache = _load_cache() if cache is None else cache
+    h = _ctx_hash(ctx)
     hit = cache.get(cache_key)
-    if hit and (hit["source"] == "llm" or not (use_llm and _llm_enabled())):
+    if hit and hit.get("ctx_hash") == h and (hit["source"] == "llm" or not (use_llm and _llm_enabled())):
         return hit["lines"], hit["source"]
     lines = llm_briefing(ctx) if use_llm else None
     source = "llm" if lines else "template"
     lines = lines or template_briefing(ctx)
-    cache[cache_key] = {"lines": lines, "source": source}
+    cache[cache_key] = {"lines": lines, "source": source, "ctx_hash": h}
     return lines, source
 
 

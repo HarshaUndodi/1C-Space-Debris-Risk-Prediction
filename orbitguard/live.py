@@ -236,9 +236,47 @@ class LiveService:
         self._positions = (time.time(), out)
         return out
 
-    def orbit(self, norad: int, minutes: float, step_s: float) -> dict | None:
+    def _display_order(self, limit: int):
+        """Primary, conjunction partners, in-band objects, then a fixed random sample of the rest."""
+        cat = self.catalog_entries()
+        res = self._results.get(config.DEFAULT_PRIMARY_NORAD)
+        partners = {c["secondary"]["norad"] for c in (res or {}).get("conjunctions", [])}
+        prim = next((c for c in cat if c.norad == config.DEFAULT_PRIMARY_NORAD), None)
+        first = [c for c in cat if c.norad == config.DEFAULT_PRIMARY_NORAD or c.norad in partners]
+        fset = {c.norad for c in first}
+        band = [c for c in cat if prim and c.norad not in fset
+                and c.apogee_km >= prim.perigee_km - 25 and c.perigee_km <= prim.apogee_km + 25]
+        bset = fset | {c.norad for c in band}
+        rest = [c for c in cat if c.norad not in bset]
+        rng = np.random.default_rng(0)
+        return (first + band + [rest[i] for i in rng.permutation(len(rest))])[:limit]
+
+    def tracks(self, limit: int, minutes: float, step_s: float, start: datetime | None = None) -> dict | None:
+        """~30 min of Earth-fixed samples per object so the globe can animate in real time (cached per window)."""
+        start = (start or datetime.now(timezone.utc)).replace(microsecond=0)
+        start = start - timedelta(seconds=start.second % int(step_s))     # align → cache hits across viewers
+        key = (start.isoformat(), limit, minutes, step_s)
+        hit = getattr(self, "_tracks_cache", {}).get(key)
+        if hit:
+            return hit
+        chosen = self._display_order(limit)
+        if not chosen:
+            return None
+        xyz, t = screen.tracks_ecef(chosen, start, minutes, step_s)
+        keep = ~np.isnan(xyz).any(axis=(1, 2))
+        objs, samples = [], []
+        for c, ok, arr in zip(chosen, keep, xyz):
+            if ok:
+                objs.append({"norad": c.norad, "name": c.name, "type": c.type})
+                samples.append(np.rint(arr.reshape(-1)).astype(int).tolist())   # whole km: invisible at globe scale, ~2× smaller
+        out = {"start": start.isoformat().replace("+00:00", "Z"), "step_s": step_s, "n_steps": int(len(t)),
+               "objects": objs, "samples_km": samples}
+        self._tracks_cache = {key: out}   # keep only the latest window
+        return out
+
+    def orbit(self, norad: int, minutes: float, step_s: float, start: datetime | None = None) -> dict | None:
         entry = next((c for c in self.catalog_entries() if c.norad == norad), None)
-        return None if entry is None else {"points": screen.orbit_track(entry, minutes, step_s)}
+        return None if entry is None else {"points": screen.orbit_track(entry, minutes, step_s, start)}
 
     def presets(self) -> list[dict]:
         cat = self.catalog_entries()

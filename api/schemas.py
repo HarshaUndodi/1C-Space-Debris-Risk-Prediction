@@ -128,6 +128,22 @@ class LiveConjunctions(BaseModel):
     compute_seconds: float
 
 
+class TrackObject(BaseModel):
+    norad: int
+    name: str
+    type: str
+
+
+class LiveTracks(BaseModel):
+    """Earth-fixed (ECEF) positions in km for animating the globe: samples_km[i] is a flat
+    [x0, y0, z0, x1, y1, z1, …] list at start + k·step_s for object i."""
+    start: str
+    step_s: float
+    n_steps: int
+    objects: list[TrackObject]
+    samples_km: list[list[float]]
+
+
 class OrbitPoint(BaseModel):
     t: str
     lat: float

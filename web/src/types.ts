@@ -122,6 +122,14 @@ export interface LiveConjunctions {
   compute_seconds: number
 }
 
+export interface LiveTracks {
+  start: string
+  step_s: number
+  n_steps: number
+  objects: { norad: number; name: string; type: string }[]
+  samples_km: number[][] // per object: flat [x0,y0,z0,x1,…] Earth-fixed km
+}
+
 export interface OrbitPoint {
   t: string
   lat: number

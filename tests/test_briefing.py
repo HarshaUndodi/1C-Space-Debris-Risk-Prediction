@@ -72,12 +72,22 @@ def test_llm_truncated_falls_back(llm_on):
 
 
 def test_cache_reused_and_upgraded(llm_on):
-    cache = {"k": {"lines": ["[ALERT] a", "[DIAGNOSTIC] b", "[ACTION] c"], "source": "template"}}
+    cache = {"k": {"lines": ["[ALERT] a", "[DIAGNOSTIC] b", "[ACTION] c"], "source": "template",
+                   "ctx_hash": explain._ctx_hash(CTX)}}
     with mock.patch("anthropic.Anthropic", return_value=fake_client()) as m:
         _, src = explain.briefing(CTX, "k", cache=cache)
         assert src == "llm" and cache["k"]["source"] == "llm"   # template entry upgraded when LLM available
         explain.briefing(CTX, "k", cache=cache)
         assert m.call_count == 1                                   # LLM entry served from cache
+
+
+def test_cache_invalidated_when_numbers_change(monkeypatch):
+    monkeypatch.setattr(config, "LLM_PROVIDER", "none")
+    cache = {}
+    first, _ = explain.briefing(CTX, "k", cache=cache)
+    changed = {**CTX, "risk_p50": -3.2}
+    second, _ = explain.briefing(changed, "k", cache=cache)
+    assert first != second and second == explain.template_briefing(changed)
 
 
 def test_decision_logic():

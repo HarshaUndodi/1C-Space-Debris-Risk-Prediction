@@ -1,7 +1,7 @@
 // All data access goes through this module (SPEC Section 12 rule).
 import axios from 'axios'
 import type {
-  AlertDetail, AlertItem, Health, LiveCatalog, LiveConjunctions, ManeuverResult,
+  AlertDetail, AlertItem, Health, LiveCatalog, LiveConjunctions, LiveTracks, ManeuverResult,
   Metrics, OrbitPath, Source, SpaceWeather,
 } from './types'
 
@@ -21,7 +21,10 @@ export const api = {
   maneuver: (eventId: string) => get<ManeuverResult>(`/alerts/${eventId}/maneuver`),
   liveCatalog: (limit = 3000) => get<LiveCatalog>('/live/catalog', { limit }),
   liveConjunctions: (norad = 25544, hours = 72) => get<LiveConjunctions>('/live/conjunctions', { norad, hours }),
-  liveOrbit: (norad: number, minutes = 90, step_s = 30) => get<OrbitPath>(`/live/orbit/${norad}`, { minutes, step_s }),
+  liveOrbit: (norad: number, minutes = 90, step_s = 30, start?: string) =>
+    get<OrbitPath>(`/live/orbit/${norad}`, { minutes, step_s, start }),
+  liveTracks: (start: string, limit = 2000, minutes = 30, step_s = 30) =>
+    get<LiveTracks>('/live/tracks', { start, limit, minutes, step_s }),
   livePresets: () => get<{ norad: number; name: string }[]>('/live/presets'),
   metrics: () => get<Metrics>('/metrics'),
   spaceWeather: () => get<SpaceWeather>('/space-weather'),

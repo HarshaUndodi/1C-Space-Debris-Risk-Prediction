@@ -2,7 +2,8 @@ import {
   Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from 'recharts'
 import { api } from '../api'
-import { C, axisProps, tooltipStyle } from '../charts/theme'
+import { C, anim, axisProps, tooltipStyle } from '../charts/theme'
+import { CountUp } from '../motion'
 import { ErrorBox, Loading } from '../components/Status'
 import type { Metrics } from '../types'
 import { useApi } from '../useApi'
@@ -10,11 +11,17 @@ import { useApi } from '../useApi'
 const f = (v: number | null | undefined, d = 3) => (v == null || !Number.isFinite(v) ? '—' : v.toFixed(d))
 const pct = (v: number | null | undefined) => (v == null ? '—' : `${(v * 100).toFixed(1)}%`)
 
-function Tile({ label, model, baseline, better, note }: {
-  label: string; model: string; baseline: string; better?: 'model' | 'baseline' | 'tie'; note?: string
+/** Animated number for tiles: counts up to the value, '—' when missing. */
+const n = (v: number | null | undefined, fmt: (x: number) => string) =>
+  v == null || !Number.isFinite(v) ? '—' : <CountUp value={v} format={fmt} duration={1200} />
+const pctFmt = (v: number) => `${(v * 100).toFixed(1)}%`
+const dec = (d: number) => (v: number) => v.toFixed(d)
+
+function Tile({ label, model, baseline, better, note, i = 0 }: {
+  label: string; model: React.ReactNode; baseline: React.ReactNode; better?: 'model' | 'baseline' | 'tie'; note?: string; i?: number
 }) {
   return (
-    <div className="tile">
+    <div className="tile enter" style={{ animationDelay: `${i * 90}ms` }}>
       <div className="tile-label">{label}</div>
       <div className="tile-row">
         <div><span className="tile-who" style={{ color: C.series1 }}>■</span> model <span className="mono tile-val">{model}</span></div>
@@ -53,7 +60,7 @@ function Reliability({ m }: { m: Metrics }) {
           stroke={C.muted} strokeDasharray="4 4" dot={false} isAnimationActive={false} />
         {series.map((s) => (
           <Line key={s.key} data={s.data} dataKey="frac_pos" name={s.name} stroke={s.color} strokeWidth={2}
-            dot={{ r: 4, fill: s.color, stroke: C.surface, strokeWidth: 2 }} isAnimationActive={false} />
+            dot={{ r: 4, fill: s.color, stroke: C.surface, strokeWidth: 2 }} {...anim(200 + series.indexOf(s) * 300, 1300)} />
         ))}
       </LineChart>
     </ResponsiveContainer>
@@ -76,9 +83,9 @@ function LeadTime({ m, field, label }: { m: Metrics; field: 'recall' | 'far'; la
         <Tooltip {...tooltipStyle} formatter={(v: unknown) => pct(Number(v))} labelFormatter={(v: unknown) => `${v} days before TCA`} />
         <Legend wrapperStyle={{ fontSize: 12, color: C.ink2 }} />
         <Line dataKey="model" name={`model ${label}`} stroke={C.series1} strokeWidth={2}
-          dot={{ r: 4, fill: C.series1, stroke: C.surface, strokeWidth: 2 }} isAnimationActive={false} />
+          dot={{ r: 4, fill: C.series1, stroke: C.surface, strokeWidth: 2 }} {...anim(200, 1300)} />
         <Line dataKey="baseline" name={`baseline ${label}`} stroke={C.series2} strokeWidth={2} strokeDasharray="6 3"
-          dot={{ r: 4, fill: C.series2, stroke: C.surface, strokeWidth: 2 }} isAnimationActive={false} />
+          dot={{ r: 4, fill: C.series2, stroke: C.surface, strokeWidth: 2 }} {...anim(500, 1300)} />
       </LineChart>
     </ResponsiveContainer>
   )
@@ -101,22 +108,22 @@ export function MetricsPage() {
       </p>
 
       <div className="tiles">
-        <Tile label={`Recall on high-risk at tau (n=${m.n_test_high_risk})`} model={pct(m.model.recall)}
-          baseline={pct(m.baseline_at_95_recall_level?.recall)} better={verdict(m.model.recall, m.baseline_at_95_recall_level?.recall, false)}
+        <Tile i={0} label={`Recall on high-risk at tau (n=${m.n_test_high_risk})`} model={n(m.model.recall, pctFmt)}
+          baseline={n(m.baseline_at_95_recall_level?.recall, pctFmt)} better={verdict(m.model.recall, m.baseline_at_95_recall_level?.recall, false)}
           note="both at their own ≥95%-recall operating point, chosen on training data" />
-        <Tile label="False-alarm rate at tau" model={pct(m.model.false_alarm_rate)}
-          baseline={pct(m.baseline_at_95_recall_level?.false_alarm_rate)}
+        <Tile i={1} label="False-alarm rate at tau" model={n(m.model.false_alarm_rate, pctFmt)}
+          baseline={n(m.baseline_at_95_recall_level?.false_alarm_rate, pctFmt)}
           better={verdict(m.model.false_alarm_rate, m.baseline_at_95_recall_level?.false_alarm_rate, true)}
           note="fraction of low-risk events flagged" />
-        <Tile label="Brier score (lower = better)" model={f(m.model.brier, 4)} baseline={f(m.baseline.brier, 4)}
+        <Tile i={2} label="Brier score (lower = better)" model={n(m.model.brier, dec(4))} baseline={n(m.baseline.brier, dec(4))}
           better={verdict(m.model.brier, m.baseline.brier, true)} note={`uncalibrated model ${f(m.model.brier_uncalibrated, 4)}`} />
-        <Tile label="AUC-PR (ranking, threshold-free)" model={f(r?.auc_pr_model)} baseline={f(r?.auc_pr_baseline)}
+        <Tile i={3} label="AUC-PR (ranking, threshold-free)" model={n(r?.auc_pr_model, dec(3))} baseline={n(r?.auc_pr_baseline, dec(3))}
           better={verdict(r?.auc_pr_model, r?.auc_pr_baseline, false)} note={`ROC-AUC ${f(r?.roc_auc_model)} vs ${f(r?.roc_auc_baseline)}`} />
-        <Tile label="Kelvins score L = MSE_HR / F2 (lower = better)" model={f(m.model.kelvins_score)}
-          baseline={f(m.baseline_clipped?.kelvins_score ?? m.baseline.kelvins_score)}
+        <Tile i={4} label="Kelvins score L = MSE_HR / F2 (lower = better)" model={n(m.model.kelvins_score, dec(3))}
+          baseline={n(m.baseline_clipped?.kelvins_score ?? m.baseline.kelvins_score, dec(3))}
           better={verdict(m.model.kelvins_score, m.baseline_clipped?.kelvins_score ?? m.baseline.kelvins_score, true)}
           note={`baseline = latest CDM floored at 1e-6.5; raw latest CDM scores ${f(m.baseline.kelvins_score)}`} />
-        <Tile label="P10–P90 band coverage" model={pct(m.model.band_coverage_p10_p90)} baseline="n/a"
+        <Tile i={5} label="P10–P90 band coverage" model={n(m.model.band_coverage_p10_p90, pctFmt)} baseline="n/a"
           note="target ≈ 80%; most events sit at the risk floor, which inflates coverage" />
       </div>
 
@@ -158,7 +165,7 @@ export function MetricsPage() {
                   <XAxis type="number" {...axisProps} />
                   <YAxis type="category" dataKey="label" width={240} {...axisProps} tick={{ fill: C.ink2, fontSize: 12 }} />
                   <Tooltip {...tooltipStyle} formatter={(v: unknown) => Number(v).toFixed(3)} />
-                  <Bar dataKey="mean_abs_shap" name="mean |SHAP|" fill={C.series1} radius={4} isAnimationActive={false} />
+                  <Bar dataKey="mean_abs_shap" name="mean |SHAP|" fill={C.series1} radius={4} {...anim(300, 1100)} />
                 </BarChart>
               </ResponsiveContainer>
             ) : <div className="status">No SHAP data (mock mode).</div>}

@@ -71,6 +71,11 @@ def test_live_endpoints(client):
     assert r.status_code == 200, r.text[:200]
     lc = schemas.LiveConjunctions.model_validate(r.json())
     schemas.OrbitPath.model_validate(get_ok(client, "/api/live/orbit/25544?minutes=90&step_s=30"))
+    tr = schemas.LiveTracks.model_validate(get_ok(client, "/api/live/tracks?limit=200&minutes=10&step_s=30"))
+    assert tr.objects and all(len(s) == 3 * tr.n_steps for s in tr.samples_km)
+    if main.store.mode == "real":
+        r0 = tr.samples_km[0][:3]
+        assert 6400 < sum(v * v for v in r0) ** 0.5 < 50000, "ECEF radius should be in km above Earth"
     if main.store.mode == "real" and lc.conjunctions:
         eid = r.json()["conjunctions"][0]["event_id"]
         d = schemas.AlertDetail.model_validate(get_ok(client, f"/api/alerts/{eid}"))

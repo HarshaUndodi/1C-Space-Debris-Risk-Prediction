@@ -1,331 +1,372 @@
 {
  "1166@2": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 80,353 (P90 about 1 in 9,506) with an object of unknown type, TCA in 2.1 days.",
+   "[ALERT] Final collision risk about 1 in 9,506 (P90 about 1 in 9,506) with an object of unknown type, TCA in 2.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 226 m.",
    "[ACTION] MANEUVER: 0.001 m/s -along burn 48 h before TCA, residual Pc 1.1e-07, about 0.2 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "afb0a73ec31ce19a"
  },
  "1166@3": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 383,707 (P90 about 1 in 104,472) with an object of unknown type, TCA in 3.1 days.",
+   "[ALERT] Final collision risk about 1 in 104,472 (P90 about 1 in 104,472) with an object of unknown type, TCA in 3.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 196 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "13627b0cf37f8053"
  },
  "1166@4": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 1,399,587 (P90 about 1 in 1,044,720) with an object of unknown type, TCA in 4.0 days.",
+   "[ALERT] Final collision risk about 1 in 1,044,720 (P90 about 1 in 1,044,720) with an object of unknown type, TCA in 4.0 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest CDM risk; miss distance 532 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "81ca088ef5faebd8"
  },
  "1166@5": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,971,666 (P90 about 1 in 933,254) with an object of unknown type, TCA in 5.0 days.",
+   "[ALERT] Final collision risk about 1 in 933,254 (P90 about 1 in 933,254) with an object of unknown type, TCA in 5.0 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest miss distance; miss distance 349 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "be2e90e6da97570b"
  },
  "1166@6": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,930,893 (P90 about 1 in 831,764) with an object of unknown type, TCA in 6.1 days.",
+   "[ALERT] Final collision risk about 1 in 831,764 (P90 about 1 in 831,764) with an object of unknown type, TCA in 6.1 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest miss distance; miss distance 395 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "90a44f1d98f81e16"
  },
  "2117@2": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 169,044 (P90 about 1 in 6,109) with debris, TCA in 2.8 days.",
+   "[ALERT] Final collision risk about 1 in 6,109 (P90 about 1 in 6,109) with debris, TCA in 2.8 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 222 m.",
    "[ACTION] MANEUVER: 0.0153 m/s -along burn 48 h before TCA, residual Pc 2.5e-07, about 3.5 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "041ff6104054aaca"
  },
  "2117@3": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 1,002,305 (P90 about 1 in 45,394) with debris, TCA in 3.8 days.",
+   "[ALERT] Final collision risk about 1 in 45,394 (P90 about 1 in 45,394) with debris, TCA in 3.8 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 583 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "06eac0dcfe258401"
  },
  "2117@4": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,760,578 (P90 about 1 in 94,406) with debris, TCA in 4.8 days.",
+   "[ALERT] Final collision risk about 1 in 94,406 (P90 about 1 in 94,406) with debris, TCA in 4.8 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 1381 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "0673ec6e76a19bce"
  },
  "2117@5": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,061,963 (P90 about 1 in 158,855) with debris, TCA in 5.8 days.",
+   "[ALERT] Final collision risk about 1 in 158,855 (P90 about 1 in 158,855) with debris, TCA in 5.8 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest CDM risk; miss distance 1674 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "53c8d43802efc496"
  },
  "2091@2": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 109,901 (P90 about 1 in 2,377) with debris, TCA in 2.2 days.",
+   "[ALERT] Final collision risk about 1 in 2,377 (P90 about 1 in 2,377) with debris, TCA in 2.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 236 m.",
    "[ACTION] MANEUVER: 0.00322 m/s +along burn 48 h before TCA, residual Pc 1.2e-07, about 0.7 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "98b6eb9049b6557b"
  },
  "2091@3": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 548,277 (P90 about 1 in 2,249) with debris, TCA in 3.3 days.",
+   "[ALERT] Final collision risk about 1 in 2,249 (P90 about 1 in 2,249) with debris, TCA in 3.3 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 239 m.",
    "[ACTION] MANEUVER: 0.00179 m/s -along burn 72 h before TCA, residual Pc 8.3e-07, about 0.4 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "e64e6dc4888906a8"
  },
  "2091@4": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,157,744 (P90 about 1 in 11,695) with debris, TCA in 4.0 days.",
+   "[ALERT] Final collision risk about 1 in 11,695 (P90 about 1 in 11,695) with debris, TCA in 4.0 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest CDM risk; miss distance 345 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "e5d384f2eac3b364"
  },
  "2091@5": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,910,717 (P90 about 1 in 14,757) with debris, TCA in 5.0 days.",
+   "[ALERT] Final collision risk about 1 in 14,757 (P90 about 1 in 14,757) with debris, TCA in 5.0 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest miss distance; miss distance 481 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "7dc5c65646a6c46a"
  },
  "2091@6": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,090,295 (P90 about 1 in 12,050) with debris, TCA in 6.3 days.",
+   "[ALERT] Final collision risk about 1 in 12,050 (P90 about 1 in 12,050) with debris, TCA in 6.3 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest miss distance; miss distance 530 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "c100f3a01ea03d20"
  },
  "1832@2": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 181,134 (P90 about 1 in 5,970) with debris, TCA in 3.2 days.",
+   "[ALERT] Final collision risk about 1 in 5,970 (P90 about 1 in 5,970) with debris, TCA in 3.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 1011 m.",
    "[ACTION] MANEUVER: 0.00853 m/s -along burn 72 h before TCA, residual Pc 9.8e-07, about 2.0 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "bded74bed353db7b"
  },
  "1832@3": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 954,993 (P90 about 1 in 8,630) with debris, TCA in 3.2 days.",
+   "[ALERT] Final collision risk about 1 in 8,630 (P90 about 1 in 8,630) with debris, TCA in 3.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 1011 m.",
    "[ACTION] MANEUVER: 0.00853 m/s -along burn 72 h before TCA, residual Pc 9.8e-07, about 2.0 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "b62d3c1058bc606d"
  },
  "1832@4": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 1,324,342 (P90 about 1 in 9,333) with debris, TCA in 4.6 days.",
+   "[ALERT] Final collision risk about 1 in 9,333 (P90 about 1 in 9,333) with debris, TCA in 4.6 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 211 m.",
    "[ACTION] MANEUVER: 0.00853 m/s +along burn 72 h before TCA, residual Pc 8.6e-07, about 2.0 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "e3a9be0f32b08d1f"
  },
  "1832@5": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,964,831 (P90 about 1 in 8,933) with debris, TCA in 5.3 days.",
+   "[ALERT] Final collision risk about 1 in 8,933 (P90 about 1 in 8,933) with debris, TCA in 5.3 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and average risk so far; miss distance 991 m.",
    "[ACTION] MANEUVER: 0.00853 m/s +along burn 72 h before TCA, residual Pc 9.3e-07, about 2.0 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "99835a408a2b9dff"
  },
  "1568@2": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 341,193 (P90 about 1 in 1,919) with debris, TCA in 2.3 days.",
+   "[ALERT] Final collision risk about 1 in 1,919 (P90 about 1 in 1,919) with debris, TCA in 2.3 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 148 m.",
    "[ACTION] MANEUVER: 0.00148 m/s +along burn 48 h before TCA, residual Pc 2.8e-07, about 0.3 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "c666f4e8b7ece169"
  },
  "1568@3": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 746,449 (P90 about 1 in 488) with debris, TCA in 3.3 days.",
+   "[ALERT] Final collision risk about 1 in 488 (P90 about 1 in 488) with debris, TCA in 3.3 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 49 m.",
    "[ACTION] MANEUVER: 0.00218 m/s +along burn 72 h before TCA, residual Pc 4.1e-07, about 0.5 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "d57eef80b4bcf650"
  },
  "1568@4": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 1,402,814 (P90 about 1 in 679) with debris, TCA in 4.2 days.",
+   "[ALERT] Final collision risk about 1 in 679 (P90 about 1 in 679) with debris, TCA in 4.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 40 m.",
    "[ACTION] MANEUVER: 0.00322 m/s -along burn 72 h before TCA, residual Pc 9.7e-08, about 0.7 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "41bdd7d3a0086dbf"
  },
  "1568@5": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,930,893 (P90 about 1 in 1,466) with debris, TCA in 5.2 days.",
+   "[ALERT] Final collision risk about 1 in 1,466 (P90 about 1 in 1,466) with debris, TCA in 5.2 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest miss distance; miss distance 247 m.",
    "[ACTION] MANEUVER: 0.00391 m/s -along burn 72 h before TCA, residual Pc 5.9e-07, about 0.9 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "48df21750e1eecf9"
  },
  "1568@6": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,126,079 (P90 about 1 in 58,210) with debris, TCA in 6.2 days.",
+   "[ALERT] Final collision risk about 1 in 58,210 (P90 about 1 in 58,210) with debris, TCA in 6.2 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest miss distance; miss distance 104 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "82ff9bba30c76954"
  },
  "1259@2": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 287,078 (P90 about 1 in 2,780) with debris, TCA in 2.1 days.",
+   "[ALERT] Final collision risk about 1 in 2,780 (P90 about 1 in 2,780) with debris, TCA in 2.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 160 m.",
    "[ACTION] MANEUVER: 0.001 m/s +along burn 36 h before TCA, residual Pc 6.2e-07, about 0.2 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "48bde9817027c903"
  },
  "1259@3": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 615,177 (P90 about 1 in 488) with debris, TCA in 3.1 days.",
+   "[ALERT] Final collision risk about 1 in 488 (P90 about 1 in 488) with debris, TCA in 3.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 59 m.",
    "[ACTION] MANEUVER: 0.00179 m/s +along burn 72 h before TCA, residual Pc 2.9e-07, about 0.4 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "84c487363e5a8d00"
  },
  "1259@4": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 1,986,095 (P90 about 1 in 11,535) with debris, TCA in 4.2 days.",
+   "[ALERT] Final collision risk about 1 in 11,535 (P90 about 1 in 11,535) with debris, TCA in 4.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 185 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "3a40a276d29cfb5b"
  },
  "2059@2": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 248,313 (P90 about 1 in 2,333) with debris, TCA in 2.2 days.",
+   "[ALERT] Final collision risk about 1 in 2,333 (P90 about 1 in 2,333) with debris, TCA in 2.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 60 m.",
    "[ACTION] MANEUVER: 0.00265 m/s -along burn 48 h before TCA, residual Pc 1.7e-07, about 0.6 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "6646c6925c0acd11"
  },
  "2059@3": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 688,652 (P90 about 1 in 2,553) with debris, TCA in 3.2 days.",
+   "[ALERT] Final collision risk about 1 in 2,553 (P90 about 1 in 2,553) with debris, TCA in 3.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 20 m.",
    "[ACTION] MANEUVER: 0.00322 m/s +along burn 72 h before TCA, residual Pc 3.6e-07, about 0.7 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "69b4e62355691b20"
  },
  "2059@4": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,290,868 (P90 about 1 in 55,719) with debris, TCA in 4.1 days.",
+   "[ALERT] Final collision risk about 1 in 55,719 (P90 about 1 in 55,719) with debris, TCA in 4.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 376 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "438065e1891a07a1"
  },
  "2059@5": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,978,516 (P90 about 1 in 679,204) with debris, TCA in 5.2 days.",
+   "[ALERT] Final collision risk about 1 in 679,204 (P90 about 1 in 679,204) with debris, TCA in 5.2 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest miss distance; miss distance 420 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "dd7e4a92212c8bba"
  },
  "2059@6": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,992,265 (P90 about 1 in 138,357) with debris, TCA in 6.1 days.",
+   "[ALERT] Final collision risk about 1 in 138,357 (P90 about 1 in 138,357) with debris, TCA in 6.1 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest miss distance; miss distance 829 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "5da93941a74d782e"
  },
  "1448@2": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 257,632 (P90 about 1 in 1,786) with debris, TCA in 2.1 days.",
+   "[ALERT] Final collision risk about 1 in 1,786 (P90 about 1 in 1,786) with debris, TCA in 2.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and latest miss distance; miss distance 104 m.",
    "[ACTION] MANEUVER: 0.0186 m/s +along burn 48 h before TCA, residual Pc 3.8e-07, about 4.3 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "58e9e7e5ce80a070"
  },
  "1448@3": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 1,324,342 (P90 about 1 in 200,447) with debris, TCA in 3.1 days.",
+   "[ALERT] Final collision risk about 1 in 200,447 (P90 about 1 in 200,447) with debris, TCA in 3.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 611 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "14b02694ac06acdd"
  },
  "1448@4": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,055,891 (P90 about 1 in 186,209) with debris, TCA in 4.1 days.",
+   "[ALERT] Final collision risk about 1 in 186,209 (P90 about 1 in 186,209) with debris, TCA in 4.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and worst-case risk (scaled covariance); miss distance 613 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "f368b4ef7fc7d2d9"
  },
  "1448@5": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 6,039) with debris, TCA in 5.3 days.",
+   "[ALERT] Final collision risk about 1 in 6,039 (P90 about 1 in 6,039) with debris, TCA in 5.3 days.",
    "[DIAGNOSTIC] Driven mainly by latest miss distance and worst-case risk (scaled covariance); miss distance 398 m.",
    "[ACTION] MANEUVER: 0.0104 m/s +along burn 72 h before TCA, residual Pc 5.4e-07, about 2.4 g propellant."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "9eabf3a056ade788"
  },
  "1448@6": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 2,754,229) with debris, TCA in 6.2 days.",
+   "[ALERT] Final collision risk about 1 in 2,754,229 (P90 about 1 in 2,754,229) with debris, TCA in 6.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest miss distance and worst-case risk (scaled covariance); miss distance 1356 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "093fe32a884d2398"
  },
  "1833@2": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 176,604 (P90 about 1 in 12,823) with debris, TCA in 2.2 days.",
+   "[ALERT] Final collision risk about 1 in 12,823 (P90 about 1 in 12,823) with debris, TCA in 2.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 262 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "b797517179135667"
  },
  "1833@3": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 1,106,624 (P90 about 1 in 105,682) with debris, TCA in 3.3 days.",
+   "[ALERT] Final collision risk about 1 in 105,682 (P90 about 1 in 105,682) with debris, TCA in 3.3 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 425 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "a78f1feb5b14628a"
  },
  "1833@4": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,285,599 (P90 about 1 in 194,984) with debris, TCA in 4.3 days.",
+   "[ALERT] Final collision risk about 1 in 194,984 (P90 about 1 in 194,984) with debris, TCA in 4.3 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 787 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "5522d984b933ff3d"
  },
  "1833@5": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,985,383 (P90 about 1 in 420,727) with debris, TCA in 5.9 days.",
+   "[ALERT] Final collision risk about 1 in 420,727 (P90 about 1 in 420,727) with debris, TCA in 5.9 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest miss distance; miss distance 528 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "0e4202ea20f41574"
  },
  "1833@6": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,026,913 (P90 about 1 in 512,861) with debris, TCA in 6.5 days.",
+   "[ALERT] Final collision risk about 1 in 512,861 (P90 about 1 in 512,861) with debris, TCA in 6.5 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest miss distance; miss distance 380 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "7035b6f56264dc5f"
  },
  "280@2": {
   "lines": [
@@ -333,7 +374,8 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 2227 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "24e6eecd97fc141e"
  },
  "280@3": {
   "lines": [
@@ -341,7 +383,8 @@
    "[DIAGNOSTIC] Driven mainly by average risk so far and covariance scaling needed for worst case; miss distance 588 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "e5f837007ecd9aa0"
  },
  "280@4": {
   "lines": [
@@ -349,15 +392,17 @@
    "[DIAGNOSTIC] Driven mainly by average risk so far and miss distance in units of uncertainty; miss distance 2484 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "d609f3aef9a00666"
  },
  "280@5": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,118,890 (P90 about 1 in 1,442,115) with debris, TCA in 5.2 days.",
+   "[ALERT] Final collision risk about 1 in 1,442,115 (P90 about 1 in 1,442,115) with debris, TCA in 5.2 days.",
    "[DIAGNOSTIC] Driven mainly by average risk so far and latest CDM risk; miss distance 2101 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "093d34c32ae053f6"
  },
  "280@6": {
   "lines": [
@@ -365,95 +410,107 @@
    "[DIAGNOSTIC] Driven mainly by latest miss distance and worst-case risk (scaled covariance); miss distance 3634 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "5e6f6bb173559514"
  },
  "1335@2": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 1,475,707 (P90 about 1 in 542,001) with an object of unknown type, TCA in 2.2 days.",
+   "[ALERT] Final collision risk about 1 in 542,001 (P90 about 1 in 542,001) with an object of unknown type, TCA in 2.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 5907 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "72fb4115c6cc45da"
  },
  "1335@3": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,004,472 (P90 about 1 in 659,174) with an object of unknown type, TCA in 3.4 days.",
+   "[ALERT] Final collision risk about 1 in 659,174 (P90 about 1 in 659,174) with an object of unknown type, TCA in 3.4 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 6465 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "b5ec88e78f3323eb"
  },
  "1335@4": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,937,650 (P90 about 1 in 769,130) with an object of unknown type, TCA in 4.0 days.",
+   "[ALERT] Final collision risk about 1 in 769,130 (P90 about 1 in 769,130) with an object of unknown type, TCA in 4.0 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 6882 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "6f75ace12de26be2"
  },
  "1335@5": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,090,295 (P90 about 1 in 732,825) with an object of unknown type, TCA in 5.1 days.",
+   "[ALERT] Final collision risk about 1 in 732,825 (P90 about 1 in 732,825) with an object of unknown type, TCA in 5.1 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and average risk so far; miss distance 7152 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "56d0209a56341e85"
  },
  "1335@6": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 698,232) with an object of unknown type, TCA in 6.2 days.",
+   "[ALERT] Final collision risk about 1 in 698,232 (P90 about 1 in 698,232) with an object of unknown type, TCA in 6.2 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and highest risk seen so far; miss distance 6434 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "fa1c74c935e931be"
  },
  "1346@2": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 540,754 (P90 about 1 in 57,412) with debris, TCA in 2.1 days.",
+   "[ALERT] Final collision risk about 1 in 57,412 (P90 about 1 in 57,412) with debris, TCA in 2.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 418 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "61588f83df0771fc"
  },
  "1346@3": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 1,455,459 (P90 about 1 in 567,545) with debris, TCA in 3.2 days.",
+   "[ALERT] Final collision risk about 1 in 567,545 (P90 about 1 in 567,545) with debris, TCA in 3.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 616 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "4ac455e751b100bb"
  },
  "1346@4": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,421,029 (P90 about 1 in 63,387) with debris, TCA in 4.1 days.",
+   "[ALERT] Final collision risk about 1 in 63,387 (P90 about 1 in 63,387) with debris, TCA in 4.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 579 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "58b62a4961ea00ae"
  },
  "1346@5": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,061,963 (P90 about 1 in 22,646) with debris, TCA in 5.1 days.",
+   "[ALERT] Final collision risk about 1 in 22,646 (P90 about 1 in 22,646) with debris, TCA in 5.1 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest miss distance; miss distance 310 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "07d3571d76275c6d"
  },
  "1346@6": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,140,509 (P90 about 1 in 27,542) with debris, TCA in 6.1 days.",
+   "[ALERT] Final collision risk about 1 in 27,542 (P90 about 1 in 27,542) with debris, TCA in 6.1 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest miss distance; miss distance 195 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "188eac23fce80ca8"
  },
  "1640@2": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,126,079) with an object of unknown type, TCA in 2.3 days.",
+   "[ALERT] Final collision risk about 1 in 3,126,079 (P90 about 1 in 3,126,079) with an object of unknown type, TCA in 2.3 days.",
    "[DIAGNOSTIC] Driven mainly by change in miss distance since previous CDM and latest CDM risk; miss distance 8883 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "8ceaa93d64c27fc6"
  },
  "1640@3": {
   "lines": [
@@ -461,7 +518,8 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and miss distance in units of uncertainty; miss distance 27801 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "348a73f22a18b2ec"
  },
  "1640@4": {
   "lines": [
@@ -469,15 +527,17 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 28592 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "db8aea7e9d4a0ded"
  },
  "93@2": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,118,890) with debris, TCA in 2.3 days.",
+   "[ALERT] Final collision risk about 1 in 3,118,890 (P90 about 1 in 3,118,890) with debris, TCA in 2.3 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 15629 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "d18f784a2fe010a1"
  },
  "93@3": {
   "lines": [
@@ -485,7 +545,8 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 15792 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "9ff83bd38fd0d274"
  },
  "93@4": {
   "lines": [
@@ -493,7 +554,8 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and miss distance in units of uncertainty; miss distance 15826 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "ff18ed5357f2d222"
  },
  "93@5": {
   "lines": [
@@ -501,7 +563,8 @@
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and miss distance in units of uncertainty; miss distance 15736 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "7775fb48b6c8b836"
  },
  "641@2": {
   "lines": [
@@ -509,55 +572,62 @@
    "[DIAGNOSTIC] Driven mainly by risk trend over time and average risk so far; miss distance 7111 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "a598e6bbb634c0e1"
  },
  "641@3": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,155,005) with debris, TCA in 3.2 days.",
+   "[ALERT] Final collision risk about 1 in 3,155,005 (P90 about 1 in 3,155,005) with debris, TCA in 3.2 days.",
    "[DIAGNOSTIC] Driven mainly by miss distance in units of uncertainty and debris ct r; miss distance 604 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "a80ea4490131bb56"
  },
  "641@4": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,147,748 (P90 about 1 in 3,040,885) with debris, TCA in 4.2 days.",
+   "[ALERT] Final collision risk about 1 in 3,040,885 (P90 about 1 in 3,040,885) with debris, TCA in 4.2 days.",
    "[DIAGNOSTIC] Driven mainly by debris crdot r and latest CDM risk; miss distance 2114 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "d6652e9ab487edc3"
  },
  "641@5": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,126,079) with debris, TCA in 5.1 days.",
+   "[ALERT] Final collision risk about 1 in 3,126,079 (P90 about 1 in 3,126,079) with debris, TCA in 5.1 days.",
    "[DIAGNOSTIC] Driven mainly by debris crdot r and lowest risk seen so far; miss distance 24964 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "c04edc48d48342d7"
  },
  "641@6": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,126,079) with debris, TCA in 6.2 days.",
+   "[ALERT] Final collision risk about 1 in 3,126,079 (P90 about 1 in 3,126,079) with debris, TCA in 6.2 days.",
    "[DIAGNOSTIC] Driven mainly by debris crdot r and lowest risk seen so far; miss distance 29316 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "969a338de1f6a5bc"
  },
  "2129@2": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,118,890 (P90 about 1 in 2,999,163) with debris, TCA in 2.2 days.",
+   "[ALERT] Final collision risk about 1 in 2,999,163 (P90 about 1 in 2,999,163) with debris, TCA in 2.2 days.",
    "[DIAGNOSTIC] Driven mainly by risk trend over time and latest miss distance; miss distance 762 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "e400cf6046a02f63"
  },
  "2129@3": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,090,295) with debris, TCA in 3.1 days.",
+   "[ALERT] Final collision risk about 1 in 3,090,295 (P90 about 1 in 3,090,295) with debris, TCA in 3.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 11721 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "908ffc1b8ae30439"
  },
  "1305@2": {
   "lines": [
@@ -565,15 +635,17 @@
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest CDM risk; miss distance 3269 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "69431981e7b07233"
  },
  "1416@2": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,523,481 (P90 about 1 in 2,449,063) with debris, TCA in 2.1 days.",
+   "[ALERT] Final collision risk about 1 in 2,449,063 (P90 about 1 in 2,449,063) with debris, TCA in 2.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 3001 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "20bb16fd8169ee0c"
  },
  "1416@3": {
   "lines": [
@@ -581,23 +653,26 @@
    "[DIAGNOSTIC] Driven mainly by covariance scaling needed for worst case and latest CDM risk; miss distance 9678 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "3659a6518f9f028c"
  },
  "1416@4": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,147,748) with debris, TCA in 4.2 days.",
+   "[ALERT] Final collision risk about 1 in 3,147,748 (P90 about 1 in 3,147,748) with debris, TCA in 4.2 days.",
    "[DIAGNOSTIC] Driven mainly by covariance scaling needed for worst case and latest CDM risk; miss distance 14801 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "a5329f15a900b22e"
  },
  "1416@5": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,133,286) with debris, TCA in 5.1 days.",
+   "[ALERT] Final collision risk about 1 in 3,133,286 (P90 about 1 in 3,133,286) with debris, TCA in 5.1 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and miss distance in units of uncertainty; miss distance 26301 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "f19f8938f312d85f"
  },
  "1416@6": {
   "lines": [
@@ -605,7 +680,8 @@
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and latest miss distance; miss distance 26881 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "e77f90e66f7f0b7a"
  },
  "574@2": {
   "lines": [
@@ -613,7 +689,8 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 26354 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "adff1ef0ef0d944d"
  },
  "574@3": {
   "lines": [
@@ -621,15 +698,17 @@
    "[DIAGNOSTIC] Driven mainly by covariance scaling needed for worst case and latest CDM risk; miss distance 21506 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "4c41b6b79c879cb4"
  },
  "696@2": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,140,509 (P90 about 1 in 2,985,383) with a payload, TCA in 2.6 days.",
+   "[ALERT] Final collision risk about 1 in 2,985,383 (P90 about 1 in 2,985,383) with a payload, TCA in 2.6 days.",
    "[DIAGNOSTIC] Driven mainly by covariance scaling needed for worst case and debris cndot t; miss distance 7238 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "851d8769a326c9e9"
  },
  "952@2": {
   "lines": [
@@ -637,7 +716,8 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 29617 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "4daf67f0a9204424"
  },
  "952@3": {
   "lines": [
@@ -645,7 +725,8 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 32360 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "95fe011cc691c40c"
  },
  "952@4": {
   "lines": [
@@ -653,7 +734,8 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 29953 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "c7d8409d8a940052"
  },
  "952@5": {
   "lines": [
@@ -661,7 +743,8 @@
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and miss distance in units of uncertainty; miss distance 31041 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "868581cc6e6b9c0c"
  },
  "952@6": {
   "lines": [
@@ -669,39 +752,44 @@
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and worst-case risk (scaled covariance); miss distance 29425 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "76238bef983de9a7"
  },
  "71@2": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,140,509) with debris, TCA in 2.3 days.",
+   "[ALERT] Final collision risk about 1 in 3,140,509 (P90 about 1 in 3,140,509) with debris, TCA in 2.3 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 34883 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "7c4c355e9545bc1f"
  },
  "71@3": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,140,509 (P90 about 1 in 3,104,560) with debris, TCA in 3.4 days.",
+   "[ALERT] Final collision risk about 1 in 3,104,560 (P90 about 1 in 3,104,560) with debris, TCA in 3.4 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 35133 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "d490dcaf2d6e462c"
  },
  "71@4": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,111,716) with debris, TCA in 4.3 days.",
+   "[ALERT] Final collision risk about 1 in 3,111,716 (P90 about 1 in 3,111,716) with debris, TCA in 4.3 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and debris energy dissipation rate; miss distance 28996 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "ed51f03ef7817e5b"
  },
  "71@5": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,104,560) with debris, TCA in 5.3 days.",
+   "[ALERT] Final collision risk about 1 in 3,104,560 (P90 about 1 in 3,104,560) with debris, TCA in 5.3 days.",
    "[DIAGNOSTIC] Driven mainly by debris energy dissipation rate and lowest risk seen so far; miss distance 37014 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "ce891d0ffb4e47e2"
  },
  "71@6": {
   "lines": [
@@ -709,39 +797,44 @@
    "[DIAGNOSTIC] Driven mainly by debris cn r and lowest risk seen so far; miss distance 16796 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "47ee45aaf877ef99"
  },
  "1897@2": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,133,286) with debris, TCA in 2.8 days.",
+   "[ALERT] Final collision risk about 1 in 3,133,286 (P90 about 1 in 3,133,286) with debris, TCA in 2.8 days.",
    "[DIAGNOSTIC] Driven mainly by change in miss distance since previous CDM and latest CDM risk; miss distance 38443 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "da5958af967ccb9f"
  },
  "1897@3": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,140,509) with debris, TCA in 4.0 days.",
+   "[ALERT] Final collision risk about 1 in 3,140,509 (P90 about 1 in 3,140,509) with debris, TCA in 4.0 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 48037 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "6fa6636e5ff439c4"
  },
  "1897@4": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,097,419) with debris, TCA in 4.8 days.",
+   "[ALERT] Final collision risk about 1 in 3,097,419 (P90 about 1 in 3,097,419) with debris, TCA in 4.8 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and miss distance in units of uncertainty; miss distance 40075 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "b2d72066e29cb2fd"
  },
  "680@2": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,118,890) with debris, TCA in 2.2 days.",
+   "[ALERT] Final collision risk about 1 in 3,118,890 (P90 about 1 in 3,118,890) with debris, TCA in 2.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and lowest risk seen so far; miss distance 23742 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "64549eeea7e7ef5d"
  },
  "680@3": {
   "lines": [
@@ -749,95 +842,107 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 23846 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "65a82f009e0b58f4"
  },
  "680@4": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,155,005) with debris, TCA in 4.2 days.",
+   "[ALERT] Final collision risk about 1 in 3,155,005 (P90 about 1 in 3,155,005) with debris, TCA in 4.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and average risk so far; miss distance 23528 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "f2b8103c500bb4ed"
  },
  "680@5": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,061,963) with debris, TCA in 5.2 days.",
+   "[ALERT] Final collision risk about 1 in 3,061,963 (P90 about 1 in 3,061,963) with debris, TCA in 5.2 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and satellite cn r; miss distance 22907 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "b771aec3a8ad9760"
  },
  "680@6": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,155,005 (P90 about 1 in 3,047,895) with debris, TCA in 6.2 days.",
+   "[ALERT] Final collision risk about 1 in 3,047,895 (P90 about 1 in 3,047,895) with debris, TCA in 6.2 days.",
    "[DIAGNOSTIC] Driven mainly by satellite eccentricity and lowest risk seen so far; miss distance 24665 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "19b8836e2669718b"
  },
  "746@2": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,061,963) with debris, TCA in 2.2 days.",
+   "[ALERT] Final collision risk about 1 in 3,061,963 (P90 about 1 in 3,061,963) with debris, TCA in 2.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and miss distance in units of uncertainty; miss distance 2006 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "11960c171b249295"
  },
  "746@3": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,147,748 (P90 about 1 in 2,999,163) with debris, TCA in 3.1 days.",
+   "[ALERT] Final collision risk about 1 in 2,999,163 (P90 about 1 in 2,999,163) with debris, TCA in 3.1 days.",
    "[DIAGNOSTIC] Driven mainly by debris cndot n and change in debris radial uncertainty; miss distance 2034 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "5faf69003f2b4118"
  },
  "746@4": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 2,576,321 (P90 about 1 in 311,172) with debris, TCA in 4.2 days.",
+   "[ALERT] Final collision risk about 1 in 311,172 (P90 about 1 in 311,172) with debris, TCA in 4.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and debris radar cross-section; miss distance 1612 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "b9ac018ff0164e4d"
  },
  "746@5": {
   "lines": [
-   "[ALERT] Final collision risk about 1 in 3,155,005 (P90 about 1 in 353,997) with debris, TCA in 5.2 days.",
+   "[ALERT] Final collision risk about 1 in 353,997 (P90 about 1 in 353,997) with debris, TCA in 5.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and debris cndot n; miss distance 1602 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "8d0dcb96d5ff4963"
  },
  "746@6": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 2,910,717) with debris, TCA in 6.1 days.",
+   "[ALERT] Final collision risk about 1 in 2,910,717 (P90 about 1 in 2,910,717) with debris, TCA in 6.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest miss distance and lowest risk seen so far; miss distance 1644 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "54af5492b6a36dde"
  },
  "339@2": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,133,286) with a payload, TCA in 2.3 days.",
+   "[ALERT] Final collision risk about 1 in 3,133,286 (P90 about 1 in 3,133,286) with a payload, TCA in 2.3 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 31109 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "78bca42906fbc75f"
  },
  "339@3": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,140,509) with a payload, TCA in 3.0 days.",
+   "[ALERT] Final collision risk about 1 in 3,140,509 (P90 about 1 in 3,140,509) with a payload, TCA in 3.0 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 30953 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "3ca25417b7581d41"
  },
  "339@4": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,147,748) with a payload, TCA in 4.1 days.",
+   "[ALERT] Final collision risk about 1 in 3,147,748 (P90 about 1 in 3,147,748) with a payload, TCA in 4.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and miss distance in units of uncertainty; miss distance 31071 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "148d01cbbd2add90"
  },
  "339@5": {
   "lines": [
@@ -845,7 +950,8 @@
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and miss distance in units of uncertainty; miss distance 29800 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "f6b0adcd430f3cb0"
  },
  "339@6": {
   "lines": [
@@ -853,31 +959,35 @@
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and covariance scaling needed for worst case; miss distance 29598 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "b3436699cb9f0cd9"
  },
  "580@2": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,147,748) with debris, TCA in 2.1 days.",
+   "[ALERT] Final collision risk about 1 in 3,147,748 (P90 about 1 in 3,147,748) with debris, TCA in 2.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 6182 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "69af01d088d64682"
  },
  "580@3": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,133,286) with debris, TCA in 3.3 days.",
+   "[ALERT] Final collision risk about 1 in 3,133,286 (P90 about 1 in 3,133,286) with debris, TCA in 3.3 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 6217 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "f392719d3b719c07"
  },
  "580@4": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,155,005) with debris, TCA in 4.2 days.",
+   "[ALERT] Final collision risk about 1 in 3,155,005 (P90 about 1 in 3,155,005) with debris, TCA in 4.2 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and debris cn t; miss distance 6190 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "8863a6bbead87a41"
  },
  "580@5": {
   "lines": [
@@ -885,7 +995,8 @@
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and average risk so far; miss distance 6176 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "72f82fb78bd1d835"
  },
  "580@6": {
   "lines": [
@@ -893,15 +1004,17 @@
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and worst-case risk (scaled covariance); miss distance 6175 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "c5a939952c6f1e97"
  },
  "1756@2": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,147,748) with a payload, TCA in 2.4 days.",
+   "[ALERT] Final collision risk about 1 in 3,147,748 (P90 about 1 in 3,147,748) with a payload, TCA in 2.4 days.",
    "[DIAGNOSTIC] Driven mainly by change in miss distance since previous CDM and latest CDM risk; miss distance 9214 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "cb0e78e98d26fb55"
  },
  "1756@3": {
   "lines": [
@@ -909,7 +1022,8 @@
    "[DIAGNOSTIC] Driven mainly by covariance scaling needed for worst case and latest CDM risk; miss distance 28920 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "1d22aca0fc80accb"
  },
  "1756@4": {
   "lines": [
@@ -917,7 +1031,8 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and satellite radar cross-section; miss distance 28927 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "14a36fd03fb2ca46"
  },
  "1756@5": {
   "lines": [
@@ -925,15 +1040,17 @@
    "[DIAGNOSTIC] Driven mainly by satellite radar cross-section and lowest risk seen so far; miss distance 29012 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "b1bdffea791a081a"
  },
  "1756@6": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,155,005) with a payload, TCA in 6.1 days.",
+   "[ALERT] Final collision risk about 1 in 3,155,005 (P90 about 1 in 3,155,005) with a payload, TCA in 6.1 days.",
    "[DIAGNOSTIC] Driven mainly by satellite radar cross-section and lowest risk seen so far; miss distance 29183 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "92bd4e4488961c13"
  },
  "1943@2": {
   "lines": [
@@ -941,7 +1058,8 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 33574 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "849b9fc3c78b955a"
  },
  "1943@3": {
   "lines": [
@@ -949,7 +1067,8 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and miss distance in units of uncertainty; miss distance 13982 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "3a11da68056d7b09"
  },
  "1943@4": {
   "lines": [
@@ -957,23 +1076,26 @@
    "[DIAGNOSTIC] Driven mainly by covariance scaling needed for worst case and latest CDM risk; miss distance 12422 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "0220d2bd2384b19e"
  },
  "1943@5": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,076,097) with debris, TCA in 5.3 days.",
+   "[ALERT] Final collision risk about 1 in 3,076,097 (P90 about 1 in 3,076,097) with debris, TCA in 5.3 days.",
    "[DIAGNOSTIC] Driven mainly by latest miss distance and lowest risk seen so far; miss distance 763 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "9cf0523a91580c01"
  },
  "1943@6": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,026,913) with debris, TCA in 6.3 days.",
+   "[ALERT] Final collision risk about 1 in 3,026,913 (P90 about 1 in 3,026,913) with debris, TCA in 6.3 days.",
    "[DIAGNOSTIC] Driven mainly by latest miss distance and lowest risk seen so far; miss distance 1520 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "005a0c068c81dad3"
  },
  "2060@2": {
   "lines": [
@@ -981,7 +1103,8 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 5200 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "c8c1cbde14a05aed"
  },
  "2060@3": {
   "lines": [
@@ -989,30 +1112,34 @@
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and covariance scaling needed for worst case; miss distance 5099 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "6dea42757088d697"
  },
  "2060@4": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,083,188) with a payload, TCA in 4.1 days.",
+   "[ALERT] Final collision risk about 1 in 3,083,188 (P90 about 1 in 3,083,188) with a payload, TCA in 4.1 days.",
    "[DIAGNOSTIC] Driven mainly by latest CDM risk and miss distance in units of uncertainty; miss distance 5006 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "713c4b75517c048f"
  },
  "2060@5": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,118,890) with a payload, TCA in 5.2 days.",
+   "[ALERT] Final collision risk about 1 in 3,118,890 (P90 about 1 in 3,118,890) with a payload, TCA in 5.2 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and miss distance in units of uncertainty; miss distance 5017 m.",
    "[ACTION] HOLD: no action, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "536b7399f579642a"
  },
  "2060@6": {
   "lines": [
-   "[ALERT] Final collision risk below 1 in 3,162,278 (P90 about 1 in 3,026,913) with a payload, TCA in 6.2 days.",
+   "[ALERT] Final collision risk about 1 in 3,026,913 (P90 about 1 in 3,026,913) with a payload, TCA in 6.2 days.",
    "[DIAGNOSTIC] Driven mainly by lowest risk seen so far and worst-case risk (scaled covariance); miss distance 5181 m.",
    "[ACTION] WATCH: high-risk class, keep maneuver option ready, re-assess at next CDM."
   ],
-  "source": "template"
+  "source": "template",
+  "ctx_hash": "36c9f499a552355f"
  }
 }

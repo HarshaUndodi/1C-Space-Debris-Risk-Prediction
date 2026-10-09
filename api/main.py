@@ -13,12 +13,14 @@ from __future__ import annotations
 import json
 import logging
 from contextlib import asynccontextmanager
+from datetime import datetime
 from functools import lru_cache
 from pathlib import Path
 from typing import Any
 
 from fastapi import APIRouter, FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 
 from api import schemas
 from orbitguard import config, download, spaceweather
@@ -77,6 +79,7 @@ async def lifespan(_app: FastAPI):
 
 
 app = FastAPI(title="OrbitGuard API", version="1.0.0", lifespan=lifespan)
+app.add_middleware(GZipMiddleware, minimum_size=2048)   # tracks are a few MB of numbers; ~4× smaller gzipped
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
@@ -175,6 +178,40 @@ def live_catalog(limit: int = Query(3000, ge=1, le=50000)) -> dict:
     return cat
 
 
+def _mock_tracks(limit: int, minutes: float, step_s: float) -> dict:
+    """Mock mode: the mock catalog's fixed positions, repeated (objects don't move)."""
+    import math
+    cat = mock("live_catalog.json")
+    objs, samples = [], []
+    n = int(minutes * 60 // step_s) + 1
+    for o in cat["objects"][:limit]:
+        r = 6371.0 + o["alt_km"]
+        la, lo = math.radians(o["lat"]), math.radians(o["lon"])
+        xyz = [round(r * math.cos(la) * math.cos(lo), 1), round(r * math.cos(la) * math.sin(lo), 1), round(r * math.sin(la), 1)]
+        objs.append({"norad": o["norad"], "name": o["name"], "type": o["type"]})
+        samples.append(xyz * n)
+    return {"start": cat["epoch"], "step_s": step_s, "n_steps": n, "objects": objs, "samples_km": samples}
+
+
+@router.get("/live/tracks", response_model=schemas.LiveTracks)
+def live_tracks(limit: int = Query(2000, ge=1, le=6000), minutes: float = Query(30, gt=0, le=120),
+                step_s: float = Query(30, ge=5, le=300), start: str | None = None) -> dict:
+    """Short-window SGP4 tracks for real-time globe animation (start = ISO UTC, default now)."""
+    svc = store.live()
+    if svc is None:
+        return _mock_tracks(limit, minutes, step_s)
+    when = None
+    if start:
+        try:
+            when = datetime.fromisoformat(start.replace("Z", "+00:00"))
+        except ValueError:
+            raise HTTPException(422, "start must be ISO-8601 UTC, e.g. 2026-10-09T12:00:00Z")
+    res = svc.tracks(limit, minutes, step_s, when)
+    if res is None:
+        raise HTTPException(503, "catalog not loaded yet")
+    return res
+
+
 @router.get("/live/conjunctions", response_model=schemas.LiveConjunctions)
 def live_conjunctions(norad: int = config.DEFAULT_PRIMARY_NORAD, hours: float = 72) -> dict:
     svc = store.live()
@@ -187,11 +224,18 @@ def live_conjunctions(norad: int = config.DEFAULT_PRIMARY_NORAD, hours: float = 
 
 
 @router.get("/live/orbit/{norad}", response_model=schemas.OrbitPath)
-def live_orbit(norad: int, minutes: float = Query(90, gt=0, le=1440), step_s: float = Query(30, ge=5, le=600)) -> dict:
+def live_orbit(norad: int, minutes: float = Query(90, gt=0, le=1440), step_s: float = Query(30, ge=5, le=600),
+               start: str | None = None) -> dict:
     svc = store.live()
     if svc is None:
         return mock("live_orbit.json")
-    res = svc.orbit(norad, minutes, step_s)
+    when = None
+    if start:
+        try:
+            when = datetime.fromisoformat(start.replace("Z", "+00:00"))
+        except ValueError:
+            raise HTTPException(422, "start must be ISO-8601 UTC")
+    res = svc.orbit(norad, minutes, step_s, when)
     if res is None:
         raise HTTPException(404, f"NORAD {norad} not in the cached catalog")
     return res

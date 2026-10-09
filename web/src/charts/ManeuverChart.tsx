@@ -3,7 +3,7 @@ import {
 } from 'recharts'
 import type { ManeuverResult } from '../types'
 import { pcSci } from '../format'
-import { C, PC_MIN, axisProps, clampPc, tooltipStyle } from './theme'
+import { C, PC_MIN, anim, axisProps, clampPc, tooltipStyle } from './theme'
 
 // Two hues (along vs radial) × marker shape (sign): stays within the 3-colour cap for scatter.
 const SERIES = [
@@ -38,15 +38,15 @@ export function ManeuverChart({ m }: { m: ManeuverResult }) {
           label={{ value: `target ${pcSci(m.target_pc)}`, fill: C.warning, fontSize: 11, position: 'insideTopRight' }} />
         <ReferenceLine y={clampPc(m.pre_burn_pc)} stroke={C.critical} strokeDasharray="3 4"
           label={{ value: `no burn ${pcSci(m.pre_burn_pc)}`, fill: C.critical, fontSize: 11, position: 'insideBottomRight' }} />
-        {SERIES.map((s) => (
+        {SERIES.map((s, i) => (
           <Scatter key={s.dir} name={s.dir} data={pts.filter((p) => p.direction === s.dir)} dataKey="y"
-            fill={s.color} fillOpacity={0.35} shape={s.shape} legendType={s.shape} isAnimationActive={false} />
+            fill={s.color} fillOpacity={0.35} shape={s.shape} legendType={s.shape} {...anim(100 + i * 150, 700)} />
         ))}
         <Line data={front} dataKey="y" name="Pareto front (best Pc per Δv)" stroke={C.ink} strokeWidth={2} dot={false}
-          isAnimationActive={false} />
+          {...anim(800, 1400)} />
         {rec.length > 0 && (
           <Scatter name="recommended" data={rec} dataKey="y" fill={C.warning} shape="star"
-            stroke={C.surface} strokeWidth={2} isAnimationActive={false} />
+            stroke={C.surface} strokeWidth={2} {...anim(2100, 500)} />
         )}
       </ComposedChart>
     </ResponsiveContainer>

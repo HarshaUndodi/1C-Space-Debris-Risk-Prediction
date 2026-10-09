@@ -5,6 +5,8 @@ import { ManeuverChart } from '../charts/ManeuverChart'
 import { ShapChart } from '../charts/ShapChart'
 import { ErrorBox, Loading } from '../components/Status'
 import { days, meters, oneInN, pcSci } from '../format'
+import { countdown, useNow } from '../live'
+import { CountUp, Typewriter } from '../motion'
 import { exportHtml, exportJson } from '../report'
 import { go } from '../router'
 import type { ManeuverResult } from '../types'
@@ -50,6 +52,9 @@ export function AlertDetailPage({ id }: { id: string }) {
   const d = detail.data
   const live = d?.source === 'live'
   const cutoffs = useMemo(() => (d ? [...d.available_cutoffs].sort((a, b) => b - a) : [6, 5, 4, 3, 2]), [d])
+  const now = useNow(1000)
+  // Live events: TCA as an absolute time (time_to_tca_days is relative to when the detail was fetched).
+  const tcaAt = useMemo(() => (d && live ? new Date(Date.now() + d.time_to_tca_days * 86400e3).toISOString() : null), [d, live])
 
   useEffect(() => { setCutoff(2) }, [id])
 
@@ -74,7 +79,7 @@ export function AlertDetailPage({ id }: { id: string }) {
 
       {d && (
         <>
-          <section className="panel replay">
+          <section className="panel replay enter">
             {cutoffs.length > 0 && (
               <div className="replay-row">
                 <label htmlFor="replay" className="panel-label">Replay — “now” is</label>
@@ -87,20 +92,26 @@ export function AlertDetailPage({ id }: { id: string }) {
             )}
             <div className="kpis">
               <div><span className="kpi-label">{live ? 'Pc (estimated)' : 'P(high risk), calibrated'}</span>
-                <span className="mono kpi">{d.p_high == null ? pcSci(Math.pow(10, d.risk_p50)) : d.p_high.toFixed(3)}</span></div>
-              <div><span className="kpi-label">Final risk P50</span><span className="mono kpi">{oneInN(d.risk_p50)}</span></div>
+                <span className="mono kpi">{d.p_high == null ? pcSci(Math.pow(10, d.risk_p50))
+                  : <CountUp value={d.p_high} format={(v) => v.toFixed(3)} />}</span></div>
+              <div><span className="kpi-label">Final risk P50</span>
+                <span className="mono kpi"><CountUp value={d.risk_p50} format={oneInN} duration={1100} /></span></div>
               <div><span className="kpi-label">Band P10–P90</span><span className="mono kpi small">{oneInN(d.risk_p10)} … {oneInN(d.risk_p90)}</span></div>
-              {!live && <div><span className="kpi-label">Baseline (latest CDM)</span><span className="mono kpi">{oneInN(d.baseline_risk)}</span></div>}
-              <div><span className="kpi-label">Miss distance</span><span className="mono kpi">{meters(d.miss_distance_m)}</span></div>
-              <div><span className="kpi-label">{live ? 'Time to TCA' : 'Latest CDM'}</span><span className="mono kpi">{days(d.time_to_tca_days)}{live ? '' : ' out'}</span></div>
+              {!live && <div><span className="kpi-label">Baseline (latest CDM)</span>
+                <span className="mono kpi"><CountUp value={d.baseline_risk} format={oneInN} duration={1100} /></span></div>}
+              <div><span className="kpi-label">Miss distance</span>
+                <span className="mono kpi"><CountUp value={d.miss_distance_m} format={meters} /></span></div>
+              <div><span className="kpi-label">{live ? 'TCA in' : 'Latest CDM'}</span>
+                <span className="mono kpi">{live && tcaAt ? <span className="tick">{countdown(tcaAt, now)}</span> : `${days(d.time_to_tca_days)} out`}</span></div>
               {d.true_final_risk != null && (
-                <div><span className="kpi-label">Actual outcome</span><span className="mono kpi">{oneInN(d.true_final_risk)}</span></div>
+                <div><span className="kpi-label">Actual outcome</span>
+                  <span className="mono kpi"><CountUp value={d.true_final_risk} format={oneInN} duration={1300} /></span></div>
               )}
             </div>
           </section>
 
           <div className="detail-grid">
-            <section className="panel">
+            <section className="panel enter" style={{ animationDelay: '80ms' }}>
               <div className="panel-title">CDM history · risk vs time to TCA</div>
               <div className="panel-body">
                 {d.cdm_history.length ? <CdmHistoryChart d={d} cutoff={cutoff} /> : (
@@ -109,7 +120,7 @@ export function AlertDetailPage({ id }: { id: string }) {
                 )}
               </div>
             </section>
-            <section className="panel">
+            <section className="panel enter" style={{ animationDelay: '160ms' }}>
               <div className="panel-title">Why flagged · top SHAP drivers</div>
               <div className="panel-body">
                 {d.shap_top.length ? <ShapChart items={d.shap_top} /> : (
@@ -118,14 +129,16 @@ export function AlertDetailPage({ id }: { id: string }) {
                 )}
               </div>
             </section>
-            <section className="panel">
+            <section className="panel enter" style={{ animationDelay: '240ms' }}>
               <div className="panel-title">Operator briefing <span className="muted">· {d.briefing_source === 'llm' ? 'LLM' : 'template'}</span></div>
-              <pre className="terminal">{d.briefing.map((l) => {
-                const tag = l.match(/^\[(\w+)\]/)?.[1] ?? ''
-                return <div key={l} className={`brief-${tag.toLowerCase()}`}>{l}</div>
-              })}</pre>
+              <pre className="terminal" aria-label={d.briefing.join(' ')}>
+                <Typewriter lines={d.briefing} render={(text, _i, full) => {
+                  const tag = full.match(/^\[(\w+)\]/)?.[1] ?? ''
+                  return <span className={`brief-${tag.toLowerCase()}`}>{text}</span>
+                }} />
+              </pre>
             </section>
-            <section className="panel">
+            <section className="panel enter" style={{ animationDelay: '320ms' }}>
               <div className="panel-title">Avoidance maneuver · residual Pc vs Δv <span className="muted">({live ? 'burn options from now' : 'decision at 2 d'})</span></div>
               <div className="panel-body">
                 {man.loading && <Loading what="maneuver options" />}
