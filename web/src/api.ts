@@ -6,7 +6,8 @@ import type {
 } from './types'
 
 const http = axios.create({
-  baseURL: import.meta.env.VITE_API_BASE ?? 'http://localhost:8000/api',
+  // Same-origin by default: FastAPI serves the built app (make serve / tunnel); Vite proxies /api in dev.
+  baseURL: import.meta.env.VITE_API_BASE ?? '/api',
   timeout: 15000,
 })
 
@@ -28,7 +29,7 @@ export const api = {
 
 export function errorMessage(e: unknown): string {
   if (axios.isAxiosError(e)) {
-    if (!e.response) return `API unreachable (${e.message}). Is the backend running on :8000?`
+    if (!e.response) return `API unreachable (${e.message}). Is the OrbitGuard server running?`
     return `API error ${e.response.status}: ${JSON.stringify(e.response.data).slice(0, 160)}`
   }
   return String(e)

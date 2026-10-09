@@ -14,6 +14,8 @@ switch ($Target) {
     'live'  { & $Py -m orbitguard.live }
     'api'   { & $Py -m uvicorn api.main:app --reload --port 8000 }
     'web'   { Push-Location web; npm run dev; Pop-Location }
+    'serve' { Push-Location web; npm run build; Pop-Location; & $Py -m uvicorn api.main:app --port 8000 }
+    'share' { & cloudflared tunnel --url http://localhost:8000 }
     'test'  { & $Py -m pytest -q }
     default { Write-Error "Unknown target '$Target'" }
 }

@@ -223,3 +223,11 @@ def space_weather() -> dict:
 
 
 app.include_router(router)
+
+# Serve the built dashboard (web/dist) from the same origin, so one port / one tunnel URL carries
+# both the UI and /api. The app uses hash routing, so index.html is the only page.
+WEB_DIST = Path(__file__).resolve().parent.parent / "web" / "dist"
+if WEB_DIST.exists():
+    from fastapi.staticfiles import StaticFiles
+
+    app.mount("/", StaticFiles(directory=WEB_DIST, html=True), name="web")

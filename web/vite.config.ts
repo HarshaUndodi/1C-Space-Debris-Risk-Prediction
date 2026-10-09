@@ -11,5 +11,5 @@ const cesium = ((cesiumImport as unknown as { default?: CesiumPlugin }).default 
 // so the bundled NaturalEarthII imagery works offline with no Ion token.
 export default defineConfig({
   plugins: [react(), cesium()],
-  server: { port: 5173, strictPort: true },
+  server: { port: 5173, strictPort: true, proxy: { '/api': 'http://localhost:8000' } },
 })

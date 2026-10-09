@@ -6,7 +6,7 @@ else
 PY ?= .venv/bin/python
 endif
 
-.PHONY: setup data mocks train eval demo live api web test
+.PHONY: setup data mocks train eval demo live api web serve share test
 
 setup:
 	python -m venv .venv
@@ -38,6 +38,13 @@ api:
 
 web:
 	cd web && npm run dev
+
+serve:   # one server: built dashboard + API on http://localhost:8000
+	cd web && npm run build
+	$(PY) -m uvicorn api.main:app --port 8000
+
+share:   # public link to `make serve` via a Cloudflare quick tunnel (no account)
+	cloudflared tunnel --url http://localhost:8000
 
 test:
 	$(PY) -m pytest -q
