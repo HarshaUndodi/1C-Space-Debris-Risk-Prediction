@@ -29,33 +29,25 @@ function SpaceWeatherChip() {
 }
 
 /**
- * Ambient music is always on. Browsers block audio until the visitor interacts with the page, so it
- * starts on the first click / tap / key press anywhere and is never stopped. This is only an indicator.
+ * Ambient music is always on, with no visible control. Browsers block audio until the visitor interacts
+ * with the page, so it starts on the first click / tap / key press anywhere and is never stopped.
  */
-function MusicIndicator() {
-  const [on, setOn] = useState(false)
+function useAlwaysOnMusic() {
   useEffect(() => {
     const events = ['pointerdown', 'keydown', 'touchstart'] as const
     const start = () => {
       ambient.start()
-      setOn(true)
       events.forEach((e) => window.removeEventListener(e, start, true))
     }
     events.forEach((e) => window.addEventListener(e, start, { capture: true, passive: true }))
     return () => events.forEach((e) => window.removeEventListener(e, start, true))
   }, [])
-  return (
-    <span className={`music ${on ? 'on' : ''}`} role="status"
-      title={on ? 'Ambient space music, generated live in your browser' : 'Music starts on your first click'}>
-      <span className="eq" aria-hidden="true"><i /><i /><i /><i /></span>
-      <span>{on ? 'Ambient' : 'Click anywhere for sound'}</span>
-    </span>
-  )
 }
 
 export function Header({ route, source, onSource, mode }: {
   route: Route['page']; source: Source; onSource: (s: Source) => void; mode?: string
 }) {
+  useAlwaysOnMusic()
   return (
     <header className="header">
       <div className="logo" onClick={go.mission} role="link">
@@ -67,7 +59,6 @@ export function Header({ route, source, onSource, mode }: {
         <button className={route === 'metrics' ? 'active' : ''} onClick={go.metrics}>Metrics</button>
       </nav>
       <div className="header-right">
-        <MusicIndicator />
         <SpaceWeatherChip />
         {route === 'mission' && (
           <div className="toggle" role="tablist">
