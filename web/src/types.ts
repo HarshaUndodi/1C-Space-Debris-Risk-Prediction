@@ -85,6 +85,8 @@ export interface ManeuverResult {
   points: ManeuverOption[]
   pareto: ParetoPoint[]
   secondary_check: SecondaryCheck
+  note?: string | null
+  assumptions?: Record<string, unknown> | null
 }
 
 export interface CatalogObject {
@@ -136,8 +138,8 @@ export interface LeadTimePoint {
 }
 
 export interface BaselineMetrics {
-  kelvins_score: number
-  mse_hr: number
+  kelvins_score: number | null
+  mse_hr: number | null
   f2: number
   recall: number
   false_alarm_rate: number
@@ -157,15 +159,35 @@ export interface ScreeningMetrics {
   seconds: number
 }
 
+export interface ReliabilityBin {
+  p_mean: number
+  frac_pos: number
+  n: number
+}
+
 export interface Metrics {
   cutoff_days: number
   n_test_events: number
   n_test_high_risk: number
   baseline: BaselineMetrics
   model: ModelMetrics
-  lead_time: LeadTimePoint[]
-  screening: ScreeningMetrics
-  [extra: string]: unknown
+  lead_time: (LeadTimePoint & { model_far?: number; baseline_far?: number; n_available?: number })[]
+  screening: ScreeningMetrics & { primary?: string; conjunctions?: number; prefiltered_objects?: number; all_vs_all_seconds?: number }
+  // extras written by evaluate.py / pc.py (absent in mock mode)
+  is_mock?: boolean
+  generated_at?: string
+  n_train_events?: number
+  n_train_high_risk?: number
+  baseline_clipped?: { kelvins_score: number | null; mse_hr: number | null; f2: number }
+  baseline_at_95_recall_level?: { level_log10: number; recall: number; false_alarm_rate: number; f2: number }
+  ranking?: {
+    auc_pr_model: number; auc_pr_baseline: number; roc_auc_model: number; roc_auc_baseline: number
+    far_at_recall_diagnostic: Record<string, { model: number; baseline: number }>
+  }
+  reliability?: { model_calibrated: ReliabilityBin[]; model_uncalibrated: ReliabilityBin[]; baseline_logistic: ReliabilityBin[] }
+  shap_global?: { feature: string; label: string; mean_abs_shap: number }[]
+  pc_validation?: { n_cdms: number; spearman_all: number; spearman_above_floor: number | null; median_abs_log10_diff_above_floor: number | null; within_1_order_of_magnitude: number | null }
+  notes?: string[]
 }
 
 export interface SpaceWeather {
