@@ -1,0 +1,68 @@
+{
+ "cutoff_days": 2,
+ "n_test_events": 0,
+ "n_test_high_risk": 0,
+ "baseline": {
+  "kelvins_score": 0.0,
+  "mse_hr": 0.0,
+  "f2": 0.0,
+  "recall": 0.0,
+  "false_alarm_rate": 0.0,
+  "brier": 0.0
+ },
+ "model": {
+  "kelvins_score": 0.0,
+  "mse_hr": 0.0,
+  "f2": 0.0,
+  "recall": 0.0,
+  "false_alarm_rate": 0.0,
+  "brier": 0.0,
+  "brier_uncalibrated": 0.0,
+  "band_coverage_p10_p90": 0.0,
+  "threshold": 0.0
+ },
+ "lead_time": [
+  {
+   "cutoff_days": 2,
+   "model_recall": 0.0,
+   "baseline_recall": 0.0,
+   "model_f2": 0.0,
+   "baseline_f2": 0.0
+  },
+  {
+   "cutoff_days": 3,
+   "model_recall": 0.0,
+   "baseline_recall": 0.0,
+   "model_f2": 0.0,
+   "baseline_f2": 0.0
+  },
+  {
+   "cutoff_days": 4,
+   "model_recall": 0.0,
+   "baseline_recall": 0.0,
+   "model_f2": 0.0,
+   "baseline_f2": 0.0
+  },
+  {
+   "cutoff_days": 5,
+   "model_recall": 0.0,
+   "baseline_recall": 0.0,
+   "model_f2": 0.0,
+   "baseline_f2": 0.0
+  },
+  {
+   "cutoff_days": 7,
+   "model_recall": 0.0,
+   "baseline_recall": 0.0,
+   "model_f2": 0.0,
+   "baseline_f2": 0.0
+  }
+ ],
+ "screening": {
+  "objects": 0,
+  "hours": 72,
+  "step_s": 60,
+  "seconds": 0.0
+ },
+ "is_mock": true
+}

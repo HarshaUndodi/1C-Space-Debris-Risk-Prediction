@@ -1,0 +1,2256 @@
+{
+ "1000": {
+  "event_id": "1000",
+  "source": "historical",
+  "decision": "MANEUVER",
+  "time_to_tca_days": 2.18,
+  "p_high": 0.991,
+  "risk_p10": -4.0,
+  "risk_p50": -3.4,
+  "risk_p90": -2.92,
+  "baseline_risk": -3.025,
+  "miss_distance_m": 103.6,
+  "chaser_type": "DEBRIS",
+  "cdm_history": [
+   {
+    "time_to_tca": 7.02,
+    "risk": -5.46,
+    "miss_distance_m": 355.5
+   },
+   {
+    "time_to_tca": 6.609,
+    "risk": -5.407,
+    "miss_distance_m": 356.6
+   },
+   {
+    "time_to_tca": 6.348,
+    "risk": -5.077,
+    "miss_distance_m": 344.2
+   },
+   {
+    "time_to_tca": 5.976,
+    "risk": -4.944,
+    "miss_distance_m": 357.5
+   },
+   {
+    "time_to_tca": 5.629,
+    "risk": -5.133,
+    "miss_distance_m": 301.6
+   },
+   {
+    "time_to_tca": 5.213,
+    "risk": -5.151,
+    "miss_distance_m": 302.5
+   },
+   {
+    "time_to_tca": 4.895,
+    "risk": -4.377,
+    "miss_distance_m": 279.5
+   },
+   {
+    "time_to_tca": 4.537,
+    "risk": -4.959,
+    "miss_distance_m": 256.3
+   },
+   {
+    "time_to_tca": 4.243,
+    "risk": -4.349,
+    "miss_distance_m": 265.4
+   },
+   {
+    "time_to_tca": 3.864,
+    "risk": -4.274,
+    "miss_distance_m": 233.3
+   },
+   {
+    "time_to_tca": 3.532,
+    "risk": -4.284,
+    "miss_distance_m": 229.8
+   },
+   {
+    "time_to_tca": 3.144,
+    "risk": -4.173,
+    "miss_distance_m": 222.8
+   },
+   {
+    "time_to_tca": 2.773,
+    "risk": -4.06,
+    "miss_distance_m": 205.9
+   },
+   {
+    "time_to_tca": 2.455,
+    "risk": -4.02,
+    "miss_distance_m": 189.6
+   },
+   {
+    "time_to_tca": 2.056,
+    "risk": -3.703,
+    "miss_distance_m": 159.0
+   },
+   {
+    "time_to_tca": 1.783,
+    "risk": -3.955,
+    "miss_distance_m": 157.1
+   },
+   {
+    "time_to_tca": 1.413,
+    "risk": -3.956,
+    "miss_distance_m": 144.6
+   },
+   {
+    "time_to_tca": 1.076,
+    "risk": -3.108,
+    "miss_distance_m": 127.8
+   },
+   {
+    "time_to_tca": 0.685,
+    "risk": -3.176,
+    "miss_distance_m": 108.5
+   },
+   {
+    "time_to_tca": 0.397,
+    "risk": -3.546,
+    "miss_distance_m": 108.2
+   }
+  ],
+  "available_cutoffs": [
+   7,
+   5,
+   4,
+   3,
+   2
+  ],
+  "shap_top": [
+   {
+    "feature": "risk_max",
+    "label": "Highest risk seen so far",
+    "value": 103.37,
+    "shap": -0.72
+   },
+   {
+    "feature": "mahalanobis_proxy",
+    "label": "Miss distance in units of uncertainty",
+    "value": 201.31,
+    "shap": 1.0
+   },
+   {
+    "feature": "delta_miss_distance",
+    "label": "Change in miss distance since previous CDM",
+    "value": 425.97,
+    "shap": 0.8
+   },
+   {
+    "feature": "last_risk",
+    "label": "Latest CDM risk",
+    "value": 113.14,
+    "shap": -0.36
+   },
+   {
+    "feature": "slope_risk",
+    "label": "Risk trend over time",
+    "value": 24.44,
+    "shap": 0.4
+   }
+  ],
+  "briefing": [
+   "[ALERT] Final risk about 1 in 2,512 with debris, TCA in 2.18 days.",
+   "[DIAGNOSTIC] Driven mainly by highest risk seen so far and miss distance in units of uncertainty.",
+   "[ACTION] MANEUVER: Plan avoidance: +0.12 m/s along-track, 24 h before TCA."
+  ],
+  "briefing_source": "template",
+  "true_final_risk": -3.201
+ },
+ "1037": {
+  "event_id": "1037",
+  "source": "historical",
+  "decision": "MANEUVER",
+  "time_to_tca_days": 2.26,
+  "p_high": 0.978,
+  "risk_p10": -4.65,
+  "risk_p50": -3.9,
+  "risk_p90": -3.3,
+  "baseline_risk": -4.114,
+  "miss_distance_m": 134.0,
+  "chaser_type": "PAYLOAD",
+  "cdm_history": [
+   {
+    "time_to_tca": 7.028,
+    "risk": -6.258,
+    "miss_distance_m": 479.8
+   },
+   {
+    "time_to_tca": 6.666,
+    "risk": -6.117,
+    "miss_distance_m": 443.8
+   },
+   {
+    "time_to_tca": 6.291,
+    "risk": -5.234,
+    "miss_distance_m": 425.8
+   },
+   {
+    "time_to_tca": 5.981,
+    "risk": -5.338,
+    "miss_distance_m": 398.6
+   },
+   {
+    "time_to_tca": 5.567,
+    "risk": -5.544,
+    "miss_distance_m": 378.5
+   },
+   {
+    "time_to_tca": 5.202,
+    "risk": -5.482,
+    "miss_distance_m": 395.1
+   },
+   {
+    "time_to_tca": 4.859,
+    "risk": -5.865,
+    "miss_distance_m": 369.8
+   },
+   {
+    "time_to_tca": 4.572,
+    "risk": -5.092,
+    "miss_distance_m": 337.3
+   },
+   {
+    "time_to_tca": 4.196,
+    "risk": -5.569,
+    "miss_distance_m": 330.0
+   },
+   {
+    "time_to_tca": 3.816,
+    "risk": -5.135,
+    "miss_distance_m": 313.4
+   },
+   {
+    "time_to_tca": 3.5,
+    "risk": -4.848,
+    "miss_distance_m": 317.6
+   },
+   {
+    "time_to_tca": 3.115,
+    "risk": -4.824,
+    "miss_distance_m": 260.7
+   },
+   {
+    "time_to_tca": 2.82,
+    "risk": -4.589,
+    "miss_distance_m": 262.9
+   },
+   {
+    "time_to_tca": 2.445,
+    "risk": -4.064,
+    "miss_distance_m": 251.3
+   },
+   {
+    "time_to_tca": 2.088,
+    "risk": -4.309,
+    "miss_distance_m": 239.8
+   },
+   {
+    "time_to_tca": 1.73,
+    "risk": -4.743,
+    "miss_distance_m": 198.9
+   },
+   {
+    "time_to_tca": 1.413,
+    "risk": -4.557,
+    "miss_distance_m": 186.0
+   },
+   {
+    "time_to_tca": 1.036,
+    "risk": -4.602,
+    "miss_distance_m": 176.2
+   },
+   {
+    "time_to_tca": 0.659,
+    "risk": -4.085,
+    "miss_distance_m": 140.8
+   },
+   {
+    "time_to_tca": 0.312,
+    "risk": -4.259,
+    "miss_distance_m": 136.7
+   }
+  ],
+  "available_cutoffs": [
+   7,
+   5,
+   4,
+   3,
+   2
+  ],
+  "shap_top": [
+   {
+    "feature": "delta_miss_distance",
+    "label": "Change in miss distance since previous CDM",
+    "value": 283.72,
+    "shap": -0.72
+   },
+   {
+    "feature": "last_miss_distance",
+    "label": "Latest miss distance",
+    "value": 234.11,
+    "shap": 1.0
+   },
+   {
+    "feature": "mahalanobis_proxy",
+    "label": "Miss distance in units of uncertainty",
+    "value": 129.82,
+    "shap": 0.8
+   },
+   {
+    "feature": "last_risk",
+    "label": "Latest CDM risk",
+    "value": 162.44,
+    "shap": -0.36
+   },
+   {
+    "feature": "risk_max",
+    "label": "Highest risk seen so far",
+    "value": 257.94,
+    "shap": 0.4
+   }
+  ],
+  "briefing": [
+   "[ALERT] Final risk about 1 in 7,943 with payload, TCA in 2.26 days.",
+   "[DIAGNOSTIC] Driven mainly by change in miss distance since previous cdm and latest miss distance.",
+   "[ACTION] MANEUVER: Plan avoidance: +0.12 m/s along-track, 24 h before TCA."
+  ],
+  "briefing_source": "template",
+  "true_final_risk": -4.145
+ },
+ "1074": {
+  "event_id": "1074",
+  "source": "historical",
+  "decision": "MANEUVER",
+  "time_to_tca_days": 2.33,
+  "p_high": 0.955,
+  "risk_p10": -5.2,
+  "risk_p50": -4.3,
+  "risk_p90": -3.58,
+  "baseline_risk": -4.221,
+  "miss_distance_m": 171.0,
+  "chaser_type": "ROCKET BODY",
+  "cdm_history": [
+   {
+    "time_to_tca": 6.964,
+    "risk": -6.304,
+    "miss_distance_m": 576.6
+   },
+   {
+    "time_to_tca": 6.655,
+    "risk": -6.041,
+    "miss_distance_m": 563.4
+   },
+   {
+    "time_to_tca": 6.261,
+    "risk": -6.508,
+    "miss_distance_m": 516.1
+   },
+   {
+    "time_to_tca": 5.967,
+    "risk": -5.931,
+    "miss_distance_m": 574.6
+   },
+   {
+    "time_to_tca": 5.578,
+    "risk": -5.82,
+    "miss_distance_m": 504.7
+   },
+   {
+    "time_to_tca": 5.266,
+    "risk": -5.682,
+    "miss_distance_m": 519.7
+   },
+   {
+    "time_to_tca": 4.923,
+    "risk": -5.603,
+    "miss_distance_m": 456.3
+   },
+   {
+    "time_to_tca": 4.577,
+    "risk": -5.189,
+    "miss_distance_m": 453.4
+   },
+   {
+    "time_to_tca": 4.161,
+    "risk": -4.915,
+    "miss_distance_m": 421.1
+   },
+   {
+    "time_to_tca": 3.892,
+    "risk": -5.801,
+    "miss_distance_m": 372.8
+   },
+   {
+    "time_to_tca": 3.473,
+    "risk": -4.669,
+    "miss_distance_m": 405.6
+   },
+   {
+    "time_to_tca": 3.104,
+    "risk": -5.2,
+    "miss_distance_m": 343.2
+   },
+   {
+    "time_to_tca": 2.805,
+    "risk": -4.536,
+    "miss_distance_m": 312.5
+   },
+   {
+    "time_to_tca": 2.437,
+    "risk": -5.251,
+    "miss_distance_m": 317.2
+   },
+   {
+    "time_to_tca": 2.133,
+    "risk": -4.985,
+    "miss_distance_m": 287.9
+   },
+   {
+    "time_to_tca": 1.781,
+    "risk": -4.799,
+    "miss_distance_m": 269.9
+   },
+   {
+    "time_to_tca": 1.382,
+    "risk": -4.13,
+    "miss_distance_m": 241.1
+   },
+   {
+    "time_to_tca": 1.095,
+    "risk": -4.312,
+    "miss_distance_m": 199.0
+   },
+   {
+    "time_to_tca": 0.679,
+    "risk": -4.43,
+    "miss_distance_m": 186.9
+   },
+   {
+    "time_to_tca": 0.352,
+    "risk": -4.742,
+    "miss_distance_m": 166.6
+   }
+  ],
+  "available_cutoffs": [
+   7,
+   5,
+   4,
+   3,
+   2
+  ],
+  "shap_top": [
+   {
+    "feature": "last_c_sigma_t",
+    "label": "Debris along-track uncertainty",
+    "value": 463.42,
+    "shap": -0.72
+   },
+   {
+    "feature": "last_risk",
+    "label": "Latest CDM risk",
+    "value": 195.78,
+    "shap": 1.0
+   },
+   {
+    "feature": "mahalanobis_proxy",
+    "label": "Miss distance in units of uncertainty",
+    "value": 146.98,
+    "shap": 0.8
+   },
+   {
+    "feature": "last_AP",
+    "label": "Geomagnetic activity (Ap)",
+    "value": 241.73,
+    "shap": -0.36
+   },
+   {
+    "feature": "risk_max",
+    "label": "Highest risk seen so far",
+    "value": 329.75,
+    "shap": 0.4
+   }
+  ],
+  "briefing": [
+   "[ALERT] Final risk about 1 in 19,953 with rocket body, TCA in 2.33 days.",
+   "[DIAGNOSTIC] Driven mainly by debris along-track uncertainty and latest cdm risk.",
+   "[ACTION] MANEUVER: Plan avoidance: +0.12 m/s along-track, 24 h before TCA."
+  ],
+  "briefing_source": "template",
+  "true_final_risk": -3.765
+ },
+ "1111": {
+  "event_id": "1111",
+  "source": "historical",
+  "decision": "MANEUVER",
+  "time_to_tca_days": 2.37,
+  "p_high": 0.897,
+  "risk_p10": -5.85,
+  "risk_p50": -4.8,
+  "risk_p90": -3.96,
+  "baseline_risk": -4.912,
+  "miss_distance_m": 225.0,
+  "chaser_type": "UNKNOWN",
+  "cdm_history": [
+   {
+    "time_to_tca": 7.006,
+    "risk": -6.987,
+    "miss_distance_m": 753.6
+   },
+   {
+    "time_to_tca": 6.663,
+    "risk": -6.733,
+    "miss_distance_m": 692.7
+   },
+   {
+    "time_to_tca": 6.261,
+    "risk": -7.093,
+    "miss_distance_m": 802.8
+   },
+   {
+    "time_to_tca": 5.914,
+    "risk": -6.926,
+    "miss_distance_m": 658.3
+   },
+   {
+    "time_to_tca": 5.592,
+    "risk": -5.737,
+    "miss_distance_m": 766.7
+   },
+   {
+    "time_to_tca": 5.297,
+    "risk": -6.702,
+    "miss_distance_m": 632.8
+   },
+   {
+    "time_to_tca": 4.91,
+    "risk": -6.056,
+    "miss_distance_m": 665.0
+   },
+   {
+    "time_to_tca": 4.593,
+    "risk": -6.427,
+    "miss_distance_m": 578.4
+   },
+   {
+    "time_to_tca": 4.23,
+    "risk": -5.701,
+    "miss_distance_m": 567.2
+   },
+   {
+    "time_to_tca": 3.847,
+    "risk": -5.99,
+    "miss_distance_m": 519.4
+   },
+   {
+    "time_to_tca": 3.528,
+    "risk": -6.245,
+    "miss_distance_m": 490.2
+   },
+   {
+    "time_to_tca": 3.102,
+    "risk": -5.73,
+    "miss_distance_m": 465.7
+   },
+   {
+    "time_to_tca": 2.761,
+    "risk": -5.729,
+    "miss_distance_m": 441.9
+   },
+   {
+    "time_to_tca": 2.483,
+    "risk": -5.097,
+    "miss_distance_m": 411.5
+   },
+   {
+    "time_to_tca": 2.13,
+    "risk": -5.223,
+    "miss_distance_m": 379.7
+   },
+   {
+    "time_to_tca": 1.723,
+    "risk": -5.225,
+    "miss_distance_m": 332.1
+   },
+   {
+    "time_to_tca": 1.403,
+    "risk": -5.019,
+    "miss_distance_m": 316.1
+   },
+   {
+    "time_to_tca": 1.061,
+    "risk": -4.294,
+    "miss_distance_m": 311.6
+   },
+   {
+    "time_to_tca": 0.737,
+    "risk": -4.795,
+    "miss_distance_m": 251.7
+   },
+   {
+    "time_to_tca": 0.36,
+    "risk": -5.207,
+    "miss_distance_m": 243.8
+   }
+  ],
+  "available_cutoffs": [
+   7,
+   5,
+   4,
+   3,
+   2
+  ],
+  "shap_top": [
+   {
+    "feature": "last_AP",
+    "label": "Geomagnetic activity (Ap)",
+    "value": 450.84,
+    "shap": -0.72
+   },
+   {
+    "feature": "last_c_sigma_t",
+    "label": "Debris along-track uncertainty",
+    "value": 489.68,
+    "shap": 1.0
+   },
+   {
+    "feature": "last_miss_distance",
+    "label": "Latest miss distance",
+    "value": 400.02,
+    "shap": 0.8
+   },
+   {
+    "feature": "last_risk",
+    "label": "Latest CDM risk",
+    "value": 388.64,
+    "shap": -0.36
+   },
+   {
+    "feature": "slope_risk",
+    "label": "Risk trend over time",
+    "value": 319.45,
+    "shap": 0.4
+   }
+  ],
+  "briefing": [
+   "[ALERT] Final risk about 1 in 63,096 with unknown, TCA in 2.37 days.",
+   "[DIAGNOSTIC] Driven mainly by geomagnetic activity (ap) and debris along-track uncertainty.",
+   "[ACTION] MANEUVER: Plan avoidance: +0.12 m/s along-track, 24 h before TCA."
+  ],
+  "briefing_source": "template",
+  "true_final_risk": -4.917
+ },
+ "1148": {
+  "event_id": "1148",
+  "source": "historical",
+  "decision": "WATCH",
+  "time_to_tca_days": 2.21,
+  "p_high": 0.779,
+  "risk_p10": -6.5,
+  "risk_p50": -5.3,
+  "risk_p90": -4.34,
+  "baseline_risk": -5.224,
+  "miss_distance_m": 298.4,
+  "chaser_type": "DEBRIS",
+  "cdm_history": [
+   {
+    "time_to_tca": 7.036,
+    "risk": -6.7,
+    "miss_distance_m": 1071.5
+   },
+   {
+    "time_to_tca": 6.646,
+    "risk": -6.905,
+    "miss_distance_m": 990.2
+   },
+   {
+    "time_to_tca": 6.289,
+    "risk": -7.064,
+    "miss_distance_m": 931.6
+   },
+   {
+    "time_to_tca": 5.964,
+    "risk": -6.644,
+    "miss_distance_m": 874.4
+   },
+   {
+    "time_to_tca": 5.577,
+    "risk": -6.601,
+    "miss_distance_m": 877.5
+   },
+   {
+    "time_to_tca": 5.214,
+    "risk": -6.357,
+    "miss_distance_m": 877.3
+   },
+   {
+    "time_to_tca": 4.898,
+    "risk": -6.035,
+    "miss_distance_m": 840.0
+   },
+   {
+    "time_to_tca": 4.542,
+    "risk": -7.116,
+    "miss_distance_m": 768.2
+   },
+   {
+    "time_to_tca": 4.173,
+    "risk": -6.866,
+    "miss_distance_m": 710.8
+   },
+   {
+    "time_to_tca": 3.837,
+    "risk": -5.827,
+    "miss_distance_m": 714.3
+   },
+   {
+    "time_to_tca": 3.487,
+    "risk": -6.496,
+    "miss_distance_m": 620.1
+   },
+   {
+    "time_to_tca": 3.133,
+    "risk": -6.134,
+    "miss_distance_m": 576.5
+   },
+   {
+    "time_to_tca": 2.788,
+    "risk": -6.278,
+    "miss_distance_m": 584.4
+   },
+   {
+    "time_to_tca": 2.469,
+    "risk": -5.543,
+    "miss_distance_m": 556.3
+   },
+   {
+    "time_to_tca": 2.08,
+    "risk": -6.633,
+    "miss_distance_m": 504.1
+   },
+   {
+    "time_to_tca": 1.795,
+    "risk": -5.721,
+    "miss_distance_m": 474.5
+   },
+   {
+    "time_to_tca": 1.442,
+    "risk": -5.075,
+    "miss_distance_m": 381.6
+   },
+   {
+    "time_to_tca": 1.048,
+    "risk": -5.73,
+    "miss_distance_m": 393.0
+   },
+   {
+    "time_to_tca": 0.683,
+    "risk": -5.968,
+    "miss_distance_m": 366.2
+   },
+   {
+    "time_to_tca": 0.354,
+    "risk": -5.187,
+    "miss_distance_m": 317.3
+   }
+  ],
+  "available_cutoffs": [
+   7,
+   5,
+   4,
+   3,
+   2
+  ],
+  "shap_top": [
+   {
+    "feature": "mahalanobis_proxy",
+    "label": "Miss distance in units of uncertainty",
+    "value": 131.62,
+    "shap": -0.72
+   },
+   {
+    "feature": "last_miss_distance",
+    "label": "Latest miss distance",
+    "value": 178.92,
+    "shap": 1.0
+   },
+   {
+    "feature": "risk_max",
+    "label": "Highest risk seen so far",
+    "value": 153.79,
+    "shap": 0.8
+   },
+   {
+    "feature": "last_c_sigma_r",
+    "label": "Debris radial uncertainty",
+    "value": 74.59,
+    "shap": -0.36
+   },
+   {
+    "feature": "last_c_sigma_t",
+    "label": "Debris along-track uncertainty",
+    "value": 69.63,
+    "shap": 0.4
+   }
+  ],
+  "briefing": [
+   "[ALERT] Final risk about 1 in 199,526 with debris, TCA in 2.21 days.",
+   "[DIAGNOSTIC] Driven mainly by miss distance in units of uncertainty and latest miss distance.",
+   "[ACTION] WATCH: Monitor; re-assess at next CDM, maneuver option on standby."
+  ],
+  "briefing_source": "template",
+  "true_final_risk": -4.9
+ },
+ "1185": {
+  "event_id": "1185",
+  "source": "historical",
+  "decision": "WATCH",
+  "time_to_tca_days": 2.15,
+  "p_high": 0.632,
+  "risk_p10": -7.05,
+  "risk_p50": -5.7,
+  "risk_p90": -4.62,
+  "baseline_risk": -4.959,
+  "miss_distance_m": 352.4,
+  "chaser_type": "PAYLOAD",
+  "cdm_history": [
+   {
+    "time_to_tca": 7.005,
+    "risk": -7.548,
+    "miss_distance_m": 1266.6
+   },
+   {
+    "time_to_tca": 6.694,
+    "risk": -7.512,
+    "miss_distance_m": 1108.9
+   },
+   {
+    "time_to_tca": 6.328,
+    "risk": -8.308,
+    "miss_distance_m": 1148.3
+   },
+   {
+    "time_to_tca": 5.948,
+    "risk": -7.551,
+    "miss_distance_m": 1120.3
+   },
+   {
+    "time_to_tca": 5.588,
+    "risk": -7.033,
+    "miss_distance_m": 1055.0
+   },
+   {
+    "time_to_tca": 5.299,
+    "risk": -6.926,
+    "miss_distance_m": 1021.3
+   },
+   {
+    "time_to_tca": 4.922,
+    "risk": -6.894,
+    "miss_distance_m": 926.4
+   },
+   {
+    "time_to_tca": 4.595,
+    "risk": -7.045,
+    "miss_distance_m": 926.3
+   },
+   {
+    "time_to_tca": 4.162,
+    "risk": -6.566,
+    "miss_distance_m": 843.3
+   },
+   {
+    "time_to_tca": 3.885,
+    "risk": -6.588,
+    "miss_distance_m": 812.9
+   },
+   {
+    "time_to_tca": 3.514,
+    "risk": -6.7,
+    "miss_distance_m": 807.2
+   },
+   {
+    "time_to_tca": 3.112,
+    "risk": -7.237,
+    "miss_distance_m": 675.4
+   },
+   {
+    "time_to_tca": 2.809,
+    "risk": -6.968,
+    "miss_distance_m": 602.7
+   },
+   {
+    "time_to_tca": 2.469,
+    "risk": -6.585,
+    "miss_distance_m": 661.5
+   },
+   {
+    "time_to_tca": 2.051,
+    "risk": -6.322,
+    "miss_distance_m": 588.5
+   },
+   {
+    "time_to_tca": 1.745,
+    "risk": -5.75,
+    "miss_distance_m": 578.5
+   },
+   {
+    "time_to_tca": 1.433,
+    "risk": -6.062,
+    "miss_distance_m": 535.3
+   },
+   {
+    "time_to_tca": 1.03,
+    "risk": -5.886,
+    "miss_distance_m": 429.6
+   },
+   {
+    "time_to_tca": 0.696,
+    "risk": -6.026,
+    "miss_distance_m": 374.5
+   },
+   {
+    "time_to_tca": 0.344,
+    "risk": -6.024,
+    "miss_distance_m": 351.8
+   }
+  ],
+  "available_cutoffs": [
+   7,
+   5,
+   4,
+   3,
+   2
+  ],
+  "shap_top": [
+   {
+    "feature": "last_AP",
+    "label": "Geomagnetic activity (Ap)",
+    "value": 306.24,
+    "shap": -0.72
+   },
+   {
+    "feature": "slope_risk",
+    "label": "Risk trend over time",
+    "value": 16.39,
+    "shap": 1.0
+   },
+   {
+    "feature": "last_risk",
+    "label": "Latest CDM risk",
+    "value": 441.49,
+    "shap": 0.8
+   },
+   {
+    "feature": "mahalanobis_proxy",
+    "label": "Miss distance in units of uncertainty",
+    "value": 353.34,
+    "shap": -0.36
+   },
+   {
+    "feature": "risk_max",
+    "label": "Highest risk seen so far",
+    "value": 82.43,
+    "shap": 0.4
+   }
+  ],
+  "briefing": [
+   "[ALERT] Final risk about 1 in 501,187 with payload, TCA in 2.15 days.",
+   "[DIAGNOSTIC] Driven mainly by geomagnetic activity (ap) and risk trend over time.",
+   "[ACTION] WATCH: Monitor; re-assess at next CDM, maneuver option on standby."
+  ],
+  "briefing_source": "template",
+  "true_final_risk": -5.942
+ },
+ "1222": {
+  "event_id": "1222",
+  "source": "historical",
+  "decision": "WATCH",
+  "time_to_tca_days": 2.39,
+  "p_high": 0.411,
+  "risk_p10": -7.7,
+  "risk_p50": -6.2,
+  "risk_p90": -5.0,
+  "baseline_risk": -6.527,
+  "miss_distance_m": 493.5,
+  "chaser_type": "ROCKET BODY",
+  "cdm_history": [
+   {
+    "time_to_tca": 7.028,
+    "risk": -8.218,
+    "miss_distance_m": 1759.7
+   },
+   {
+    "time_to_tca": 6.664,
+    "risk": -8.391,
+    "miss_distance_m": 1533.0
+   },
+   {
+    "time_to_tca": 6.307,
+    "risk": -8.719,
+    "miss_distance_m": 1510.4
+   },
+   {
+    "time_to_tca": 5.915,
+    "risk": -8.037,
+    "miss_distance_m": 1505.0
+   },
+   {
+    "time_to_tca": 5.645,
+    "risk": -7.117,
+    "miss_distance_m": 1559.4
+   },
+   {
+    "time_to_tca": 5.23,
+    "risk": -8.008,
+    "miss_distance_m": 1425.8
+   },
+   {
+    "time_to_tca": 4.908,
+    "risk": -7.718,
+    "miss_distance_m": 1323.0
+   },
+   {
+    "time_to_tca": 4.57,
+    "risk": -7.41,
+    "miss_distance_m": 1319.5
+   },
+   {
+    "time_to_tca": 4.215,
+    "risk": -7.487,
+    "miss_distance_m": 1279.1
+   },
+   {
+    "time_to_tca": 3.894,
+    "risk": -7.673,
+    "miss_distance_m": 1155.7
+   },
+   {
+    "time_to_tca": 3.465,
+    "risk": -6.236,
+    "miss_distance_m": 1088.3
+   },
+   {
+    "time_to_tca": 3.151,
+    "risk": -6.549,
+    "miss_distance_m": 1023.2
+   },
+   {
+    "time_to_tca": 2.79,
+    "risk": -6.74,
+    "miss_distance_m": 949.4
+   },
+   {
+    "time_to_tca": 2.447,
+    "risk": -6.901,
+    "miss_distance_m": 854.3
+   },
+   {
+    "time_to_tca": 2.062,
+    "risk": -6.575,
+    "miss_distance_m": 783.2
+   },
+   {
+    "time_to_tca": 1.713,
+    "risk": -6.389,
+    "miss_distance_m": 794.7
+   },
+   {
+    "time_to_tca": 1.378,
+    "risk": -6.393,
+    "miss_distance_m": 682.1
+   },
+   {
+    "time_to_tca": 1.03,
+    "risk": -6.259,
+    "miss_distance_m": 618.3
+   },
+   {
+    "time_to_tca": 0.693,
+    "risk": -5.99,
+    "miss_distance_m": 514.0
+   },
+   {
+    "time_to_tca": 0.361,
+    "risk": -6.336,
+    "miss_distance_m": 454.5
+   }
+  ],
+  "available_cutoffs": [
+   7,
+   5,
+   4,
+   3,
+   2
+  ],
+  "shap_top": [
+   {
+    "feature": "risk_max",
+    "label": "Highest risk seen so far",
+    "value": 179.28,
+    "shap": 0.72
+   },
+   {
+    "feature": "delta_miss_distance",
+    "label": "Change in miss distance since previous CDM",
+    "value": 479.01,
+    "shap": -1.0
+   },
+   {
+    "feature": "last_c_sigma_t",
+    "label": "Debris along-track uncertainty",
+    "value": 497.71,
+    "shap": -0.8
+   },
+   {
+    "feature": "last_miss_distance",
+    "label": "Latest miss distance",
+    "value": 384.91,
+    "shap": 0.36
+   },
+   {
+    "feature": "slope_risk",
+    "label": "Risk trend over time",
+    "value": 152.04,
+    "shap": -0.4
+   }
+  ],
+  "briefing": [
+   "[ALERT] Final risk about 1 in 1,584,893 with rocket body, TCA in 2.39 days.",
+   "[DIAGNOSTIC] Driven mainly by highest risk seen so far and change in miss distance since previous cdm.",
+   "[ACTION] WATCH: Monitor; re-assess at next CDM, maneuver option on standby."
+  ],
+  "briefing_source": "template",
+  "true_final_risk": -6.014
+ },
+ "1259": {
+  "event_id": "1259",
+  "source": "historical",
+  "decision": "HOLD",
+  "time_to_tca_days": 2.16,
+  "p_high": 0.165,
+  "risk_p10": -8.55,
+  "risk_p50": -6.9,
+  "risk_p90": -5.58,
+  "baseline_risk": -6.85,
+  "miss_distance_m": 578.0,
+  "chaser_type": "UNKNOWN",
+  "cdm_history": [
+   {
+    "time_to_tca": 6.951,
+    "risk": -8.727,
+    "miss_distance_m": 1855.0
+   },
+   {
+    "time_to_tca": 6.621,
+    "risk": -8.564,
+    "miss_distance_m": 1889.1
+   },
+   {
+    "time_to_tca": 6.303,
+    "risk": -8.29,
+    "miss_distance_m": 1648.5
+   },
+   {
+    "time_to_tca": 5.916,
+    "risk": -8.852,
+    "miss_distance_m": 1638.5
+   },
+   {
+    "time_to_tca": 5.567,
+    "risk": -8.761,
+    "miss_distance_m": 1735.2
+   },
+   {
+    "time_to_tca": 5.284,
+    "risk": -8.45,
+    "miss_distance_m": 1632.0
+   },
+   {
+    "time_to_tca": 4.949,
+    "risk": -8.343,
+    "miss_distance_m": 1596.8
+   },
+   {
+    "time_to_tca": 4.556,
+    "risk": -8.523,
+    "miss_distance_m": 1548.8
+   },
+   {
+    "time_to_tca": 4.234,
+    "risk": -7.842,
+    "miss_distance_m": 1454.0
+   },
+   {
+    "time_to_tca": 3.899,
+    "risk": -7.78,
+    "miss_distance_m": 1374.4
+   },
+   {
+    "time_to_tca": 3.464,
+    "risk": -7.132,
+    "miss_distance_m": 1255.0
+   },
+   {
+    "time_to_tca": 3.145,
+    "risk": -7.857,
+    "miss_distance_m": 1146.7
+   },
+   {
+    "time_to_tca": 2.789,
+    "risk": -8.004,
+    "miss_distance_m": 1045.5
+   },
+   {
+    "time_to_tca": 2.408,
+    "risk": -7.84,
+    "miss_distance_m": 1029.0
+   },
+   {
+    "time_to_tca": 2.126,
+    "risk": -7.328,
+    "miss_distance_m": 974.3
+   },
+   {
+    "time_to_tca": 1.743,
+    "risk": -7.599,
+    "miss_distance_m": 929.4
+   },
+   {
+    "time_to_tca": 1.397,
+    "risk": -6.969,
+    "miss_distance_m": 808.1
+   },
+   {
+    "time_to_tca": 1.015,
+    "risk": -7.342,
+    "miss_distance_m": 752.3
+   },
+   {
+    "time_to_tca": 0.668,
+    "risk": -6.944,
+    "miss_distance_m": 609.8
+   },
+   {
+    "time_to_tca": 0.391,
+    "risk": -6.951,
+    "miss_distance_m": 605.4
+   }
+  ],
+  "available_cutoffs": [
+   7,
+   5,
+   4,
+   3,
+   2
+  ],
+  "shap_top": [
+   {
+    "feature": "last_risk",
+    "label": "Latest CDM risk",
+    "value": 236.14,
+    "shap": 0.72
+   },
+   {
+    "feature": "last_c_sigma_r",
+    "label": "Debris radial uncertainty",
+    "value": 379.52,
+    "shap": -1.0
+   },
+   {
+    "feature": "mahalanobis_proxy",
+    "label": "Miss distance in units of uncertainty",
+    "value": 451.18,
+    "shap": -0.8
+   },
+   {
+    "feature": "last_c_sigma_t",
+    "label": "Debris along-track uncertainty",
+    "value": 358.95,
+    "shap": 0.36
+   },
+   {
+    "feature": "risk_max",
+    "label": "Highest risk seen so far",
+    "value": 481.42,
+    "shap": -0.4
+   }
+  ],
+  "briefing": [
+   "[ALERT] Final risk about 1 in 7,943,282 with unknown, TCA in 2.16 days.",
+   "[DIAGNOSTIC] Driven mainly by latest cdm risk and debris radial uncertainty.",
+   "[ACTION] HOLD: No action, re-assess at next CDM."
+  ],
+  "briefing_source": "template",
+  "true_final_risk": -7.018
+ },
+ "1296": {
+  "event_id": "1296",
+  "source": "historical",
+  "decision": "HOLD",
+  "time_to_tca_days": 2.05,
+  "p_high": 0.053,
+  "risk_p10": -9.4,
+  "risk_p50": -7.6,
+  "risk_p90": -6.16,
+  "baseline_risk": -6.601,
+  "miss_distance_m": 806.1,
+  "chaser_type": "DEBRIS",
+  "cdm_history": [
+   {
+    "time_to_tca": 6.994,
+    "risk": -9.821,
+    "miss_distance_m": 2895.9
+   },
+   {
+    "time_to_tca": 6.655,
+    "risk": -9.23,
+    "miss_distance_m": 2778.6
+   },
+   {
+    "time_to_tca": 6.315,
+    "risk": -9.986,
+    "miss_distance_m": 2685.8
+   },
+   {
+    "time_to_tca": 5.997,
+    "risk": -9.663,
+    "miss_distance_m": 2549.3
+   },
+   {
+    "time_to_tca": 5.648,
+    "risk": -9.695,
+    "miss_distance_m": 2468.7
+   },
+   {
+    "time_to_tca": 5.229,
+    "risk": -9.354,
+    "miss_distance_m": 2141.9
+   },
+   {
+    "time_to_tca": 4.923,
+    "risk": -8.73,
+    "miss_distance_m": 2223.3
+   },
+   {
+    "time_to_tca": 4.575,
+    "risk": -9.091,
+    "miss_distance_m": 2243.8
+   },
+   {
+    "time_to_tca": 4.185,
+    "risk": -8.914,
+    "miss_distance_m": 1977.7
+   },
+   {
+    "time_to_tca": 3.812,
+    "risk": -8.554,
+    "miss_distance_m": 1804.9
+   },
+   {
+    "time_to_tca": 3.454,
+    "risk": -8.377,
+    "miss_distance_m": 1708.0
+   },
+   {
+    "time_to_tca": 3.178,
+    "risk": -8.603,
+    "miss_distance_m": 1785.6
+   },
+   {
+    "time_to_tca": 2.799,
+    "risk": -8.71,
+    "miss_distance_m": 1369.8
+   },
+   {
+    "time_to_tca": 2.499,
+    "risk": -7.692,
+    "miss_distance_m": 1654.4
+   },
+   {
+    "time_to_tca": 2.096,
+    "risk": -8.278,
+    "miss_distance_m": 1216.1
+   },
+   {
+    "time_to_tca": 1.798,
+    "risk": -8.156,
+    "miss_distance_m": 1238.6
+   },
+   {
+    "time_to_tca": 1.391,
+    "risk": -7.992,
+    "miss_distance_m": 1071.2
+   },
+   {
+    "time_to_tca": 1.079,
+    "risk": -7.63,
+    "miss_distance_m": 1067.8
+   },
+   {
+    "time_to_tca": 0.658,
+    "risk": -8.23,
+    "miss_distance_m": 945.9
+   },
+   {
+    "time_to_tca": 0.356,
+    "risk": -6.898,
+    "miss_distance_m": 829.9
+   }
+  ],
+  "available_cutoffs": [
+   7,
+   5,
+   4,
+   3,
+   2
+  ],
+  "shap_top": [
+   {
+    "feature": "last_c_sigma_r",
+    "label": "Debris radial uncertainty",
+    "value": 295.58,
+    "shap": 0.72
+   },
+   {
+    "feature": "delta_miss_distance",
+    "label": "Change in miss distance since previous CDM",
+    "value": 193.15,
+    "shap": -1.0
+   },
+   {
+    "feature": "last_AP",
+    "label": "Geomagnetic activity (Ap)",
+    "value": 457.23,
+    "shap": -0.8
+   },
+   {
+    "feature": "slope_risk",
+    "label": "Risk trend over time",
+    "value": 245.94,
+    "shap": 0.36
+   },
+   {
+    "feature": "last_miss_distance",
+    "label": "Latest miss distance",
+    "value": 62.86,
+    "shap": -0.4
+   }
+  ],
+  "briefing": [
+   "[ALERT] Final risk about 1 in 39,810,717 with debris, TCA in 2.05 days.",
+   "[DIAGNOSTIC] Driven mainly by debris radial uncertainty and change in miss distance since previous cdm.",
+   "[ACTION] HOLD: No action, re-assess at next CDM."
+  ],
+  "briefing_source": "template",
+  "true_final_risk": -6.933
+ },
+ "1333": {
+  "event_id": "1333",
+  "source": "historical",
+  "decision": "HOLD",
+  "time_to_tca_days": 2.08,
+  "p_high": 0.013,
+  "risk_p10": -10.35,
+  "risk_p50": -8.4,
+  "risk_p90": -6.84,
+  "baseline_risk": -8.24,
+  "miss_distance_m": 1058.8,
+  "chaser_type": "PAYLOAD",
+  "cdm_history": [
+   {
+    "time_to_tca": 6.995,
+    "risk": -9.565,
+    "miss_distance_m": 3781.8
+   },
+   {
+    "time_to_tca": 6.663,
+    "risk": -10.164,
+    "miss_distance_m": 3543.0
+   },
+   {
+    "time_to_tca": 6.284,
+    "risk": -9.9,
+    "miss_distance_m": 3530.0
+   },
+   {
+    "time_to_tca": 5.942,
+    "risk": -9.646,
+    "miss_distance_m": 3202.1
+   },
+   {
+    "time_to_tca": 5.646,
+    "risk": -10.148,
+    "miss_distance_m": 3094.9
+   },
+   {
+    "time_to_tca": 5.275,
+    "risk": -9.608,
+    "miss_distance_m": 3250.9
+   },
+   {
+    "time_to_tca": 4.904,
+    "risk": -9.935,
+    "miss_distance_m": 2816.6
+   },
+   {
+    "time_to_tca": 4.528,
+    "risk": -9.552,
+    "miss_distance_m": 2695.8
+   },
+   {
+    "time_to_tca": 4.24,
+    "risk": -9.243,
+    "miss_distance_m": 2320.8
+   },
+   {
+    "time_to_tca": 3.824,
+    "risk": -9.741,
+    "miss_distance_m": 2355.0
+   },
+   {
+    "time_to_tca": 3.483,
+    "risk": -10.162,
+    "miss_distance_m": 2204.5
+   },
+   {
+    "time_to_tca": 3.191,
+    "risk": -9.583,
+    "miss_distance_m": 2178.8
+   },
+   {
+    "time_to_tca": 2.803,
+    "risk": -8.758,
+    "miss_distance_m": 2022.6
+   },
+   {
+    "time_to_tca": 2.474,
+    "risk": -9.41,
+    "miss_distance_m": 1912.3
+   },
+   {
+    "time_to_tca": 2.109,
+    "risk": -8.573,
+    "miss_distance_m": 1687.0
+   },
+   {
+    "time_to_tca": 1.765,
+    "risk": -9.156,
+    "miss_distance_m": 1683.5
+   },
+   {
+    "time_to_tca": 1.38,
+    "risk": -8.8,
+    "miss_distance_m": 1533.5
+   },
+   {
+    "time_to_tca": 1.024,
+    "risk": -8.621,
+    "miss_distance_m": 1392.1
+   },
+   {
+    "time_to_tca": 0.682,
+    "risk": -8.876,
+    "miss_distance_m": 1209.1
+   },
+   {
+    "time_to_tca": 0.316,
+    "risk": -8.478,
+    "miss_distance_m": 1000.2
+   }
+  ],
+  "available_cutoffs": [
+   7,
+   5,
+   4,
+   3,
+   2
+  ],
+  "shap_top": [
+   {
+    "feature": "slope_risk",
+    "label": "Risk trend over time",
+    "value": 126.48,
+    "shap": 0.72
+   },
+   {
+    "feature": "last_AP",
+    "label": "Geomagnetic activity (Ap)",
+    "value": 157.86,
+    "shap": -1.0
+   },
+   {
+    "feature": "last_risk",
+    "label": "Latest CDM risk",
+    "value": 117.45,
+    "shap": -0.8
+   },
+   {
+    "feature": "risk_max",
+    "label": "Highest risk seen so far",
+    "value": 237.33,
+    "shap": 0.36
+   },
+   {
+    "feature": "delta_miss_distance",
+    "label": "Change in miss distance since previous CDM",
+    "value": 340.05,
+    "shap": -0.4
+   }
+  ],
+  "briefing": [
+   "[ALERT] Final risk about 1 in 251,188,643 with payload, TCA in 2.08 days.",
+   "[DIAGNOSTIC] Driven mainly by risk trend over time and geomagnetic activity (ap).",
+   "[ACTION] HOLD: No action, re-assess at next CDM."
+  ],
+  "briefing_source": "template",
+  "true_final_risk": -7.816
+ },
+ "1370": {
+  "event_id": "1370",
+  "source": "historical",
+  "decision": "HOLD",
+  "time_to_tca_days": 2.37,
+  "p_high": 0.002,
+  "risk_p10": -11.6,
+  "risk_p50": -9.5,
+  "risk_p90": -7.82,
+  "baseline_risk": -10.07,
+  "miss_distance_m": 1637.3,
+  "chaser_type": "ROCKET BODY",
+  "cdm_history": [
+   {
+    "time_to_tca": 6.996,
+    "risk": -11.811,
+    "miss_distance_m": 5731.4
+   },
+   {
+    "time_to_tca": 6.671,
+    "risk": -11.507,
+    "miss_distance_m": 5249.0
+   },
+   {
+    "time_to_tca": 6.265,
+    "risk": -10.564,
+    "miss_distance_m": 5753.0
+   },
+   {
+    "time_to_tca": 5.905,
+    "risk": -10.775,
+    "miss_distance_m": 4828.4
+   },
+   {
+    "time_to_tca": 5.564,
+    "risk": -10.772,
+    "miss_distance_m": 5008.4
+   },
+   {
+    "time_to_tca": 5.292,
+    "risk": -10.835,
+    "miss_distance_m": 4979.9
+   },
+   {
+    "time_to_tca": 4.851,
+    "risk": -10.636,
+    "miss_distance_m": 4581.1
+   },
+   {
+    "time_to_tca": 4.519,
+    "risk": -10.536,
+    "miss_distance_m": 4286.6
+   },
+   {
+    "time_to_tca": 4.153,
+    "risk": -11.274,
+    "miss_distance_m": 4008.0
+   },
+   {
+    "time_to_tca": 3.811,
+    "risk": -10.743,
+    "miss_distance_m": 3540.3
+   },
+   {
+    "time_to_tca": 3.512,
+    "risk": -9.87,
+    "miss_distance_m": 3910.8
+   },
+   {
+    "time_to_tca": 3.124,
+    "risk": -9.867,
+    "miss_distance_m": 3405.6
+   },
+   {
+    "time_to_tca": 2.807,
+    "risk": -9.776,
+    "miss_distance_m": 3170.8
+   },
+   {
+    "time_to_tca": 2.459,
+    "risk": -10.074,
+    "miss_distance_m": 2794.7
+   },
+   {
+    "time_to_tca": 2.135,
+    "risk": -9.909,
+    "miss_distance_m": 2766.7
+   },
+   {
+    "time_to_tca": 1.7,
+    "risk": -10.374,
+    "miss_distance_m": 2486.5
+   },
+   {
+    "time_to_tca": 1.435,
+    "risk": -9.867,
+    "miss_distance_m": 2540.4
+   },
+   {
+    "time_to_tca": 1.062,
+    "risk": -9.414,
+    "miss_distance_m": 2104.0
+   },
+   {
+    "time_to_tca": 0.666,
+    "risk": -9.522,
+    "miss_distance_m": 1865.2
+   },
+   {
+    "time_to_tca": 0.377,
+    "risk": -9.594,
+    "miss_distance_m": 1593.4
+   }
+  ],
+  "available_cutoffs": [
+   7,
+   5,
+   4,
+   3,
+   2
+  ],
+  "shap_top": [
+   {
+    "feature": "last_c_sigma_r",
+    "label": "Debris radial uncertainty",
+    "value": 417.3,
+    "shap": 0.72
+   },
+   {
+    "feature": "mahalanobis_proxy",
+    "label": "Miss distance in units of uncertainty",
+    "value": 4.17,
+    "shap": -1.0
+   },
+   {
+    "feature": "risk_max",
+    "label": "Highest risk seen so far",
+    "value": 295.84,
+    "shap": -0.8
+   },
+   {
+    "feature": "last_risk",
+    "label": "Latest CDM risk",
+    "value": 111.8,
+    "shap": 0.36
+   },
+   {
+    "feature": "last_c_sigma_t",
+    "label": "Debris along-track uncertainty",
+    "value": 436.31,
+    "shap": -0.4
+   }
+  ],
+  "briefing": [
+   "[ALERT] Final risk about 1 in 3,162,277,660 with rocket body, TCA in 2.37 days.",
+   "[DIAGNOSTIC] Driven mainly by debris radial uncertainty and miss distance in units of uncertainty.",
+   "[ACTION] HOLD: No action, re-assess at next CDM."
+  ],
+  "briefing_source": "template",
+  "true_final_risk": -9.484
+ },
+ "1407": {
+  "event_id": "1407",
+  "source": "historical",
+  "decision": "HOLD",
+  "time_to_tca_days": 2.22,
+  "p_high": 0.0,
+  "risk_p10": -13.25,
+  "risk_p50": -11.0,
+  "risk_p90": -9.2,
+  "baseline_risk": -10.828,
+  "miss_distance_m": 1895.6,
+  "chaser_type": "UNKNOWN",
+  "cdm_history": [
+   {
+    "time_to_tca": 7.018,
+    "risk": -12.894,
+    "miss_distance_m": 6261.0
+   },
+   {
+    "time_to_tca": 6.673,
+    "risk": -13.643,
+    "miss_distance_m": 5807.0
+   },
+   {
+    "time_to_tca": 6.307,
+    "risk": -12.783,
+    "miss_distance_m": 6153.7
+   },
+   {
+    "time_to_tca": 5.976,
+    "risk": -12.735,
+    "miss_distance_m": 6269.0
+   },
+   {
+    "time_to_tca": 5.648,
+    "risk": -13.532,
+    "miss_distance_m": 5791.0
+   },
+   {
+    "time_to_tca": 5.242,
+    "risk": -11.929,
+    "miss_distance_m": 5087.1
+   },
+   {
+    "time_to_tca": 4.901,
+    "risk": -12.507,
+    "miss_distance_m": 4956.4
+   },
+   {
+    "time_to_tca": 4.501,
+    "risk": -12.567,
+    "miss_distance_m": 4787.8
+   },
+   {
+    "time_to_tca": 4.23,
+    "risk": -11.673,
+    "miss_distance_m": 5104.6
+   },
+   {
+    "time_to_tca": 3.852,
+    "risk": -12.178,
+    "miss_distance_m": 4827.9
+   },
+   {
+    "time_to_tca": 3.491,
+    "risk": -11.94,
+    "miss_distance_m": 4516.6
+   },
+   {
+    "time_to_tca": 3.109,
+    "risk": -11.871,
+    "miss_distance_m": 3908.2
+   },
+   {
+    "time_to_tca": 2.839,
+    "risk": -11.63,
+    "miss_distance_m": 4278.2
+   },
+   {
+    "time_to_tca": 2.44,
+    "risk": -11.341,
+    "miss_distance_m": 3288.4
+   },
+   {
+    "time_to_tca": 2.118,
+    "risk": -11.204,
+    "miss_distance_m": 3124.1
+   },
+   {
+    "time_to_tca": 1.715,
+    "risk": -11.594,
+    "miss_distance_m": 3028.0
+   },
+   {
+    "time_to_tca": 1.446,
+    "risk": -11.331,
+    "miss_distance_m": 2744.0
+   },
+   {
+    "time_to_tca": 1.018,
+    "risk": -11.209,
+    "miss_distance_m": 2443.8
+   },
+   {
+    "time_to_tca": 0.67,
+    "risk": -10.962,
+    "miss_distance_m": 1948.3
+   },
+   {
+    "time_to_tca": 0.386,
+    "risk": -10.792,
+    "miss_distance_m": 1860.3
+   }
+  ],
+  "available_cutoffs": [
+   7,
+   5,
+   4,
+   3,
+   2
+  ],
+  "shap_top": [
+   {
+    "feature": "last_miss_distance",
+    "label": "Latest miss distance",
+    "value": 97.05,
+    "shap": 0.72
+   },
+   {
+    "feature": "slope_risk",
+    "label": "Risk trend over time",
+    "value": 88.81,
+    "shap": -1.0
+   },
+   {
+    "feature": "last_c_sigma_r",
+    "label": "Debris radial uncertainty",
+    "value": 258.62,
+    "shap": -0.8
+   },
+   {
+    "feature": "risk_max",
+    "label": "Highest risk seen so far",
+    "value": 231.55,
+    "shap": 0.36
+   },
+   {
+    "feature": "last_risk",
+    "label": "Latest CDM risk",
+    "value": 126.02,
+    "shap": -0.4
+   }
+  ],
+  "briefing": [
+   "[ALERT] Final risk about 1 in 100,000,000,000 with unknown, TCA in 2.22 days.",
+   "[DIAGNOSTIC] Driven mainly by latest miss distance and risk trend over time.",
+   "[ACTION] HOLD: No action, re-assess at next CDM."
+  ],
+  "briefing_source": "template",
+  "true_final_risk": -10.888
+ },
+ "1444": {
+  "event_id": "1444",
+  "source": "historical",
+  "decision": "HOLD",
+  "time_to_tca_days": 2.38,
+  "p_high": 0.0,
+  "risk_p10": -16.9,
+  "risk_p50": -14.5,
+  "risk_p90": -12.58,
+  "baseline_risk": -14.468,
+  "miss_distance_m": 2452.5,
+  "chaser_type": "DEBRIS",
+  "cdm_history": [
+   {
+    "time_to_tca": 7.0,
+    "risk": -16.609,
+    "miss_distance_m": 9033.6
+   },
+   {
+    "time_to_tca": 6.611,
+    "risk": -16.621,
+    "miss_distance_m": 7873.0
+   },
+   {
+    "time_to_tca": 6.275,
+    "risk": -16.116,
+    "miss_distance_m": 7312.3
+   },
+   {
+    "time_to_tca": 5.929,
+    "risk": -16.044,
+    "miss_distance_m": 7643.0
+   },
+   {
+    "time_to_tca": 5.626,
+    "risk": -16.142,
+    "miss_distance_m": 7908.6
+   },
+   {
+    "time_to_tca": 5.288,
+    "risk": -16.207,
+    "miss_distance_m": 7739.5
+   },
+   {
+    "time_to_tca": 4.94,
+    "risk": -15.964,
+    "miss_distance_m": 6271.0
+   },
+   {
+    "time_to_tca": 4.598,
+    "risk": -15.759,
+    "miss_distance_m": 6042.4
+   },
+   {
+    "time_to_tca": 4.248,
+    "risk": -15.942,
+    "miss_distance_m": 6185.9
+   },
+   {
+    "time_to_tca": 3.895,
+    "risk": -15.379,
+    "miss_distance_m": 5563.9
+   },
+   {
+    "time_to_tca": 3.457,
+    "risk": -15.097,
+    "miss_distance_m": 5650.8
+   },
+   {
+    "time_to_tca": 3.114,
+    "risk": -14.837,
+    "miss_distance_m": 5160.5
+   },
+   {
+    "time_to_tca": 2.78,
+    "risk": -14.763,
+    "miss_distance_m": 4278.3
+   },
+   {
+    "time_to_tca": 2.455,
+    "risk": -15.255,
+    "miss_distance_m": 4233.0
+   },
+   {
+    "time_to_tca": 2.06,
+    "risk": -14.984,
+    "miss_distance_m": 3946.7
+   },
+   {
+    "time_to_tca": 1.785,
+    "risk": -15.001,
+    "miss_distance_m": 4169.7
+   },
+   {
+    "time_to_tca": 1.412,
+    "risk": -14.891,
+    "miss_distance_m": 3541.6
+   },
+   {
+    "time_to_tca": 1.054,
+    "risk": -14.806,
+    "miss_distance_m": 3154.6
+   },
+   {
+    "time_to_tca": 0.667,
+    "risk": -14.607,
+    "miss_distance_m": 2850.4
+   },
+   {
+    "time_to_tca": 0.325,
+    "risk": -14.1,
+    "miss_distance_m": 2679.6
+   }
+  ],
+  "available_cutoffs": [
+   7,
+   5,
+   4,
+   3,
+   2
+  ],
+  "shap_top": [
+   {
+    "feature": "delta_miss_distance",
+    "label": "Change in miss distance since previous CDM",
+    "value": 55.07,
+    "shap": 0.72
+   },
+   {
+    "feature": "last_AP",
+    "label": "Geomagnetic activity (Ap)",
+    "value": 458.01,
+    "shap": -1.0
+   },
+   {
+    "feature": "mahalanobis_proxy",
+    "label": "Miss distance in units of uncertainty",
+    "value": 157.37,
+    "shap": -0.8
+   },
+   {
+    "feature": "last_risk",
+    "label": "Latest CDM risk",
+    "value": 302.11,
+    "shap": 0.36
+   },
+   {
+    "feature": "last_c_sigma_t",
+    "label": "Debris along-track uncertainty",
+    "value": 229.83,
+    "shap": -0.4
+   }
+  ],
+  "briefing": [
+   "[ALERT] Final risk about 1 in 316,227,766,016,838 with debris, TCA in 2.38 days.",
+   "[DIAGNOSTIC] Driven mainly by change in miss distance since previous cdm and geomagnetic activity (ap).",
+   "[ACTION] HOLD: No action, re-assess at next CDM."
+  ],
+  "briefing_source": "template",
+  "true_final_risk": -14.384
+ },
+ "1481": {
+  "event_id": "1481",
+  "source": "historical",
+  "decision": "HOLD",
+  "time_to_tca_days": 2.07,
+  "p_high": 0.0,
+  "risk_p10": -22.55,
+  "risk_p50": -20.0,
+  "risk_p90": -17.96,
+  "baseline_risk": -21.465,
+  "miss_distance_m": 3485.1,
+  "chaser_type": "PAYLOAD",
+  "cdm_history": [
+   {
+    "time_to_tca": 7.032,
+    "risk": -21.686,
+    "miss_distance_m": 12260.4
+   },
+   {
+    "time_to_tca": 6.674,
+    "risk": -22.002,
+    "miss_distance_m": 11711.6
+   },
+   {
+    "time_to_tca": 6.297,
+    "risk": -21.712,
+    "miss_distance_m": 11631.5
+   },
+   {
+    "time_to_tca": 5.915,
+    "risk": -22.026,
+    "miss_distance_m": 10225.5
+   },
+   {
+    "time_to_tca": 5.642,
+    "risk": -21.208,
+    "miss_distance_m": 10216.9
+   },
+   {
+    "time_to_tca": 5.234,
+    "risk": -21.969,
+    "miss_distance_m": 10121.2
+   },
+   {
+    "time_to_tca": 4.855,
+    "risk": -21.198,
+    "miss_distance_m": 8688.4
+   },
+   {
+    "time_to_tca": 4.534,
+    "risk": -21.184,
+    "miss_distance_m": 9322.0
+   },
+   {
+    "time_to_tca": 4.229,
+    "risk": -21.042,
+    "miss_distance_m": 8866.6
+   },
+   {
+    "time_to_tca": 3.862,
+    "risk": -21.555,
+    "miss_distance_m": 8251.9
+   },
+   {
+    "time_to_tca": 3.525,
+    "risk": -21.069,
+    "miss_distance_m": 7493.7
+   },
+   {
+    "time_to_tca": 3.179,
+    "risk": -20.555,
+    "miss_distance_m": 7764.2
+   },
+   {
+    "time_to_tca": 2.771,
+    "risk": -20.11,
+    "miss_distance_m": 7139.0
+   },
+   {
+    "time_to_tca": 2.492,
+    "risk": -20.693,
+    "miss_distance_m": 6447.8
+   },
+   {
+    "time_to_tca": 2.094,
+    "risk": -20.267,
+    "miss_distance_m": 5853.0
+   },
+   {
+    "time_to_tca": 1.764,
+    "risk": -20.391,
+    "miss_distance_m": 5610.7
+   },
+   {
+    "time_to_tca": 1.35,
+    "risk": -20.334,
+    "miss_distance_m": 4673.9
+   },
+   {
+    "time_to_tca": 1.099,
+    "risk": -20.384,
+    "miss_distance_m": 4668.0
+   },
+   {
+    "time_to_tca": 0.678,
+    "risk": -20.112,
+    "miss_distance_m": 4044.4
+   },
+   {
+    "time_to_tca": 0.306,
+    "risk": -19.767,
+    "miss_distance_m": 3427.7
+   }
+  ],
+  "available_cutoffs": [
+   7,
+   5,
+   4,
+   3,
+   2
+  ],
+  "shap_top": [
+   {
+    "feature": "delta_miss_distance",
+    "label": "Change in miss distance since previous CDM",
+    "value": 387.97,
+    "shap": 0.72
+   },
+   {
+    "feature": "last_risk",
+    "label": "Latest CDM risk",
+    "value": 429.62,
+    "shap": -1.0
+   },
+   {
+    "feature": "last_miss_distance",
+    "label": "Latest miss distance",
+    "value": 119.57,
+    "shap": -0.8
+   },
+   {
+    "feature": "mahalanobis_proxy",
+    "label": "Miss distance in units of uncertainty",
+    "value": 332.26,
+    "shap": 0.36
+   },
+   {
+    "feature": "last_AP",
+    "label": "Geomagnetic activity (Ap)",
+    "value": 60.33,
+    "shap": -0.4
+   }
+  ],
+  "briefing": [
+   "[ALERT] Final risk about 1 in 100,000,000,000,000,000,000 with payload, TCA in 2.07 days.",
+   "[DIAGNOSTIC] Driven mainly by change in miss distance since previous cdm and latest cdm risk.",
+   "[ACTION] HOLD: No action, re-assess at next CDM."
+  ],
+  "briefing_source": "template",
+  "true_final_risk": -20.11
+ }
+}

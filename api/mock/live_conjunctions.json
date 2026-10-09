@@ -1,0 +1,89 @@
+{
+ "primary": {
+  "norad": 25544,
+  "name": "ISS (ZARYA)",
+  "type": "PAYLOAD",
+  "lat": 0.0,
+  "lon": 17.189,
+  "alt_km": 420.0
+ },
+ "conjunctions": [
+  {
+   "secondary": {
+    "norad": 40001,
+    "name": "MOCK DEB 1",
+    "type": "DEBRIS",
+    "lat": 22.912,
+    "lon": -17.279,
+    "alt_km": 417.5
+   },
+   "tca": "2026-10-09T15:30:00Z",
+   "miss_km": 1.8,
+   "rel_speed_kms": 11.31,
+   "pc_est": 1.653e-05,
+   "rtn_km": [
+    -1.633,
+    0.753,
+    0.083
+   ]
+  },
+  {
+   "secondary": {
+    "norad": 40003,
+    "name": "MOCK SAT 3",
+    "type": "PAYLOAD",
+    "lat": -15.885,
+    "lon": -62.749,
+    "alt_km": 425.3
+   },
+   "tca": "2026-10-10T04:00:00Z",
+   "miss_km": 3.2,
+   "rel_speed_kms": 7.62,
+   "pc_est": 4.076e-06,
+   "rtn_km": [
+    -2.104,
+    -2.138,
+    1.113
+   ]
+  },
+  {
+   "secondary": {
+    "norad": 40005,
+    "name": "MOCK DEB 5",
+    "type": "DEBRIS",
+    "lat": 6.872,
+    "lon": 92.731,
+    "alt_km": 416.2
+   },
+   "tca": "2026-10-10T23:18:00Z",
+   "miss_km": 6.7,
+   "rel_speed_kms": 13.56,
+   "pc_est": 1.231e-07,
+   "rtn_km": [
+    2.447,
+    3.146,
+    5.385
+   ]
+  },
+  {
+   "secondary": {
+    "norad": 40007,
+    "name": "MOCK DEB 7",
+    "type": "DEBRIS",
+    "lat": 2.695,
+    "lon": 60.527,
+    "alt_km": 421.0
+   },
+   "tca": "2026-10-11T21:00:00Z",
+   "miss_km": 8.9,
+   "rel_speed_kms": 9.11,
+   "pc_est": 1.364e-08,
+   "rtn_km": [
+    -2.667,
+    5.6,
+    -6.382
+   ]
+  }
+ ],
+ "compute_seconds": 0.0
+}

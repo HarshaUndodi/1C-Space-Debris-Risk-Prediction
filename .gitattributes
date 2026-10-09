@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.pdf binary
+*.joblib binary
+*.parquet binary
+*.png binary

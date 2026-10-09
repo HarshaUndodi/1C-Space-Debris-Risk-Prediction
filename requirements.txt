@@ -1,0 +1,17 @@
+pandas
+numpy
+scipy
+pyarrow
+scikit-learn
+lightgbm
+shap
+matplotlib
+sgp4>=2.23
+requests
+fastapi
+uvicorn[standard]
+pydantic>=2
+python-dotenv
+pytest
+httpx             # FastAPI TestClient (API contract tests)
+anthropic          # optional, for LLM briefing

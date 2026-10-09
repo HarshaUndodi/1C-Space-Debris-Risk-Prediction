@@ -1,0 +1,176 @@
+// One TypeScript type per SPEC Section 13 schema — mirrors api/schemas.py.
+
+export type Decision = 'MANEUVER' | 'WATCH' | 'HOLD'
+export type Source = 'historical' | 'live'
+export type Direction = '+along' | '-along' | '+radial' | '-radial'
+
+export interface Health {
+  status: string
+  model_loaded: boolean
+  catalog_age_hours: number | null
+  mode: 'mock' | 'real'
+}
+
+export interface AlertItem {
+  event_id: string
+  source: Source
+  decision: Decision
+  time_to_tca_days: number
+  p_high: number
+  risk_p10: number
+  risk_p50: number
+  risk_p90: number
+  baseline_risk: number
+  miss_distance_m: number
+  chaser_type: string
+}
+
+export interface CdmPoint {
+  time_to_tca: number
+  risk: number
+  miss_distance_m: number
+}
+
+export interface ShapItem {
+  feature: string
+  label: string
+  value: number | null
+  shap: number
+}
+
+export interface AlertDetail extends AlertItem {
+  cdm_history: CdmPoint[]
+  available_cutoffs: number[]
+  shap_top: ShapItem[]
+  briefing: string[]
+  briefing_source: 'llm' | 'template'
+  true_final_risk: number | null
+}
+
+export interface ManeuverOption {
+  dv_ms: number
+  direction: Direction
+  burn_lead_h: number
+  post_pc: number
+}
+
+export interface RecommendedBurn extends ManeuverOption {
+  propellant_g: number
+}
+
+export interface ParetoPoint {
+  dv_ms: number
+  post_pc: number
+}
+
+export interface NewConjunction {
+  norad: number
+  name: string
+  miss_km: number
+  tca: string
+}
+
+export interface SecondaryCheck {
+  applicable: boolean
+  new_conjunctions: NewConjunction[]
+  note?: string | null
+}
+
+export interface ManeuverResult {
+  event_id: string
+  target_pc: number
+  target_met: boolean
+  pre_burn_pc: number
+  recommended: RecommendedBurn
+  points: ManeuverOption[]
+  pareto: ParetoPoint[]
+  secondary_check: SecondaryCheck
+}
+
+export interface CatalogObject {
+  norad: number
+  name: string
+  type: string
+  lat: number
+  lon: number
+  alt_km: number
+}
+
+export interface LiveCatalog {
+  epoch: string
+  objects: CatalogObject[]
+}
+
+export interface Conjunction {
+  secondary: CatalogObject
+  tca: string
+  miss_km: number
+  rel_speed_kms: number
+  pc_est: number
+  rtn_km: number[]
+}
+
+export interface LiveConjunctions {
+  primary: CatalogObject
+  conjunctions: Conjunction[]
+  compute_seconds: number
+}
+
+export interface OrbitPoint {
+  t: string
+  lat: number
+  lon: number
+  alt_km: number
+}
+
+export interface OrbitPath {
+  points: OrbitPoint[]
+}
+
+export interface LeadTimePoint {
+  cutoff_days: number
+  model_recall: number
+  baseline_recall: number
+  model_f2: number
+  baseline_f2: number
+}
+
+export interface BaselineMetrics {
+  kelvins_score: number
+  mse_hr: number
+  f2: number
+  recall: number
+  false_alarm_rate: number
+  brier: number
+}
+
+export interface ModelMetrics extends BaselineMetrics {
+  brier_uncalibrated: number
+  band_coverage_p10_p90: number
+  threshold: number
+}
+
+export interface ScreeningMetrics {
+  objects: number
+  hours: number
+  step_s: number
+  seconds: number
+}
+
+export interface Metrics {
+  cutoff_days: number
+  n_test_events: number
+  n_test_high_risk: number
+  baseline: BaselineMetrics
+  model: ModelMetrics
+  lead_time: LeadTimePoint[]
+  screening: ScreeningMetrics
+  [extra: string]: unknown
+}
+
+export interface SpaceWeather {
+  date: string
+  f107: number
+  ap: number
+  heuristic_drag_flag: 'normal' | 'elevated'
+}
