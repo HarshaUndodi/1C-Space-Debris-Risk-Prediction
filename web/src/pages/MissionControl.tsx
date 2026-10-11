@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { api } from '../api'
 import { AlertList } from '../components/AlertList'
 import { Globe } from '../components/Globe'
+import { LiveCdmPredictor } from '../components/LiveCdmPredictor'
 import { SpaceWeatherGauge } from '../components/SpaceWeatherGauge'
 import { ErrorBox, Loading } from '../components/Status'
 import { pcSci } from '../format'
@@ -33,6 +34,7 @@ export function MissionControl({ source }: { source: Source }) {
   const [highlightIsro, setHighlightIsro] = useState(true)
   const [highlightSwarm, setHighlightSwarm] = useState(true)
   const [showWeather, setShowWeather] = useState(false)
+  const [showCdmPredictor, setShowCdmPredictor] = useState(false)
   const clock = useSimClock()
   const { tracks } = useLiveTracks(clock)
   const now = useNow(1000)
@@ -101,6 +103,14 @@ export function MissionControl({ source }: { source: Source }) {
             >
               <span className="dot dot-sun" /> ☀️ Solar Drag Gauge
             </button>
+            <button
+              type="button"
+              className={`layer-btn ${showCdmPredictor ? 'active cdm-active' : ''}`}
+              onClick={() => setShowCdmPredictor(!showCdmPredictor)}
+              title="Ingest and evaluate live Conjunction Data Messages (CDMs)"
+            >
+              <span className="dot dot-cdm" /> 📡 Live CDM Predictor
+            </button>
           </div>
         </div>
 
@@ -133,6 +143,9 @@ export function MissionControl({ source }: { source: Source }) {
       </section>
 
       <section className="panel list-panel enter" style={{ animationDelay: '120ms' }}>
+        {showCdmPredictor && (
+          <LiveCdmPredictor onClose={() => setShowCdmPredictor(false)} />
+        )}
         {showWeather && (
           <SpaceWeatherGauge data={spaceWeather.data} onClose={() => setShowWeather(false)} />
         )}

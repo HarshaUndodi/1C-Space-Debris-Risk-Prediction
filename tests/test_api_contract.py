@@ -91,3 +91,21 @@ def test_metrics_and_space_weather(client):
 def test_cors_for_vite_dev_server(client):
     r = client.get("/api/health", headers={"Origin": "http://localhost:5173"})
     assert r.headers.get("access-control-allow-origin") == "http://localhost:5173"
+
+
+def test_live_cdm_prediction(client):
+    # Test sample CDMs endpoint
+    samples = get_ok(client, "/api/live/cdm/samples")
+    assert len(samples) >= 3 and "data" in samples[0]
+
+    # Test prediction on a sample live CDM
+    sample = samples[0]["data"]
+    res = client.post("/api/live/cdm/predict", json=sample)
+    assert res.status_code == 200, res.text
+    data = res.json()
+    assert data["source"] == "live"
+    assert data["decision"] in ("MANEUVER", "WATCH", "HOLD")
+    assert data["p_high"] is not None
+    assert len(data["shap_top"]) >= 3
+    assert len(data["briefing"]) == 3
+    assert "recommended" in data["maneuver"]

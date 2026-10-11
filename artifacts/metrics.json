@@ -435,14 +435,14 @@
     "objects": 19374,
     "hours": 72,
     "step_s": 60,
-    "seconds": 3.89,
+    "seconds": 0.88,
     "primary": "ISS (ZARYA)",
     "prefiltered_objects": 519,
     "conjunctions": 8,
     "threshold_km": 10,
-    "catalog_load_seconds": 6.7,
+    "catalog_load_seconds": 3.23,
     "note": "seconds = SGP4 propagation + screening + TCA refinement; catalog parsing is catalog_load_seconds",
-    "run_utc": "2026-10-11T09:26:00Z"
+    "run_utc": "2026-10-11T11:30:44Z"
   },
   "pc_validation": {
     "n_cdms": 19997,

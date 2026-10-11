@@ -273,6 +273,75 @@ def space_weather() -> dict:
     return mock("space_weather.json")
 
 
+@router.post("/live/cdm/predict")
+def live_cdm_predict(input_data: schemas.LiveCdmInput) -> dict:
+    """Evaluate a live CDM with LightGBM risk classifier, quantiles, SHAP, and Clohessy-Wiltshire maneuver planning."""
+    try:
+        from orbitguard import predict
+        return predict.predict_cdm(input_data.model_dump(), cutoff=input_data.cutoff or 2)
+    except Exception as exc:
+        log.exception("Live CDM prediction failed")
+        raise HTTPException(500, f"Live prediction failed: {exc}")
+
+
+@router.get("/live/cdm/samples")
+def live_cdm_samples() -> list[dict]:
+    """Pre-configured realistic live CDMs for demonstration and operator testing."""
+    return [
+        {
+            "id": "isro-cartosat-debris",
+            "title": "🇮🇳 ISRO Cartosat-2F vs Cosmos-1408 Debris",
+            "description": "High closing speed crossing in Sun-Synchronous Orbit (505 km). Moderate initial miss distance, expanding radial uncertainty.",
+            "data": {
+                "event_id": "ISRO-CARTOSAT-2F-2026-10",
+                "time_to_tca_days": 2.1,
+                "miss_distance_m": 165.0,
+                "rel_speed_kms": 12.4,
+                "risk": 2.4e-4,
+                "chaser_type": "DEBRIS",
+                "target_sigmas_m": [35.0, 110.0, 35.0],
+                "chaser_sigmas_m": [130.0, 480.0, 130.0],
+                "sma_km": 6883.0,
+                "cutoff": 2,
+            },
+        },
+        {
+            "id": "iss-asat-close-pass",
+            "title": "🛰️ ISS vs Fengyun-1C Fragmentation Cloud",
+            "description": "Close approach within 120m of the International Space Station with severe cross-track velocity.",
+            "data": {
+                "event_id": "ISS-FY1C-DEB-7721",
+                "time_to_tca_days": 1.8,
+                "miss_distance_m": 115.0,
+                "rel_speed_kms": 10.9,
+                "risk": 8.5e-4,
+                "chaser_type": "DEBRIS",
+                "target_sigmas_m": [25.0, 80.0, 25.0],
+                "chaser_sigmas_m": [160.0, 520.0, 160.0],
+                "sma_km": 6798.0,
+                "cutoff": 2,
+            },
+        },
+        {
+            "id": "starlink-payload-pass",
+            "title": "📡 Active Payload En-Route Conjunction",
+            "description": "Two operational satellites in adjacent orbital shells. Good OD accuracy (small covariances), nominal miss.",
+            "data": {
+                "event_id": "PAYLOAD-CROSS-SHELL-991",
+                "time_to_tca_days": 3.4,
+                "miss_distance_m": 820.0,
+                "rel_speed_kms": 7.8,
+                "risk": 1.5e-6,
+                "chaser_type": "PAYLOAD",
+                "target_sigmas_m": [15.0, 45.0, 15.0],
+                "chaser_sigmas_m": [18.0, 52.0, 18.0],
+                "sma_km": 6928.0,
+                "cutoff": 3,
+            },
+        },
+    ]
+
+
 app.include_router(router)
 
 # Serve the built dashboard (web/dist) from the same origin, so one port / one tunnel URL carries

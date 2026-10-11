@@ -237,3 +237,26 @@ export interface SpaceWeather {
   leo_impact?: string
   history_7d?: SpaceWeatherHistoryPoint[]
 }
+
+export interface LiveCdmSample {
+  id: string
+  title: string
+  description: string
+  data: {
+    event_id: string
+    time_to_tca_days: number
+    miss_distance_m: number
+    rel_speed_kms: number
+    risk: number
+    chaser_type: string
+    target_sigmas_m?: number[]
+    chaser_sigmas_m?: number[]
+    sma_km?: number
+    cutoff?: number
+  }
+}
+
+export interface LiveCdmPredictionResult extends AlertDetail {
+  maneuver: ManeuverResult
+}
+

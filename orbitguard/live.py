@@ -135,6 +135,7 @@ class LiveService:
         self._results: dict[int, dict] = {}      # norad -> screening result (+ "computed_at_unix")
         self._running: set[int] = set()
         self._maneuvers: dict[str, dict] = {}
+        self._predictions: dict[str, dict] = {}
         self._positions: tuple[float, dict] | None = None
         self._started = False
         self.catalog_load_seconds: float | None = None
@@ -325,6 +326,33 @@ class LiveService:
             for c in res["conjunctions"]:
                 out.append(self._item(res, c))
         return out
+
+    def _prediction(self, res: dict, c: dict) -> dict:
+        eid = c.get("event_id") or live_event_id(res["primary"]["norad"], c)
+        if eid in self._predictions:
+            return self._predictions[eid]
+        from orbitguard import predict
+        hours = max(0.1, (datetime.fromisoformat(c["tca"].replace("Z", "+00:00")) - datetime.now(timezone.utc)).total_seconds() / 3600)
+        age_p = c["element_age_days"]["primary"]
+        age_s = c["element_age_days"]["secondary"]
+        cdm_input = {
+            "event_id": eid,
+            "time_to_tca_days": round(hours / 24.0, 3),
+            "miss_distance_m": c["miss_km"] * 1000.0,
+            "rel_speed_kms": c["rel_speed_kms"],
+            "risk": c["pc_est"],
+            "chaser_type": c["secondary"]["type"],
+            "rtn_km": c.get("rtn_km", [0.0, c["miss_km"], 0.0]),
+            "rel_v_rtn_kms": c.get("rel_v_rtn_kms", [0.0, c["rel_speed_kms"], 0.0]),
+            "target_sigmas_m": (screen.assumed_sigmas_km(age_p) * 1000.0).tolist(),
+            "chaser_sigmas_m": (screen.assumed_sigmas_km(age_s) * 1000.0).tolist(),
+            "sma_km": c.get("primary_sma_km", 6780.0),
+        }
+        pred = predict.predict_cdm(cdm_input, cutoff=2)
+        if pred.get("briefing"):
+            pred["briefing"][0] = f"[ALERT] {res['primary']['name']} vs {c['secondary']['name']} ({c['secondary']['type']}): " + pred["briefing"][0].replace("[ALERT] ", "")
+        self._predictions[eid] = pred
+        return pred
 
     def _item(self, res: dict, c: dict) -> dict:
         band = sorted([c["pc_est"], c["pc_band"]["half"], c["pc_band"]["double"]])

@@ -32,6 +32,9 @@ export const api = {
       { message, history, client_hour: new Date().getHours() },
       { timeout: 60000 })).data,
   spaceWeather: () => get<SpaceWeather>('/space-weather'),
+  predictLiveCdm: async (cdm: Record<string, unknown>) =>
+    (await http.post<import('./types').LiveCdmPredictionResult>('/live/cdm/predict', cdm)).data,
+  liveCdmSamples: () => get<import('./types').LiveCdmSample[]>('/live/cdm/samples'),
 }
 
 export function errorMessage(e: unknown): string {

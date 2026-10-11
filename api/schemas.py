@@ -236,3 +236,20 @@ class SpaceWeather(BaseModel):
     drag_uncertainty_pct: Optional[float] = None
     leo_impact: Optional[str] = None
     history_7d: Optional[list[dict]] = None
+
+
+class LiveCdmInput(BaseModel):
+    model_config = {"extra": "allow"}
+
+    event_id: Optional[str] = None
+    time_to_tca_days: float = 2.0
+    miss_distance_m: float = 250.0
+    rel_speed_kms: float = 11.5
+    risk: float = 1e-5
+    chaser_type: str = "DEBRIS"
+    relative_position_rtn: Optional[list[float]] = None
+    relative_velocity_rtn: Optional[list[float]] = None
+    target_sigmas_m: Optional[list[float]] = None
+    chaser_sigmas_m: Optional[list[float]] = None
+    sma_km: Optional[float] = 6780.0
+    cutoff: Optional[int] = 2

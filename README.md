@@ -31,7 +31,7 @@ make demo      # artifacts/demo_events.json (30 held-out events, precomputed)
 make live      # screen the ISS against the cached catalog (also runs at API startup)
 make api       # FastAPI on http://localhost:8000/api
 make web       # dashboard on http://localhost:5173
-make test      # pytest (100 collected / 93 passed tests)
+make test      # pytest (102 collected / 95 passed tests)
 ```
 
 To share it: `make serve` (dashboard and API on one port), then `make share` for a public Cloudflare link.
@@ -41,6 +41,7 @@ In the dashboard, the globe animates about 1,500 real catalog objects along thei
 Web Audio API) plays continuously from the visitor's first click, because browsers block sound until then.
 
 ### Key Extended Capabilities
+- **📡 Live CDM Ingestion & Prediction Engine:** Submit real-time Conjunction Data Messages (CDMs) via API (`POST /api/live/cdm/predict`) or through the interactive dashboard tool. Performs on-demand LightGBM calibrated risk evaluation, TreeSHAP feature extraction, and automated Clohessy–Wiltshire maneuver planning with zero re-training.
 - **🎯 Interactive "What-If" Maneuver Sandbox:** Adjust $\Delta v$ magnitude (0.001 to 1.5 m/s), thrust direction (+along, -along, +radial, -radial), and burn lead time. Real-time Tsiolkovsky propellant calculation ($\Delta m = m_0(1 - e^{-\Delta v / I_{sp} g_0})$) and dynamic Pareto frontier plotting.
 - **☀️ Space Weather & Atmospheric Drag Gauge:** Real-time solar radio flux ($F_{10.7}$) and geomagnetic ($A_p$) indices, NOAA storm scale ratings (G0–G5), thermospheric density multiplier, and an interactive G4 solar storm simulation toggle.
 - **🇮🇳 ISRO NETRA Fleet Monitoring:** Dedicated one-click screening shortcuts for Indian satellites (Cartosat, RISAT, Oceansat, Astrosat, EOS).
