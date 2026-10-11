@@ -3,6 +3,7 @@ import { api } from '../api'
 import { CdmHistoryChart } from '../charts/CdmHistoryChart'
 import { ManeuverChart } from '../charts/ManeuverChart'
 import { ShapChart } from '../charts/ShapChart'
+import { ManeuverSandbox } from '../components/ManeuverSandbox'
 import { ErrorBox, Loading } from '../components/Status'
 import { days, meters, oneInN, pcSci } from '../format'
 import { countdown, useNow } from '../live'
@@ -47,6 +48,7 @@ function ManeuverSummary({ m }: { m: ManeuverResult }) {
 
 export function AlertDetailPage({ id }: { id: string }) {
   const [cutoff, setCutoff] = useState(2)
+  const [customPlan, setCustomPlan] = useState<{ dv_ms: number; direction: string; burn_lead_h: number; post_pc: number } | null>(null)
   const detail = useApi(() => api.alert(id, cutoff), [id, cutoff])
   const man = useApi(() => api.maneuver(id), [id])
   const d = detail.data
@@ -56,7 +58,7 @@ export function AlertDetailPage({ id }: { id: string }) {
   // Live events: TCA as an absolute time (time_to_tca_days is relative to when the detail was fetched).
   const tcaAt = useMemo(() => (d && live ? new Date(Date.now() + d.time_to_tca_days * 86400e3).toISOString() : null), [d, live])
 
-  useEffect(() => { setCutoff(2) }, [id])
+  useEffect(() => { setCutoff(2); setCustomPlan(null) }, [id])
 
   return (
     <main className="detail">
@@ -143,7 +145,13 @@ export function AlertDetailPage({ id }: { id: string }) {
               <div className="panel-body">
                 {man.loading && <Loading what="maneuver options" />}
                 {man.error && <div className="status">Maneuver not available for this event ({man.error.includes('404') ? 'incomplete covariance in its CDM' : man.error}).</div>}
-                {man.data && <><ManeuverChart m={man.data} /><ManeuverSummary m={man.data} /></>}
+                {man.data && (
+                  <>
+                    <ManeuverChart m={man.data} customPlan={customPlan} />
+                    <ManeuverSummary m={man.data} />
+                    <ManeuverSandbox m={man.data} onPlanChange={setCustomPlan} />
+                  </>
+                )}
               </div>
             </section>
           </div>

@@ -1,11 +1,12 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import {
-  Cartesian3, Color, ImageryLayer, Ion, Material, NearFarScalar, PointPrimitive, PointPrimitiveCollection,
-  PolylineCollection, TileMapServiceImageryProvider, Viewer, buildModuleUrl,
+  Cartesian2, Cartesian3, Color, ImageryLayer, Ion, Material, NearFarScalar, PointPrimitive,
+  PointPrimitiveCollection, PolylineCollection, ScreenSpaceEventHandler, ScreenSpaceEventType,
+  TileMapServiceImageryProvider, Viewer, buildModuleUrl,
 } from 'cesium'
 import 'cesium/Build/Cesium/Widgets/widgets.css'
 import { positionAt, type SimClock } from '../live'
-import type { CatalogObject, Conjunction, LiveTracks, OrbitPoint } from '../types'
+import type { CatalogObject, Conjunction, LiveTracks, OrbitPoint, TrackObject } from '../types'
 
 const ionToken = import.meta.env.VITE_CESIUM_ION_TOKEN as string | undefined
 if (ionToken) Ion.defaultAccessToken = ionToken
@@ -14,17 +15,99 @@ const toCart = (o: { lat: number; lon: number; alt_km: number }) =>
   Cartesian3.fromDegrees(o.lon, o.lat, o.alt_km * 1000)
 
 const COLORS = {
-  debris: Color.fromCssColorString('#7a8594').withAlpha(0.8),
+  debris: Color.fromCssColorString('#64748b').withAlpha(0.75),
   payload: Color.WHITE.withAlpha(0.9),
   primary: Color.fromCssColorString('#22d3ee'),
+  isro: Color.fromCssColorString('#10b981'), // vibrant emerald for ISRO assets
+  cosmos1408: Color.fromCssColorString('#ff4500'), // glowing neon orange for Cosmos-1408 debris
+  asat: Color.fromCssColorString('#f43f5e'), // rose for Fengyun-1C / collision debris
   conj: Color.fromCssColorString('#ef4444'),
+}
+
+type PointMeta = {
+  norad: number
+  name: string
+  type: string
+  tag?: string
+}
+
+function getPointStyle(
+  o: PointMeta,
+  primaryNorad?: number | null,
+  highlightIsro = false,
+  highlightSwarm = false,
+) {
+  const isPrimary = o.norad === primaryNorad
+  if (isPrimary) {
+    return {
+      pixelSize: 12,
+      color: COLORS.primary,
+      outlineColor: Color.WHITE,
+      outlineWidth: 2,
+      scaleByDistance: undefined,
+    }
+  }
+
+  const isCosmos1408 = o.tag === 'cosmos-1408'
+  const isAsat = o.tag === 'fengyun-1c' || o.tag === 'collision-debris'
+  const isIsro = o.tag === 'isro'
+
+  if (isCosmos1408) {
+    return {
+      pixelSize: highlightSwarm ? 7 : 4,
+      color: COLORS.cosmos1408,
+      outlineColor: highlightSwarm ? Color.YELLOW : Color.fromCssColorString('#7f1d1d'),
+      outlineWidth: highlightSwarm ? 1.5 : 0,
+      scaleByDistance: new NearFarScalar(1e6, 2.0, 4e7, 1.0),
+    }
+  }
+
+  if (isAsat && highlightSwarm) {
+    return {
+      pixelSize: 4.5,
+      color: COLORS.asat,
+      outlineColor: Color.fromCssColorString('#fda4af'),
+      outlineWidth: 1,
+      scaleByDistance: new NearFarScalar(1e6, 1.6, 4e7, 0.8),
+    }
+  }
+
+  if (isIsro) {
+    return {
+      pixelSize: highlightIsro ? 8 : 4.5,
+      color: COLORS.isro,
+      outlineColor: highlightIsro ? Color.WHITE : Color.TRANSPARENT,
+      outlineWidth: highlightIsro ? 1.5 : 0,
+      scaleByDistance: new NearFarScalar(1e6, 1.8, 4e7, 0.9),
+    }
+  }
+
+  const isPayload = o.type === 'PAYLOAD'
+  return {
+    pixelSize: isPayload ? 3 : 2.4,
+    color: isPayload ? COLORS.payload : COLORS.debris,
+    outlineColor: Color.TRANSPARENT,
+    outlineWidth: 0,
+    scaleByDistance: new NearFarScalar(1e6, 1.6, 4e7, 0.8),
+  }
 }
 
 /**
  * Cesium globe. With `tracks` + `clock`, every object is moved each frame by interpolating its SGP4
  * samples at the simulated time (real time, or warped). Without tracks, `objects` are drawn static.
  */
-export function Globe({ objects, tracks, clock, primaryNorad, orbit, conjunctions, spin }: {
+export function Globe({
+  objects,
+  tracks,
+  clock,
+  primaryNorad,
+  orbit,
+  conjunctions,
+  spin,
+  highlightIsro = false,
+  highlightSwarm = false,
+  onSelectObject,
+}: {
   objects: CatalogObject[]
   tracks?: LiveTracks | null
   clock?: SimClock
@@ -32,6 +115,9 @@ export function Globe({ objects, tracks, clock, primaryNorad, orbit, conjunction
   orbit: OrbitPoint[]
   conjunctions: Conjunction[]
   spin?: boolean
+  highlightIsro?: boolean
+  highlightSwarm?: boolean
+  onSelectObject?: (norad: number) => void
 }) {
   const el = useRef<HTMLDivElement>(null)
   const viewer = useRef<Viewer | null>(null)
@@ -43,6 +129,9 @@ export function Globe({ objects, tracks, clock, primaryNorad, orbit, conjunction
   clockRef.current = clock
   const spinRef = useRef(spin)
   spinRef.current = spin
+  const onSelectRef = useRef(onSelectObject)
+  onSelectRef.current = onSelectObject
+  const [hovered, setHovered] = useState<PointMeta | null>(null)
 
   // Create the viewer once. Bundled Natural Earth II imagery, no terrain -> works offline, no Ion account.
   useEffect(() => {
@@ -61,6 +150,25 @@ export function Globe({ objects, tracks, clock, primaryNorad, orbit, conjunction
     markers.current = v.scene.primitives.add(new PointPrimitiveCollection())
     lines.current = v.scene.primitives.add(new PolylineCollection())
     viewer.current = v
+
+    // Interactive picker handler for hover inspection
+    const handler = new ScreenSpaceEventHandler(v.scene.canvas)
+    handler.setInputAction((movement: { endPosition: Cartesian2 }) => {
+      const picked = v.scene.pick(movement.endPosition)
+      if (picked && picked.primitive && (picked.primitive as unknown as { _meta?: PointMeta })._meta) {
+        setHovered((picked.primitive as unknown as { _meta: PointMeta })._meta)
+      } else {
+        setHovered(null)
+      }
+    }, ScreenSpaceEventType.MOUSE_MOVE)
+
+    handler.setInputAction((movement: { position: Cartesian2 }) => {
+      const picked = v.scene.pick(movement.position)
+      if (picked && picked.primitive && (picked.primitive as unknown as { _meta?: PointMeta })._meta) {
+        const meta = (picked.primitive as unknown as { _meta: PointMeta })._meta
+        if (onSelectRef.current) onSelectRef.current(meta.norad)
+      }
+    }, ScreenSpaceEventType.LEFT_CLICK)
 
     // Per-frame: move every tracked object to its interpolated position at sim time; slow idle spin.
     const scratch = [0, 0, 0]
@@ -88,7 +196,11 @@ export function Globe({ objects, tracks, clock, primaryNorad, orbit, conjunction
     const stop = () => { spinRef.current = false }
     el.current.addEventListener('pointerdown', stop)
     el.current.addEventListener('wheel', stop, { passive: true })
-    return () => { v.destroy(); viewer.current = null }
+    return () => {
+      handler.destroy()
+      v.destroy()
+      viewer.current = null
+    }
   }, [])
 
   // Moving objects (tracks) or static objects (catalog fallback).
@@ -98,28 +210,35 @@ export function Globe({ objects, tracks, clock, primaryNorad, orbit, conjunction
     pc.removeAll()
     moving.current = null
     if (tracks && tracks.objects.length) {
-      const pts = tracks.objects.map((o) => {
-        const isPrimary = o.norad === primaryNorad
-        return pc.add({
+      const pts = tracks.objects.map((o: TrackObject) => {
+        const style = getPointStyle(o, primaryNorad, highlightIsro, highlightSwarm)
+        const pt = pc.add({
           position: Cartesian3.ZERO,
-          pixelSize: isPrimary ? 11 : o.type === 'PAYLOAD' ? 3 : 2.4,
-          color: isPrimary ? COLORS.primary : o.type === 'PAYLOAD' ? COLORS.payload : COLORS.debris,
-          outlineColor: Color.WHITE, outlineWidth: isPrimary ? 2 : 0,
-          scaleByDistance: isPrimary ? undefined : new NearFarScalar(1e6, 1.6, 4e7, 0.8),
+          pixelSize: style.pixelSize,
+          color: style.color,
+          outlineColor: style.outlineColor,
+          outlineWidth: style.outlineWidth,
+          scaleByDistance: style.scaleByDistance,
         })
+        ;(pt as unknown as { _meta: PointMeta })._meta = o
+        return pt
       })
       moving.current = { pts, tracks }
       return
     }
     for (const o of objects) {
-      pc.add({
+      const style = getPointStyle(o, primaryNorad, highlightIsro, highlightSwarm)
+      const pt = pc.add({
         position: toCart(o),
-        pixelSize: o.norad === primaryNorad ? 11 : o.type === 'PAYLOAD' ? 3 : 2,
-        color: o.norad === primaryNorad ? COLORS.primary : o.type === 'PAYLOAD' ? COLORS.payload : COLORS.debris,
-        scaleByDistance: new NearFarScalar(1e6, 1.6, 4e7, 0.8),
+        pixelSize: style.pixelSize,
+        color: style.color,
+        outlineColor: style.outlineColor,
+        outlineWidth: style.outlineWidth,
+        scaleByDistance: style.scaleByDistance,
       })
+      ;(pt as unknown as { _meta: PointMeta })._meta = o
     }
-  }, [tracks, objects, primaryNorad])
+  }, [tracks, objects, primaryNorad, highlightIsro, highlightSwarm])
 
   // Orbit trail + conjunction geometry at TCA.
   useEffect(() => {
@@ -128,8 +247,11 @@ export function Globe({ objects, tracks, clock, primaryNorad, orbit, conjunction
     mc.removeAll()
     lc.removeAll()
     if (orbit.length > 1) {
-      lc.add({ positions: orbit.map(toCart), width: 2,
-        material: Material.fromType('Color', { color: COLORS.primary.withAlpha(0.65) }) })
+      lc.add({
+        positions: orbit.map(toCart),
+        width: 2,
+        material: Material.fromType('Color', { color: COLORS.primary.withAlpha(0.65) }),
+      })
     }
     for (const c of conjunctions) {
       const sp = toCart(c.secondary)
@@ -142,5 +264,26 @@ export function Globe({ objects, tracks, clock, primaryNorad, orbit, conjunction
     }
   }, [orbit, conjunctions])
 
-  return <div className="globe" ref={el} />
+  return (
+    <div className="globe-container" style={{ position: 'relative', width: '100%', height: '100%' }}>
+      <div className="globe" ref={el} />
+      {hovered && (
+        <div className="globe-hud" role="status" aria-live="polite">
+          <span className={`hud-badge hud-${hovered.tag ?? 'general'}`}>
+            {hovered.tag === 'isro'
+              ? '🇮🇳 ISRO ASSET'
+              : hovered.tag === 'cosmos-1408'
+              ? '🔥 COSMOS 1408 ASAT DEBRIS'
+              : hovered.tag === 'fengyun-1c'
+              ? '⚠️ FENGYUN-1C ASAT DEBRIS'
+              : hovered.tag === 'collision-debris'
+              ? '💥 COLLISION DEBRIS'
+              : hovered.type}
+          </span>
+          <span className="hud-name mono">{hovered.name}</span>
+          <span className="hud-norad mono muted">NORAD {hovered.norad}</span>
+        </div>
+      )}
+    </div>
+  )
 }

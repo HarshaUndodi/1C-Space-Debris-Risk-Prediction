@@ -102,6 +102,7 @@ class CatalogObject(BaseModel):
     lat: float
     lon: float
     alt_km: float
+    tag: Optional[str] = None
 
 
 class LiveCatalog(BaseModel):
@@ -132,6 +133,7 @@ class TrackObject(BaseModel):
     norad: int
     name: str
     type: str
+    tag: Optional[str] = None
 
 
 class LiveTracks(BaseModel):
@@ -223,7 +225,14 @@ class AgentReply(BaseModel):
 
 
 class SpaceWeather(BaseModel):
+    model_config = {"extra": "allow"}
+
     date: str
     f107: float
     ap: float
     heuristic_drag_flag: Literal["normal", "elevated"]
+    noaa_scale: Optional[str] = None
+    density_multiplier: Optional[float] = None
+    drag_uncertainty_pct: Optional[float] = None
+    leo_impact: Optional[str] = None
+    history_7d: Optional[list[dict]] = None

@@ -33,6 +33,19 @@ J2 = 1.08262668e-3
 INDIAN_NEEDLES = ("CARTOSAT", "RISAT", "OCEANSAT", "RESOURCESAT", "EOS-0", "ASTROSAT", "INSAT", "GSAT")
 
 
+def object_tag(name: str) -> str:
+    n = name.upper()
+    if "COSMOS 1408" in n or "1408 DEB" in n:
+        return "cosmos-1408"
+    if "FENGYUN 1C" in n or "FY-1C" in n:
+        return "fengyun-1c"
+    if "COSMOS 2251" in n or "IRIDIUM 33" in n:
+        return "collision-debris"
+    if any(needle in n for needle in INDIAN_NEEDLES):
+        return "isro"
+    return "general"
+
+
 def live_event_id(primary: int, c: dict) -> str:
     return f"live-{primary}-{c['secondary']['norad']}-{c['tca'].replace('-', '').replace(':', '').rstrip('Z')}"
 
@@ -225,19 +238,24 @@ class LiveService:
         rng = np.random.default_rng(0)
         first = [c for c in cat if c.norad == prim_id or c.norad in partners]
         band = [c for c in cat if prim and c not in first and c.apogee_km >= prim.perigee_km - 25 and c.perigee_km <= prim.apogee_km + 25]
-        rest = [c for c in cat if c not in first and c not in band]
-        order = first + band + [rest[i] for i in rng.permutation(len(rest))]
+        bset = {c.norad for c in first} | {c.norad for c in band}
+        isro_items = [c for c in cat if c.norad not in bset and any(needle in c.name.upper() for needle in INDIAN_NEEDLES)]
+        c1408_items = [c for c in cat if c.norad not in bset and ("COSMOS 1408" in c.name.upper() or "1408 DEB" in c.name.upper())]
+        priority = isro_items[:30] + c1408_items
+        pset = bset | {c.norad for c in priority}
+        rest = [c for c in cat if c.norad not in pset]
+        order = first + band + priority + [rest[i] for i in rng.permutation(len(rest))]
         chosen = order[:limit]
         now = datetime.now(timezone.utc)
         lat, lon, alt, ok = screen.positions_now(chosen, now)
-        objs = [{"norad": c.norad, "name": c.name, "type": c.type, "lat": round(float(la), 3), "lon": round(float(lo), 3),
+        objs = [{"norad": c.norad, "name": c.name, "type": c.type, "tag": object_tag(c.name), "lat": round(float(la), 3), "lon": round(float(lo), 3),
                  "alt_km": round(float(al), 1)} for c, la, lo, al, k in zip(chosen, lat, lon, alt, ok) if k]
         out = {"epoch": now.isoformat(timespec="seconds").replace("+00:00", "Z"), "objects": objs}
         self._positions = (time.time(), out)
         return out
 
     def _display_order(self, limit: int):
-        """Primary, conjunction partners, in-band objects, then a fixed random sample of the rest."""
+        """Primary, conjunction partners, in-band objects, ISRO assets, Cosmos-1408 & ASAT debris, then random sample."""
         cat = self.catalog_entries()
         res = self._results.get(config.DEFAULT_PRIMARY_NORAD)
         partners = {c["secondary"]["norad"] for c in (res or {}).get("conjunctions", [])}
@@ -247,9 +265,16 @@ class LiveService:
         band = [c for c in cat if prim and c.norad not in fset
                 and c.apogee_km >= prim.perigee_km - 25 and c.perigee_km <= prim.apogee_km + 25]
         bset = fset | {c.norad for c in band}
-        rest = [c for c in cat if c.norad not in bset]
+
+        isro_items = [c for c in cat if c.norad not in bset and any(needle in c.name.upper() for needle in INDIAN_NEEDLES)]
+        c1408_items = [c for c in cat if c.norad not in bset and ("COSMOS 1408" in c.name.upper() or "1408 DEB" in c.name.upper())]
+        asat_items = [c for c in cat if c.norad not in bset and "FENGYUN 1C" in c.name.upper()]
+        priority = isro_items[:35] + c1408_items + asat_items[:120]
+        pset = bset | {c.norad for c in priority}
+
+        rest = [c for c in cat if c.norad not in pset]
         rng = np.random.default_rng(0)
-        return (first + band + [rest[i] for i in rng.permutation(len(rest))])[:limit]
+        return (first + band + priority + [rest[i] for i in rng.permutation(len(rest))])[:limit]
 
     def tracks(self, limit: int, minutes: float, step_s: float, start: datetime | None = None) -> dict | None:
         """~30 min of Earth-fixed samples per object so the globe can animate in real time (cached per window)."""
@@ -267,7 +292,7 @@ class LiveService:
         objs, samples = [], []
         for c, ok, arr in zip(chosen, keep, xyz):
             if ok:
-                objs.append({"norad": c.norad, "name": c.name, "type": c.type})
+                objs.append({"norad": c.norad, "name": c.name, "type": c.type, "tag": object_tag(c.name)})
                 samples.append(np.rint(arr.reshape(-1)).astype(int).tolist())   # whole km: invisible at globe scale, ~2× smaller
         out = {"start": start.isoformat().replace("+00:00", "Z"), "step_s": step_s, "n_steps": int(len(t)),
                "objects": objs, "samples_km": samples}
@@ -280,8 +305,12 @@ class LiveService:
 
     def presets(self) -> list[dict]:
         cat = self.catalog_entries()
-        iss = [{"norad": c.norad, "name": c.name} for c in cat if c.norad == config.DEFAULT_PRIMARY_NORAD]
-        return iss + screen.find_by_name(cat, *INDIAN_NEEDLES)[:15]
+        iss = [{"norad": c.norad, "name": c.name, "fleet": "station", "agency": "International Space Station"}
+               for c in cat if c.norad == config.DEFAULT_PRIMARY_NORAD]
+        isro_raw = screen.find_by_name(cat, *INDIAN_NEEDLES)
+        isro = [{"norad": c["norad"], "name": c["name"], "fleet": "isro", "agency": "ISRO (India)"}
+                for c in isro_raw[:25]]
+        return iss + isro
 
     def _find(self, event_id: str) -> tuple[dict, dict] | None:
         for res in self._results.values():

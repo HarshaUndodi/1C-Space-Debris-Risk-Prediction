@@ -2,7 +2,7 @@
 import axios from 'axios'
 import type {
   AlertDetail, AlertItem, Health, LiveCatalog, LiveConjunctions, LiveTracks, ManeuverResult,
-  Metrics, OrbitPath, Source, SpaceWeather,
+  Metrics, OrbitPath, Preset, Source, SpaceWeather,
 } from './types'
 
 const http = axios.create({
@@ -25,7 +25,7 @@ export const api = {
     get<OrbitPath>(`/live/orbit/${norad}`, { minutes, step_s, start }),
   liveTracks: (start: string, limit = 2000, minutes = 30, step_s = 30) =>
     get<LiveTracks>('/live/tracks', { start, limit, minutes, step_s }),
-  livePresets: () => get<{ norad: number; name: string }[]>('/live/presets'),
+  livePresets: () => get<Preset[]>('/live/presets'),
   metrics: () => get<Metrics>('/metrics'),
   agent: async (message: string, history: { role: 'user' | 'assistant'; text: string }[]) =>
     (await http.post<{ reply: string; source: 'claude' | 'rules'; event_ids: string[] }>('/agent',

@@ -96,6 +96,7 @@ export interface CatalogObject {
   lat: number
   lon: number
   alt_km: number
+  tag?: string
 }
 
 export interface LiveCatalog {
@@ -122,11 +123,25 @@ export interface LiveConjunctions {
   compute_seconds: number
 }
 
+export interface TrackObject {
+  norad: number
+  name: string
+  type: string
+  tag?: string
+}
+
+export interface Preset {
+  norad: number
+  name: string
+  fleet?: 'station' | 'isro' | string
+  agency?: string
+}
+
 export interface LiveTracks {
   start: string
   step_s: number
   n_steps: number
-  objects: { norad: number; name: string; type: string }[]
+  objects: TrackObject[]
   samples_km: number[][] // per object: flat [x0,y0,z0,x1,…] Earth-fixed km
 }
 
@@ -205,9 +220,20 @@ export interface Metrics {
   notes?: string[]
 }
 
+export interface SpaceWeatherHistoryPoint {
+  date: string
+  f107: number
+  ap: number
+}
+
 export interface SpaceWeather {
   date: string
   f107: number
   ap: number
   heuristic_drag_flag: 'normal' | 'elevated'
+  noaa_scale?: string
+  density_multiplier?: number
+  drag_uncertainty_pct?: number
+  leo_impact?: string
+  history_7d?: SpaceWeatherHistoryPoint[]
 }

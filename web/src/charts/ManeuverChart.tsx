@@ -13,11 +13,18 @@ const SERIES = [
   { dir: '-radial', color: C.series2, shape: 'triangle' as const },
 ]
 
-/** Residual Pc (log) vs Δv (log): every option, the Pareto front, the recommended burn. */
-export function ManeuverChart({ m }: { m: ManeuverResult }) {
+/** Residual Pc (log) vs Δv (log): every option, the Pareto front, the recommended burn, and operator custom plan. */
+export function ManeuverChart({
+  m,
+  customPlan,
+}: {
+  m: ManeuverResult
+  customPlan?: { dv_ms: number; post_pc: number; direction?: string; burn_lead_h?: number } | null
+}) {
   const pts = m.points.map((p) => ({ ...p, y: clampPc(p.post_pc) }))
   const front = m.pareto.map((p) => ({ dv_ms: p.dv_ms, y: clampPc(p.post_pc) }))
   const rec = m.recommended.dv_ms > 0 ? [{ ...m.recommended, y: clampPc(m.recommended.post_pc) }] : []
+  const custom = customPlan && customPlan.dv_ms > 0 ? [{ ...customPlan, y: clampPc(customPlan.post_pc) }] : []
   return (
     <ResponsiveContainer width="100%" height={320}>
       <ComposedChart margin={{ top: 12, right: 24, bottom: 8, left: 4 }}>
@@ -47,6 +54,10 @@ export function ManeuverChart({ m }: { m: ManeuverResult }) {
         {rec.length > 0 && (
           <Scatter name="recommended" data={rec} dataKey="y" fill={C.warning} shape="star"
             stroke={C.surface} strokeWidth={2} {...anim(2100, 500)} />
+        )}
+        {custom.length > 0 && (
+          <Scatter name="Operator Custom Plan" data={custom} dataKey="y" fill="#22d3ee" shape="diamond"
+            stroke="#ffffff" strokeWidth={2} />
         )}
       </ComposedChart>
     </ResponsiveContainer>
