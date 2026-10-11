@@ -435,26 +435,14 @@
     "objects": 19376,
     "hours": 72,
     "step_s": 60,
-    "seconds": 1.18,
+    "seconds": 2.84,
     "primary": "ISS (ZARYA)",
     "prefiltered_objects": 519,
-    "conjunctions": 8,
+    "conjunctions": 9,
     "threshold_km": 10,
-    "catalog_load_seconds": 0.5,
+    "catalog_load_seconds": 0.7,
     "note": "seconds = SGP4 propagation + screening + TCA refinement; catalog parsing is catalog_load_seconds",
-    "run_utc": "2026-10-09T11:16:41Z",
-    "all_vs_all": {
-      "objects": 18589,
-      "hours": 24.0,
-      "step_s": 60,
-      "radius_km": 10,
-      "steps": 1441,
-      "pairs_sampled_close": 8670,
-      "pairs_persistent_formation": 85,
-      "propagation_seconds": 9.46,
-      "kdtree_seconds": 23.72,
-      "seconds": 34.01
-    }
+    "run_utc": "2026-10-09T13:18:06Z"
   },
   "pc_validation": {
     "n_cdms": 19997,
