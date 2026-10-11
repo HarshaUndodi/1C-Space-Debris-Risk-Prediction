@@ -10,8 +10,12 @@ Full build spec: [SPEC.md](SPEC.md).
 | Parse noisy orbital data | ESA Kelvins CDMs (162k rows / 13k events), the live CelesTrak OMM catalog (19k objects), and CelesTrak space weather |
 | Calibrated confidence | Isotonic-calibrated P(high risk) plus a P10–P90 band on the final risk |
 | Ranked alerts | MANEUVER / WATCH / HOLD, ranked by calibrated probability |
-| Fuel-efficient maneuvers | Clohessy–Wiltshire burn search over size × direction × timing, a Pareto front, and grams of propellant |
-| Explain why | SHAP drivers in plain English plus a three-line operator briefing (LLM, or a template fallback) |
+| Fuel-efficient maneuvers | Clohessy–Wiltshire burn search over size × direction × timing, Pareto front, propellant mass, and an **interactive "What-If" thruster simulator** |
+| Explain why | SHAP drivers in plain English plus a three-line operator briefing (LLM or template fallback) |
+| Space weather & drag impact | Real-time NOAA geomagnetic storm scales (G0–G5), thermospheric density swelling multiplier, and live solar storm simulator |
+| Fleet & swarm tracking | **ISRO NETRA fleet screening** (Cartosat, RISAT, Oceansat, EOS) + targeted tracking for Cosmos-1408 & ASAT debris clouds |
+
+> 📘 **See [UPDATES_FROM_BASE.md](UPDATES_FROM_BASE.md) for a complete list of all features, enhancements, and architectural upgrades added to the base specification.**
 
 ## Quick start
 
@@ -27,7 +31,7 @@ make demo      # artifacts/demo_events.json (30 held-out events, precomputed)
 make live      # screen the ISS against the cached catalog (also runs at API startup)
 make api       # FastAPI on http://localhost:8000/api
 make web       # dashboard on http://localhost:5173
-make test      # pytest (61 tests)
+make test      # pytest (100 collected / 93 passed tests)
 ```
 
 To share it: `make serve` (dashboard and API on one port), then `make share` for a public Cloudflare link.
@@ -36,12 +40,12 @@ In the dashboard, the globe animates about 1,500 real catalog objects along thei
 1× / 10× / 60×), charts and numbers build in, and ambient space music (generated live in the browser with the
 Web Audio API) plays continuously from the visitor's first click, because browsers block sound until then.
 
-**Nova, the voice assistant** (the orb, bottom right) gives spoken status updates and decision support:
-"status update", "tell me about event 1568", "should we maneuver for the top alert?", "any live close
-approaches?". It uses browser speech in and out (Chrome/Edge, over HTTPS or localhost) with a female voice.
-Every number comes from the same API the dashboard uses. With `ANTHROPIC_API_KEY` set it runs as a Claude
-(`claude-opus-5`) tool-use agent, with server-side refusal fallbacks; without a key it uses a built-in
-rule-based agent.
+### Key Extended Capabilities
+- **🎯 Interactive "What-If" Maneuver Sandbox:** Adjust $\Delta v$ magnitude (0.001 to 1.5 m/s), thrust direction (+along, -along, +radial, -radial), and burn lead time. Real-time Tsiolkovsky propellant calculation ($\Delta m = m_0(1 - e^{-\Delta v / I_{sp} g_0})$) and dynamic Pareto frontier plotting.
+- **☀️ Space Weather & Atmospheric Drag Gauge:** Real-time solar radio flux ($F_{10.7}$) and geomagnetic ($A_p$) indices, NOAA storm scale ratings (G0–G5), thermospheric density multiplier, and an interactive G4 solar storm simulation toggle.
+- **🇮🇳 ISRO NETRA Fleet Monitoring:** Dedicated one-click screening shortcuts for Indian satellites (Cartosat, RISAT, Oceansat, Astrosat, EOS).
+- **🔥 Cosmos-1408 ASAT & Debris Swarms:** Visual overlay toggles for major fragmentation clouds with Cesium HUD mouse hover inspection and click-to-select tracking.
+- **🎙️ Nova Voice Assistant:** Voice-enabled operations agent (speech in/out) for hands-free telemetry queries, Go/No-Go status briefings, and event diagnostics.
 
 All artifacts (models, metrics, demo events, catalog snapshot) are committed, so **`make api` + `make web`
 runs the full demo offline on a fresh clone**. You don't need a Cesium Ion token (the globe uses Cesium's
